@@ -1,40 +1,27 @@
-# Fly.io-Konfiguration für den Star-Citizen-Showcase-Bot (inklusive Web-Seite).
+# fly.toml app configuration file generated for jasonjol33-stdc on 2026-10-10T15:52:00Z
 #
-# WICHTIG: 'app' unten musst du auf deinen eigenen, weltweit eindeutigen
-# Fly.io-App-Namen ändern (z.B. beim ersten Deploy mit `fly launch` automatisch
-# gesetzt, oder manuell hier eintragen).
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
-# Der Bot läuft als Hintergrund-Prozess und liefert nebenbei die Web-Seite aus
-# (siehe [http_service] unten). Nach dem Deploy ist sie unter https://<app-name>.fly.dev
-# erreichbar.
 
-app = "sc-showcase-bot"
-primary_region = "fra"  # Frankfurt - bei Bedarf auf eine andere Fly.io-Region ändern
+app = 'jasonjol33-stdc'
+primary_region = 'ams'
 
 [build]
 
-[[mounts]]
-  source = "sc_showcase_data"
-  destination = "/app/data"
-
 [env]
-  DATA_DIR = "/app/data"
-  PORT = "8080"  # Port der Web-Seite - muss zu internal_port unten passen
-  # Optional: öffentliche Adresse der Web-Seite. Wenn gesetzt, verlinkt das Kopf-Embed im
-  # Discord-Channel die Seite. Eigenen App-Namen einsetzen und die Raute entfernen:
-  # WEB_URL = "https://sc-showcase-bot.fly.dev"
+  DATA_DIR = '/app/data'
+  PORT = '8080'
 
-# Öffentliche Web-Seite (die HTTPS-Weiterleitung übernimmt Fly).
-# WICHTIG: Der Bot muss dauerhaft laufen und darf nur auf EINER Maschine laufen (sonst
-# postet er doppelt). Deshalb darf Fly die Maschine weder bei fehlendem Web-Traffic
-# stoppen noch traffic-gesteuert starten. Diese beiden Werte nicht auf "true" stellen
-# und die App nicht hochskalieren.
+[[mounts]]
+  source = 'data'
+  destination = '/app/data'
+
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = false
+  auto_stop_machines = 'off'
   auto_start_machines = false
 
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "256mb"
+  size = 'shared-cpu-1x'
+  memory = '256mb'
