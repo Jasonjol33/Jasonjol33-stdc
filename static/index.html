@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Durchsuchbare Übersicht aller Star-Citizen-Schiffe mit aktuellen In-Game-Kaufpreisen (aUEC).">
+<title>Star Citizen Schiffs-Showcase</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%80%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070a13; --panel:#0c1220; --card:#111a2c;
+    --line:rgba(148,178,255,0.16); --line-soft:rgba(148,178,255,0.08);
+    --cyan:#52d6f2; --violet:#9c86ff; --green:#46e0a6; --amber:#f4a93e;
+    --text:#e8edf7; --text-dim:#8c97b3; --text-faint:#59627c;
+    --font-display:'Chakra Petch', sans-serif; --font-ui:'Space Grotesk', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-padding-top:120px;}
+  body{
+    margin:0; min-height:100vh; display:flex; flex-direction:column; background:var(--bg); color:var(--text);
+    font-family:var(--font-ui); -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1px 1px at 8% 22%, rgba(200,220,255,.55) 50%, transparent 51%),
+      radial-gradient(1px 1px at 77% 12%, rgba(200,220,255,.4) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 58% 68%, rgba(200,220,255,.4) 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 84%, rgba(200,220,255,.35) 50%, transparent 51%),
+      radial-gradient(1px 1px at 92% 58%, rgba(200,220,255,.3) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 42% 38%, rgba(200,220,255,.3) 50%, transparent 51%);
+    background-repeat:repeat; background-size:640px 640px; background-attachment:fixed;
+  }
+  a{color:inherit;}
+
+  .topsticky{position:sticky; top:0; z-index:20;}
+  .bar{background:rgba(12,18,32,0.92); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);}
+  .bar-top{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    padding:14px 24px; border-bottom:1px solid var(--line-soft);
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-mark{color:var(--cyan); flex-shrink:0;}
+  .brand-name{font-family:var(--font-display); font-weight:700; font-size:1.05rem; letter-spacing:0.02em;}
+  #statusText{display:flex; flex-wrap:wrap; gap:0; font-size:0.85rem; color:var(--text-dim);}
+  .stat{display:flex; gap:6px; align-items:baseline; padding:0 14px; border-left:1px solid var(--line);}
+  .stat:first-child{border-left:none; padding-left:0;}
+  .stat strong{color:var(--text); font-family:var(--font-display); font-weight:600;}
+  .stat-warn{color:var(--amber); cursor:help;}
+
+  .bar-controls{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    padding:10px 24px; border-bottom:1px solid var(--line);
+  }
+  .search-field{
+    display:flex; align-items:center; gap:8px; background:var(--panel);
+    border:1px solid var(--line); padding:8px 12px; flex:1 1 220px; min-width:180px;
+  }
+  .search-field .prompt{color:var(--cyan); font-family:var(--font-display); font-weight:600;}
+  .search-field input{
+    background:none; border:none; outline:none; width:100%;
+    color:var(--text); font-family:var(--font-ui); font-size:0.95rem;
+  }
+  .search-field input::placeholder{color:var(--text-faint);}
+  .search-field:focus-within{border-color:var(--cyan);}
+
+  .select{
+    appearance:none; -webkit-appearance:none;
+    background:var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238c97b3'/%3E%3C/svg%3E") no-repeat right 12px center;
+    border:1px solid var(--line); color:var(--text); font-family:var(--font-ui);
+    font-size:0.88rem; padding:8px 30px 8px 12px; cursor:pointer;
+  }
+  .select:focus{outline:none; border-color:var(--cyan);}
+
+  .segmented{display:flex; border:1px solid var(--line);}
+  .seg{
+    background:none; border:none; border-right:1px solid var(--line); color:var(--text-dim);
+    font-family:var(--font-ui); font-size:0.88rem; padding:8px 14px; cursor:pointer;
+  }
+  .seg:last-child{border-right:none;}
+  .seg:hover:not(.active){color:var(--text);}
+  .seg.active{background:var(--cyan); color:#04121a; font-weight:600;}
+  .seg:focus-visible, .select:focus-visible, .icon-btn:focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+
+  .filters-extra{display:contents;}
+  .filter-toggle{
+    display:none; align-items:center; gap:8px; position:relative;
+    background:var(--panel); border:1px solid var(--line); color:var(--text-dim);
+    font-family:var(--font-ui); font-size:0.88rem; padding:8px 12px; cursor:pointer;
+  }
+  .filter-toggle:hover, .filter-toggle[aria-expanded="true"]{color:var(--cyan); border-color:var(--cyan);}
+  .filter-toggle:focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+  .filter-toggle.has-active::after{
+    content:''; position:absolute; top:-4px; right:-4px; width:9px; height:9px;
+    border-radius:50%; background:var(--cyan); box-shadow:0 0 6px var(--cyan);
+  }
+  .icon-btn{
+    background:var(--panel); border:1px solid var(--line); color:var(--text-dim);
+    width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .icon-btn:hover{color:var(--cyan); border-color:var(--cyan);}
+  .icon-btn.spinning svg{animation:spin 0.7s linear;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  main{flex:1 0 auto; width:100%; max-width:1400px; margin:0 auto; padding:0 24px 56px;}
+  .result-count{color:var(--text-faint); font-size:0.85rem; margin:16px 0 0;}
+  .result-count strong{font-family:var(--font-display); font-weight:600; color:var(--text-dim);}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:18px; margin-top:12px;}
+
+  .card-frame{
+    --cut:14px; clip-path:polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    background:var(--line); padding:1px; cursor:pointer; transition:background-color .18s ease;
+  }
+  .card-frame:hover, .card-frame:focus-visible{background:var(--cyan); outline:none;}
+  .card-frame:focus{outline:none;}
+  .card{
+    clip-path:polygon(13px 0, 100% 0, 100% calc(100% - 13px), calc(100% - 13px) 100%, 0 100%, 0 13px);
+    background:var(--card); height:100%; display:flex; flex-direction:column;
+  }
+  .card-image{position:relative; aspect-ratio:16/10; background:linear-gradient(135deg,#0c1424,#141f38); overflow:hidden;}
+  .card-image img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .placeholder{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;}
+  .placeholder span{font-family:var(--font-display); font-size:2rem; font-weight:700; color:var(--text-faint);}
+  .tag{
+    position:absolute; top:8px; right:8px; font-size:0.68rem; letter-spacing:0.03em;
+    padding:3px 8px; background:rgba(7,10,19,0.78); border:1px solid var(--amber); color:var(--amber);
+  }
+  .card-body{padding:12px 14px 14px; display:flex; flex-direction:column; gap:4px; flex:1;}
+  .card-name{margin:0; font-family:var(--font-display); font-weight:600; font-size:1.05rem; line-height:1.25;}
+  .card-maker{margin:0; color:var(--text-dim); font-size:0.83rem;}
+  .card-price-row{margin-top:auto; padding-top:10px; display:flex; align-items:flex-start; gap:8px;}
+  .dot{width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:6px;}
+  .dot-green{background:var(--green); box-shadow:0 0 6px var(--green);}
+  .dot-amber{background:var(--amber);}
+  .price-block{display:flex; flex-direction:column; gap:2px;}
+  .price{font-family:var(--font-display); font-weight:600; font-variant-numeric:tabular-nums; font-size:1rem;}
+  .price .unit{font-family:var(--font-ui); font-weight:400; font-size:0.72rem; color:var(--text-dim); margin-left:4px;}
+  .price.unavailable{font-family:var(--font-ui); font-weight:500; font-size:0.85rem; color:var(--text-dim);}
+  .terminal{font-size:0.74rem; color:var(--text-faint);}
+  .extra{color:var(--violet);}
+
+  .card-frame.skeleton{background:var(--line-soft); cursor:default; pointer-events:none;}
+  .card-frame.skeleton .card{aspect-ratio:16/11.2; position:relative; overflow:hidden;}
+  .card-frame.skeleton .card::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg, transparent, rgba(140,151,179,0.12), transparent);
+    transform:translateX(-100%); animation:shimmer 1.3s infinite;
+  }
+  @keyframes shimmer{to{transform:translateX(100%);}}
+
+  .empty{grid-column:1/-1; padding:56px 4px; color:var(--text-dim); max-width:420px;}
+  .empty strong{display:block; color:var(--text); font-family:var(--font-display); font-size:1.1rem; margin-bottom:8px;}
+  .empty p{margin:0 0 16px; line-height:1.5;}
+  .empty button{
+    background:var(--panel); border:1px solid var(--cyan); color:var(--cyan);
+    padding:9px 18px; cursor:pointer; font-family:var(--font-ui); font-size:0.9rem;
+  }
+  .empty button:hover{background:var(--cyan); color:#04121a;}
+
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(4,6,12,0.72); z-index:50;
+    display:flex; align-items:center; justify-content:center; padding:20px;
+    opacity:1; transition:opacity .15s ease;
+  }
+  .modal-backdrop.hidden{opacity:0; pointer-events:none;}
+  .modal-frame{
+    --cut:20px; clip-path:polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+    background:var(--cyan); padding:1px; width:100%; max-width:560px;
+    transform:translateY(0); transition:transform .15s ease;
+  }
+  .modal-backdrop.hidden .modal-frame{transform:translateY(8px);}
+  .modal{
+    clip-path:polygon(19px 0, 100% 0, 100% calc(100% - 19px), calc(100% - 19px) 100%, 0 100%, 0 19px);
+    background:var(--panel); max-height:85vh; overflow-y:auto; position:relative; padding:28px 26px 26px;
+  }
+  .modal::-webkit-scrollbar{width:8px;}
+  .modal::-webkit-scrollbar-thumb{background:var(--line);}
+  .modal-close{
+    position:absolute; top:12px; right:14px; z-index:1; width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(7,10,19,0.72); border:1px solid var(--line);
+    color:var(--text-dim); font-size:1rem; cursor:pointer; line-height:1;
+  }
+  .modal-close:hover, .modal-close:focus-visible{color:var(--text); border-color:var(--cyan); outline:none;}
+  .modal-image{aspect-ratio:16/9; overflow:hidden; margin:-28px -26px 18px; background:linear-gradient(135deg,#0c1424,#141f38);}
+  .modal-image img{width:100%; height:100%; object-fit:cover; display:block;}
+  .modal h2{font-family:var(--font-display); margin:0 0 8px; font-size:1.35rem; padding-right:20px;}
+  .modal-meta{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;}
+  .modal-meta span{font-size:0.76rem; color:var(--text-dim); border:1px solid var(--line); padding:3px 9px;}
+  .price-table{width:100%; border-collapse:collapse; font-size:0.9rem; margin-bottom:18px;}
+  .price-table th{text-align:left; color:var(--text-faint); font-weight:500; font-size:0.72rem; padding-bottom:6px; border-bottom:1px solid var(--line);}
+  .price-table td{padding:7px 0; border-bottom:1px solid var(--line-soft); font-variant-numeric:tabular-nums;}
+  .price-table tr:last-child td{border-bottom:none;}
+  .price-table th:last-child, .price-table td:last-child{text-align:right;}
+  .price-table td:last-child{font-family:var(--font-display); font-weight:600;}
+  .price-table tr.best td:last-child{color:var(--green);}
+  .price-table td.none{text-align:left; font-family:var(--font-ui); font-weight:400; color:var(--text-dim);}
+  .store-link{color:var(--cyan); text-decoration:none; font-size:0.9rem;}
+  .store-link:hover{text-decoration:underline;}
+
+  .footer{padding:26px 24px; text-align:center; color:var(--text-faint); font-size:0.8rem; border-top:1px solid var(--line-soft);}
+  .footer a{color:var(--text-dim);}
+
+  @media (max-width:640px){
+    .bar-top, .bar-controls, main{padding-left:16px; padding-right:16px;}
+    /* Mobil klebt nur die schlanke Suchleiste, nicht Kopf + alle Filter (sonst fehlt über die Hälfte des Displays). */
+    .topsticky{display:contents;}
+    .bar-controls{position:sticky; top:0; z-index:20;}
+    .search-field{flex:1 1 0; min-width:0;}
+    .filter-toggle{display:flex;}
+    .filters-extra{display:none; flex:1 1 100%; flex-wrap:wrap; gap:10px;}
+    .bar-controls.open .filters-extra{display:flex;}
+    .filters-extra .select, .filters-extra .segmented{flex:1 1 100%;}
+    .filters-extra .seg{flex:1;}
+    .filters-extra #sortSelect{flex:1 1 0;}
+    #statusText .stat-updated{display:none;}
+    .stat{border-left:none; padding:0 14px 0 0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topsticky">
+  <header class="bar bar-top">
+    <div class="brand">
+      <svg class="brand-mark" width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 2 L26 27 L16 21 L6 27 Z" fill="currentColor"/>
+        <path d="M16 21 L16 30" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <span class="brand-name">Star Citizen Schiffs-Showcase</span>
+    </div>
+    <div id="statusText">Verbindung zur Schiffsdatenbank wird hergestellt…</div>
+  </header>
+
+  <div class="bar bar-controls" id="controlsBar">
+    <label class="search-field">
+      <span class="prompt">&gt;</span>
+      <input id="search" type="search" placeholder="Schiff oder Hersteller" aria-label="Schiff oder Hersteller suchen" autocomplete="off">
+    </label>
+    <button id="filterToggle" class="filter-toggle" type="button" aria-expanded="false" aria-controls="filtersExtra">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      <span>Filter</span>
+    </button>
+    <div class="filters-extra" id="filtersExtra">
+    <select id="manufacturerFilter" class="select" aria-label="Hersteller filtern">
+      <option value="all">Alle Hersteller</option>
+    </select>
+    <div class="segmented" role="group" aria-label="Verfügbarkeit filtern">
+      <button type="button" class="seg active" data-value="all">Alle</button>
+      <button type="button" class="seg" data-value="ingame">Kaufbar</button>
+      <button type="button" class="seg" data-value="pledge">Nur Pledge</button>
+    </div>
+    <select id="sortSelect" class="select" aria-label="Sortierung">
+      <option value="name-asc">Name A–Z</option>
+      <option value="name-desc">Name Z–A</option>
+      <option value="price-asc">Preis aufsteigend</option>
+      <option value="price-desc">Preis absteigend</option>
+      <option value="manufacturer">Hersteller</option>
+    </select>
+    <button id="refreshBtn" class="icon-btn" type="button" aria-label="Daten neu laden" title="Daten neu laden">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+    </button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <p id="resultCount" class="result-count"></p>
+  <div id="grid" class="grid"></div>
+</main>
+
+<div id="modalBackdrop" class="modal-backdrop hidden">
+  <div class="modal-frame">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button id="modalClose" class="modal-close" type="button" aria-label="Schließen">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>Datenquelle: <a href="https://uexcorp.space" target="_blank" rel="noopener">UEX Corp</a> — community-gepflegt, nicht offiziell von Cloud Imperium Games.</p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  const state = { search: "", manufacturer: "all", availability: "all", sort: "name-asc" };
+  let ships = [];
+  let meta = {};
+  let firstLoad = true;
+  let retryTimer = null;
+  let failedAttempts = 0;
+
+  const el = {
+    grid: document.getElementById("grid"),
+    resultCount: document.getElementById("resultCount"),
+    search: document.getElementById("search"),
+    manufacturerFilter: document.getElementById("manufacturerFilter"),
+    sortSelect: document.getElementById("sortSelect"),
+    refreshBtn: document.getElementById("refreshBtn"),
+    statusText: document.getElementById("statusText"),
+    modalBackdrop: document.getElementById("modalBackdrop"),
+    modalBody: document.getElementById("modalBody"),
+    modalClose: document.getElementById("modalClose"),
+  };
+
+  function escapeHtml(str) {
+    const d = document.createElement("div");
+    d.textContent = str == null ? "" : String(str);
+    return d.innerHTML;
+  }
+
+  function formatAuec(n) {
+    return new Intl.NumberFormat("de-DE").format(Math.round(n));
+  }
+
+  function relativeTime(iso) {
+    if (!iso) return "unbekannt";
+    const diffMin = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    if (diffMin < 1) return "gerade eben";
+    if (diffMin < 60) return `vor ${diffMin} Min.`;
+    const h = Math.floor(diffMin / 60);
+    if (h < 24) return `vor ${h} Std.`;
+    return `vor ${Math.floor(h / 24)} Tg.`;
+  }
+
+  function debounce(fn, ms) {
+    let t;
+    return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+  }
+
+  async function loadShips(isRefresh) {
+    clearTimeout(retryTimer);
+    if (isRefresh) el.refreshBtn.classList.add("spinning");
+    if (firstLoad && failedAttempts === 0) {
+      el.statusText.textContent = "Verbindung zur Schiffsdatenbank wird hergestellt…";
+      showSkeleton();
+    }
+    try {
+      const res = await fetch("/api/ships", { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      // Hat sich serverseitig nichts geändert, nur die Statuszeile auffrischen
+      // (spart Flackern durch unnötiges Neuzeichnen aller Karten).
+      const unchanged = Boolean(data.last_updated) && data.last_updated === meta.last_updated;
+      ships = data.ships || [];
+      meta = data;
+      failedAttempts = 0;
+      firstLoad = false;
+      renderStatus();
+      if (!unchanged) {
+        populateManufacturerOptions();
+        render();
+      }
+    } catch (err) {
+      console.warn("Schiffsdaten konnten nicht geladen werden:", err);
+      if (ships.length === 0) {
+        // Noch kein Datenstand: Server startet evtl. gerade oder UEX war nicht erreichbar.
+        // Zuerst das Skeleton behalten (ein Kaltstart dauert meist nur Sekunden), ab dem
+        // 2. Fehlversuch die Meldung zeigen. Im Hintergrund wird mit wachsendem Abstand
+        // weiterprobiert (3, 6, 12, 24, max. 30 Sekunden).
+        failedAttempts += 1;
+        if (failedAttempts >= 2) {
+          el.statusText.textContent = "Datenquelle gerade nicht erreichbar";
+          showError();
+        }
+        retryTimer = setTimeout(() => loadShips(), Math.min(3000 * 2 ** (failedAttempts - 1), 30000));
+      }
+    } finally {
+      if (isRefresh) setTimeout(() => el.refreshBtn.classList.remove("spinning"), 400);
+    }
+  }
+
+  function renderStatus() {
+    const total = meta.total_ships ?? ships.length;
+    const ingame = meta.ingame_count ?? ships.filter(s => s.available_ingame).length;
+    let html =
+      `<span class="stat"><strong>${total}</strong>&nbsp;Schiffe</span>` +
+      `<span class="stat"><strong>${ingame}</strong>&nbsp;kaufbar</span>` +
+      `<span class="stat stat-updated">Aktualisiert ${relativeTime(meta.last_updated)}</span>`;
+    if (meta.stale) {
+      html += `<span class="stat stat-warn" title="Der letzte Abruf bei UEX ist fehlgeschlagen – angezeigt wird der letzte bekannte Stand.">⚠ Stand evtl. veraltet</span>`;
+    }
+    el.statusText.innerHTML = html;
+  }
+
+  function populateManufacturerOptions() {
+    const current = el.manufacturerFilter.value;
+    const list = [...new Set(ships.map(s => s.manufacturer))].sort((a, b) => a.localeCompare(b, "de"));
+    el.manufacturerFilter.innerHTML = '<option value="all">Alle Hersteller</option>' +
+      list.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join("");
+    if (list.includes(current)) el.manufacturerFilter.value = current;
+  }
+
+  function applyFilters() {
+    let list = ships;
+    const q = state.search.trim().toLowerCase();
+    if (q) {
+      list = list.filter(s =>
+        s.name.toLowerCase().includes(q) ||
+        s.name_full.toLowerCase().includes(q) ||
+        s.manufacturer.toLowerCase().includes(q));
+    }
+    if (state.manufacturer !== "all") list = list.filter(s => s.manufacturer === state.manufacturer);
+    if (state.availability === "ingame") list = list.filter(s => s.available_ingame);
+    if (state.availability === "pledge") list = list.filter(s => !s.available_ingame);
+
+    const hasPrice = (s) => s.cheapest_price != null;
+    list = [...list].sort((a, b) => {
+      switch (state.sort) {
+        case "name-desc": return b.name.localeCompare(a.name, "de");
+        case "manufacturer": return a.manufacturer.localeCompare(b.manufacturer, "de") || a.name.localeCompare(b.name, "de");
+        case "price-asc":
+          if (hasPrice(a) !== hasPrice(b)) return hasPrice(a) ? -1 : 1;
+          return (a.cheapest_price ?? 0) - (b.cheapest_price ?? 0);
+        case "price-desc":
+          if (hasPrice(a) !== hasPrice(b)) return hasPrice(a) ? -1 : 1;
+          return (b.cheapest_price ?? 0) - (a.cheapest_price ?? 0);
+        default: return a.name.localeCompare(b.name, "de");
+      }
+    });
+    return list;
+  }
+
+  function cardHtml(s) {
+    const initial = escapeHtml((s.name || "?").charAt(0).toUpperCase());
+    const img = s.image_url
+      ? `<img src="${escapeHtml(s.image_url)}" alt="${escapeHtml(s.name_full)}" loading="lazy" onerror="this.remove()">`
+      : "";
+    const tag = s.is_concept ? '<span class="tag">Concept</span>' : "";
+    const priceBlock = s.available_ingame
+      ? `<div class="price-block">
+           <span class="price">${formatAuec(s.cheapest_price)}<span class="unit">aUEC</span></span>
+           <span class="terminal">${escapeHtml(s.cheapest_terminal)}${s.extra_locations > 0 ? ` <span class="extra" title="Auch an ${s.extra_locations} weiteren Terminals kaufbar – Klick für alle Preise">+${s.extra_locations} weitere</span>` : ""}</span>
+         </div>`
+      : `<div class="price-block"><span class="price unavailable">Nicht im Spiel kaufbar</span><span class="terminal">Nur Pledge-Store</span></div>`;
+    return `
+      <div class="card-frame" data-id="${s.id}" tabindex="0" role="button" aria-label="${escapeHtml(s.name_full)} – Details anzeigen">
+        <div class="card">
+          <div class="card-image">
+            <div class="placeholder"><span>${initial}</span></div>
+            ${img}${tag}
+          </div>
+          <div class="card-body">
+            <h3 class="card-name">${escapeHtml(s.name)}</h3>
+            <p class="card-maker">${escapeHtml(s.manufacturer)}</p>
+            <div class="card-price-row">
+              <span class="dot ${s.available_ingame ? "dot-green" : "dot-amber"}"></span>
+              ${priceBlock}
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function render() {
+    const filtered = applyFilters();
+    el.resultCount.innerHTML = `<strong>${filtered.length}</strong> von <strong>${ships.length}</strong> Schiffen`;
+    updateFilterBadge();
+    if (filtered.length === 0) {
+      el.grid.innerHTML = `<div class="empty"><strong>Keine Schiffe gefunden</strong><p>Andere Suchbegriffe probieren oder Filter zurücksetzen.</p><button id="resetBtn" type="button">Filter zurücksetzen</button></div>`;
+      document.getElementById("resetBtn").addEventListener("click", resetFilters);
+      return;
+    }
+    el.grid.innerHTML = filtered.map(cardHtml).join("");
+  }
+
+  // Mobil sind die Filter eingeklappt: ein Punkt am Button zeigt, dass einer aktiv ist.
+  function updateFilterBadge() {
+    const active = state.manufacturer !== "all" || state.availability !== "all";
+    document.getElementById("filterToggle").classList.toggle("has-active", active);
+  }
+
+  function resetFilters() {
+    state.search = ""; state.manufacturer = "all"; state.availability = "all";
+    el.search.value = ""; el.manufacturerFilter.value = "all";
+    document.querySelectorAll(".seg").forEach(b => b.classList.toggle("active", b.dataset.value === "all"));
+    render();
+  }
+
+  function showSkeleton() {
+    el.grid.innerHTML = Array.from({ length: 10 }).map(() => `<div class="card-frame skeleton"><div class="card"></div></div>`).join("");
+    el.resultCount.textContent = "";
+  }
+
+  function showError() {
+    el.resultCount.textContent = "";
+    el.grid.innerHTML = `<div class="empty"><strong>Schiffsdaten gerade nicht erreichbar</strong><p>Die Datenquelle antwortet momentan nicht. Die Seite versucht es automatisch erneut.</p><button id="retryBtn" type="button">Jetzt erneut versuchen</button></div>`;
+    document.getElementById("retryBtn").addEventListener("click", () => loadShips(true));
+  }
+
+  function openModal(id) {
+    const s = ships.find(x => String(x.id) === String(id));
+    if (!s) return;
+    const rows = (s.all_prices && s.all_prices.length)
+      ? s.all_prices.map((p, i) => `<tr${i === 0 ? ' class="best"' : ""}><td>${escapeHtml(p.terminal)}</td><td>${formatAuec(p.price)} aUEC</td></tr>`).join("")
+      : `<tr><td colspan="2" class="none">Aktuell an keinem Terminal im Spiel kaufbar.</td></tr>`;
+    const metaTags = [
+      s.pad_type ? `<span>Pad ${escapeHtml(s.pad_type)}</span>` : "",
+      s.scu ? `<span>${s.scu} SCU</span>` : "",
+      s.crew ? `<span>Crew ${escapeHtml(s.crew)}</span>` : "",
+    ].filter(Boolean).join("");
+    el.modalBody.innerHTML = `
+      ${s.image_url ? `<div class="modal-image"><img src="${escapeHtml(s.image_url)}" alt="${escapeHtml(s.name_full)}"></div>` : ""}
+      <h2>${escapeHtml(s.name_full)}</h2>
+      <div class="modal-meta"><span>${escapeHtml(s.manufacturer)}</span>${metaTags}</div>
+      <table class="price-table"><thead><tr><th>Terminal</th><th>Preis</th></tr></thead><tbody>${rows}</tbody></table>
+      ${s.store_url ? `<a class="store-link" href="${escapeHtml(s.store_url)}" target="_blank" rel="noopener">Im Pledge-Store ansehen ↗</a>` : ""}
+    `;
+    el.modalBackdrop.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    el.modalBackdrop.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  el.grid.addEventListener("click", (e) => {
+    const card = e.target.closest(".card-frame");
+    if (card) openModal(card.dataset.id);
+  });
+  el.grid.addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card-frame")) {
+      e.preventDefault();
+      openModal(e.target.dataset.id);
+    }
+  });
+
+  el.search.addEventListener("input", debounce((e) => { state.search = e.target.value; render(); }, 150));
+  el.manufacturerFilter.addEventListener("change", (e) => { state.manufacturer = e.target.value; render(); });
+  el.sortSelect.addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+  document.querySelectorAll(".seg").forEach(btn => btn.addEventListener("click", () => {
+    document.querySelectorAll(".seg").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    state.availability = btn.dataset.value;
+    render();
+  }));
+  el.refreshBtn.addEventListener("click", () => loadShips(true));
+  document.getElementById("filterToggle").addEventListener("click", (e) => {
+    const open = document.getElementById("controlsBar").classList.toggle("open");
+    e.currentTarget.setAttribute("aria-expanded", String(open));
+  });
+  el.modalClose.addEventListener("click", closeModal);
+  el.modalBackdrop.addEventListener("click", (e) => { if (e.target === el.modalBackdrop) closeModal(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+  loadShips();
+  setInterval(() => loadShips(), 5 * 60 * 1000);
+  setInterval(() => { if (ships.length) renderStatus(); }, 60 * 1000);
+})();
+</script>
+</body>
+</html>

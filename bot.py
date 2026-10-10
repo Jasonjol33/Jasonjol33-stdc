@@ -1,0 +1,395 @@
+"""Discord-Bot: Live-Showcase aller Star-Citizen-Schiffe mit In-Game-Kaufpreisen (aUEC).
+
+Datenquelle: UEX Corp API (https://uexcorp.space) - ein von der Community
+betriebenes, nicht-offizielles Star-Citizen-Projekt.
+
+Ablauf:
+  1. Beim Start werden alle Schiffe + aktuelle In-Game-Preise geladen.
+  2. Pro Hersteller wird eine (oder bei Bedarf mehrere) Embed-Nachricht(en) im
+     konfigurierten Channel gepostet - bzw. bei einem Neustart wiederverwendet,
+     da die Nachrichten-IDs lokal gespeichert werden.
+  3. Ein Hintergrund-Task prüft alle X Minuten erneut die Preise (Standard: 60).
+     Bei Änderungen wird NUR die betroffene Hersteller-Nachricht bearbeitet und
+     im Kopf-Embed ein kurzes Änderungsprotokoll angezeigt - kein Spam, kein
+     kompletter Neuaufbau des Showcase.
+  4. Im selben Prozess läuft die Web-Seite (webapp.py): Sie zeigt denselben Datenstand mit
+     Bildern, Suche und Filtern und wird nach jedem UEX-Abruf mit den frischen Daten
+     versorgt - es gibt weiterhin nur einen Abruf. Abschaltbar mit WEB_ENABLED=false.
+
+Starten mit: python bot.py
+"""
+
+from __future__ import annotations
+
+import logging
+import sys
+from collections import defaultdict
+from datetime import datetime, timezone
+from typing import Dict, List
+
+import discord
+from discord.ext import commands, tasks
+
+from config import load_config
+from embeds import build_header_embed, build_list_pages, build_manufacturer_embeds, build_web_embed, format_auec
+from storage import load_last_prices, load_message_ids, save_last_prices, save_message_ids
+from uex_api import Ship, UexApiError, fetch_ships
+import webapp  # Web-Seite, läuft im selben Prozess wie der Bot
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+log = logging.getLogger("bot")
+
+config = load_config()
+
+
+class ShowcaseBot(commands.Bot):
+    async def setup_hook(self) -> None:
+        # Läuft genau einmal pro Prozessstart, nach dem Login und vor der Gateway-Verbindung:
+        # früher als on_ready und unabhängig davon, wie oft Discord die Verbindung neu aufbaut.
+        await ensure_web_server()
+
+
+# Wir brauchen keine privilegierten Intents (kein Message Content, keine
+# Member-Liste) - das hält die Einrichtung im Discord Developer Portal simpel.
+intents = discord.Intents.default()
+bot = ShowcaseBot(command_prefix="!sc-showcase-unused!", intents=intents)
+
+HEADER_KEY = "__header__"
+
+web_runner = None  # gesetzt, sobald die Web-Seite läuft; None = (noch) nicht gestartet
+
+
+def group_by_manufacturer(ships: Dict[int, Ship]) -> Dict[str, List[Ship]]:
+    groups: Dict[str, List[Ship]] = defaultdict(list)
+    for ship in ships.values():
+        groups[ship.manufacturer].append(ship)
+    return dict(sorted(groups.items(), key=lambda kv: kv[0].lower()))
+
+
+def compute_changes(ships: Dict[int, Ship], last_prices: Dict[str, float]) -> List[str]:
+    """Vergleicht die aktuellen Preise mit dem letzten gespeicherten Stand."""
+    changes = []
+    for ship in ships.values():
+        cheapest = ship.cheapest_price
+        key = str(ship.id)
+        old_price = last_prices.get(key)
+        new_price = cheapest.price_buy if cheapest else None
+
+        if old_price is None and new_price is not None:
+            changes.append(f"🆕 **{ship.name}** ist jetzt in-game kaufbar: {format_auec(new_price)} aUEC")
+        elif old_price is not None and new_price is None:
+            changes.append(f"❌ **{ship.name}** ist nicht mehr in-game kaufbar")
+        elif old_price is not None and new_price is not None and old_price != new_price:
+            arrow = "🔺" if new_price > old_price else "🔻"
+            changes.append(f"{arrow} **{ship.name}**: {format_auec(old_price)} → {format_auec(new_price)} aUEC")
+    return changes
+
+
+async def ensure_web_server() -> None:
+    """Startet die Web-Seite (einmalig) im selben Event-Loop wie der Bot.
+
+    Ein Fehler hier (z.B. Port belegt) darf den Bot nie stoppen: Der Discord-Showcase läuft
+    dann einfach ohne Web-Seite weiter. Mehrfachaufrufe sind harmlos.
+    """
+    global web_runner
+    if not config.web_enabled or web_runner is not None:
+        return
+    try:
+        web_runner = await webapp.start_server(port=config.web_port)
+    except Exception:
+        log.exception(
+            "Web-Seite konnte nicht gestartet werden (Port %d belegt?) - der Bot läuft ohne sie weiter.",
+            config.web_port,
+        )
+        return
+    log.info("Web-Seite läuft auf Port %d%s.", config.web_port, f" ({config.web_url})" if config.web_url else "")
+
+
+async def get_channel() -> discord.abc.Messageable:
+    channel = bot.get_channel(config.channel_id)
+    if channel is None:
+        channel = await bot.fetch_channel(config.channel_id)
+    return channel
+
+
+async def sync_manufacturer_message(
+    channel: discord.abc.Messageable,
+    key: str,
+    embeds: List[discord.Embed],
+    message_ids: Dict[str, int],
+) -> None:
+    """Postet neue Embeds oder bearbeitet vorhandene Nachrichten für eine Gruppe.
+
+    Manufacturer mit vielen Schiffen können auf mehrere Embeds/Nachrichten
+    aufgeteilt sein - dafür wird pro Chunk-Index ein eigener Storage-Key genutzt.
+    """
+    for idx, embed in enumerate(embeds):
+        storage_key = f"{key}::{idx}"
+        message_id = message_ids.get(storage_key)
+        edited = False
+        if message_id:
+            try:
+                msg = channel.get_partial_message(message_id)
+                await msg.edit(embed=embed)
+                edited = True
+            except discord.NotFound:
+                log.info("Nachricht für %s existiert nicht mehr, poste neu.", storage_key)
+            except discord.HTTPException as exc:
+                log.warning("Konnte Nachricht für %s nicht bearbeiten (%s), poste neu.", storage_key, exc)
+
+        if not edited:
+            new_msg = await channel.send(embed=embed)
+            message_ids[storage_key] = new_msg.id
+
+    # Überzählige alte Nachrichten entfernen, falls eine Gruppe jetzt weniger
+    # Chunks braucht als beim letzten Durchlauf (z.B. weil Schiffe entfernt wurden).
+    idx = len(embeds)
+    while True:
+        storage_key = f"{key}::{idx}"
+        old_id = message_ids.pop(storage_key, None)
+        if old_id is None:
+            break
+        try:
+            await channel.get_partial_message(old_id).delete()
+        except discord.HTTPException:
+            pass
+        idx += 1
+
+
+async def run_update_cycle(initial: bool = False) -> None:
+    log.info("Lade aktuelle Schiffsdaten von UEX Corp...")
+    try:
+        ships = await fetch_ships(
+            api_key=config.uex_api_key,
+            include_ground_vehicles=config.include_ground_vehicles,
+        )
+    except UexApiError as exc:
+        log.error("Fehler beim Laden der UEX-Daten: %s", exc)
+        webapp.publish_failure(str(exc))
+        return
+    except Exception:
+        log.exception("Unerwarteter Fehler beim Laden der UEX-Daten.")
+        webapp.publish_failure("Unerwarteter Fehler beim Abruf.")
+        return
+
+    if not ships:
+        log.warning("UEX hat 0 Schiffe zurückgegeben - überspringe diesen Zyklus sicherheitshalber.")
+        webapp.publish_failure("UEX lieferte 0 Schiffe.")
+        return
+
+    # Web-Seite sofort mit dem frischen Stand versorgen - bewusst VOR allem, was Discord
+    # betrifft: Die Seite soll auch dann aktuell sein, wenn das Posten im Channel scheitert.
+    webapp.publish_ships(ships)
+
+    last_prices = load_last_prices()
+    changes = [] if initial else compute_changes(ships, last_prices)
+
+    try:
+        channel = await get_channel()
+    except discord.HTTPException:
+        log.exception("Konnte den konfigurierten Channel (%s) nicht laden.", config.channel_id)
+        return
+
+    message_ids = load_message_ids()
+    groups = group_by_manufacturer(ships)
+    ingame_count = sum(1 for s in ships.values() if s.available_ingame)
+
+    header_embed = build_header_embed(
+        total_ships=len(ships),
+        ingame_count=ingame_count,
+        last_updated=datetime.now(timezone.utc),
+        changes=changes,
+        web_url=config.web_url if config.web_enabled else None,
+    )
+    await sync_manufacturer_message(channel, HEADER_KEY, [header_embed], message_ids)
+
+    for manufacturer, ships_in_group in groups.items():
+        manufacturer_embeds = build_manufacturer_embeds(manufacturer, ships_in_group)
+        await sync_manufacturer_message(channel, manufacturer, manufacturer_embeds, message_ids)
+
+    save_message_ids(message_ids)
+    save_last_prices({str(s.id): s.cheapest_price.price_buy for s in ships.values() if s.cheapest_price})
+
+    if changes:
+        log.info("%d Preisänderung(en) erkannt und im Showcase aktualisiert.", len(changes))
+    else:
+        log.info("Showcase geprüft - keine Änderungen seit dem letzten Durchlauf.")
+
+
+@tasks.loop(minutes=60)  # Startwert; wird in on_ready per Config überschrieben
+async def update_loop() -> None:
+    await run_update_cycle(initial=False)
+
+
+@bot.event
+async def on_ready() -> None:
+    log.info("Eingeloggt als %s (ID: %s)", bot.user, getattr(bot.user, "id", "?"))
+
+    try:
+        if config.guild_id:
+            guild_obj = discord.Object(id=config.guild_id)
+            bot.tree.copy_global_to(guild=guild_obj)
+            synced = await bot.tree.sync(guild=guild_obj)
+            log.info("%d Slash-Command(s) sofort für Server %s synchronisiert.", len(synced), config.guild_id)
+        else:
+            synced = await bot.tree.sync()
+            log.info(
+                "%d Slash-Command(s) global synchronisiert (kann bis zu ~1 Stunde dauern, "
+                "bis sie überall sichtbar sind; GUILD_ID in der .env setzen für sofortige Sichtbarkeit).",
+                len(synced),
+            )
+    except discord.HTTPException:
+        log.exception("Slash-Commands konnten nicht synchronisiert werden.")
+
+    if not update_loop.is_running():
+        update_loop.change_interval(minutes=config.update_interval_minutes)
+        await run_update_cycle(initial=True)
+        update_loop.start()
+        log.info("Update-Loop gestartet (alle %d Minuten).", config.update_interval_minutes)
+
+
+def _is_admin(interaction: discord.Interaction) -> bool:
+    if config.admin_role_id is None:
+        return True
+    member = interaction.user
+    if isinstance(member, discord.Member):
+        return any(role.id == config.admin_role_id for role in member.roles)
+    return False
+
+
+class ListPager(discord.ui.View):
+    """Vor/Zurück-Buttons für die /liste-Ergebnisse. Für alle im Channel bedienbar."""
+
+    def __init__(self, embeds: List[discord.Embed], timeout: float = 300.0) -> None:
+        super().__init__(timeout=timeout)
+        self.embeds = embeds
+        self.index = 0
+        self._update_buttons()
+
+    def _update_buttons(self) -> None:
+        self.previous_button.disabled = self.index == 0
+        self.next_button.disabled = self.index >= len(self.embeds) - 1
+
+    @discord.ui.button(label="◀ Zurück", style=discord.ButtonStyle.secondary)
+    async def previous_button(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
+        self.index = max(0, self.index - 1)
+        self._update_buttons()
+        await interaction.response.edit_message(embed=self.embeds[self.index], view=self)
+
+    @discord.ui.button(label="Weiter ▶", style=discord.ButtonStyle.secondary)
+    async def next_button(self, interaction: discord.Interaction, button: discord.ui.Button) -> None:
+        self.index = min(len(self.embeds) - 1, self.index + 1)
+        self._update_buttons()
+        await interaction.response.edit_message(embed=self.embeds[self.index], view=self)
+
+    async def on_timeout(self) -> None:
+        for child in self.children:
+            child.disabled = True
+
+
+@bot.tree.command(name="liste", description="Zeigt eine durchblätterbare Liste aller Star-Citizen-Schiffe mit In-Game-Preisen.")
+async def liste_command(interaction: discord.Interaction) -> None:
+    # Nicht ephemeral -> für alle im Channel sichtbar.
+    await interaction.response.defer(ephemeral=False)
+    try:
+        ships = await fetch_ships(
+            api_key=config.uex_api_key,
+            include_ground_vehicles=config.include_ground_vehicles,
+        )
+    except Exception:
+        await interaction.followup.send("Die UEX-API ist gerade nicht erreichbar. Bitte später erneut versuchen.")
+        return
+
+    pages = build_list_pages(list(ships.values()))
+    view = ListPager(pages) if len(pages) > 1 else None
+    await interaction.followup.send(embed=pages[0], view=view)
+
+
+@bot.tree.command(name="schiff", description="Zeigt den aktuellen In-Game-Kaufpreis eines Star-Citizen-Schiffs.")
+@discord.app_commands.describe(name="Name des Schiffs (oder ein Teil davon), z.B. 'Carrack' oder 'Hornet'")
+async def schiff_command(interaction: discord.Interaction, name: str) -> None:
+    # Nicht ephemeral -> Antwort ist für alle im Channel sichtbar, nicht nur für den Fragenden.
+    await interaction.response.defer(ephemeral=False)
+    try:
+        ships = await fetch_ships(
+            api_key=config.uex_api_key,
+            include_ground_vehicles=config.include_ground_vehicles,
+        )
+    except Exception:
+        await interaction.followup.send("Die UEX-API ist gerade nicht erreichbar. Bitte später erneut versuchen.")
+        return
+
+    matches = [s for s in ships.values() if name.lower() in s.name.lower()]
+    if not matches:
+        await interaction.followup.send(f"Kein Schiff gefunden, das zu „{name}“ passt.")
+        return
+
+    matches.sort(key=lambda s: len(s.name))
+    ship = matches[0]
+    cheapest = ship.cheapest_price
+
+    embed = discord.Embed(title=f"{ship.manufacturer} — {ship.name}", color=0x2E86FF)
+    if ship.image_url:
+        embed.set_thumbnail(url=ship.image_url)
+    if cheapest:
+        locations = sorted({p.terminal_name for p in ship.prices})
+        embed.add_field(name="Günstigster In-Game-Preis", value=f"{format_auec(cheapest.price_buy)} aUEC", inline=True)
+        embed.add_field(name="Ort", value=cheapest.terminal_name, inline=True)
+        weitere = [l for l in locations if l != cheapest.terminal_name]
+        if weitere:
+            embed.add_field(name="Weitere Verkaufsorte", value=", ".join(weitere), inline=False)
+    else:
+        tag = " (Concept-Schiff)" if ship.is_concept else ""
+        embed.add_field(name="In-Game-Preis", value=f"Nicht im Spiel kaufbar{tag} — nur als Pledge erhältlich.", inline=False)
+    if len(matches) > 1:
+        embed.set_footer(text=f"{len(matches) - 1} weitere Treffer für „{name}“ - für genauere Suche mehr vom Namen angeben.")
+
+    await interaction.followup.send(embed=embed)
+
+
+@bot.tree.command(name="web", description="Zeigt den Link zur Web-Seite mit allen Schiffen, Bildern, Suche und Filtern.")
+async def web_command(interaction: discord.Interaction) -> None:
+    if not config.web_enabled:
+        await interaction.response.send_message("Die Web-Seite ist auf diesem Bot abgeschaltet.", ephemeral=True)
+        return
+    if not config.web_url:
+        # Ohne öffentliche Adresse gibt es nichts, was wir verlinken könnten.
+        await interaction.response.send_message(
+            "Die Web-Seite läuft, aber es ist keine öffentliche Adresse hinterlegt. "
+            "Bitte `WEB_URL` in der Bot-Konfiguration setzen (z.B. `https://meine-app.fly.dev`).",
+            ephemeral=True,
+        )
+        return
+
+    # Öffentlich sichtbar, plus ein Link-Button zum direkten Öffnen.
+    view = discord.ui.View()
+    view.add_item(discord.ui.Button(label="Web-Seite öffnen", style=discord.ButtonStyle.link, url=config.web_url))
+    await interaction.response.send_message(embed=build_web_embed(config.web_url), view=view)
+
+
+@bot.tree.command(name="aktualisieren", description="Aktualisiert den Schiffs-Showcase sofort manuell.")
+async def refresh_command(interaction: discord.Interaction) -> None:
+    if not _is_admin(interaction):
+        # Die Ablehnung bleibt ephemeral (nur für dich sichtbar) - macht bei einer
+        # fehlenden Berechtigung mehr Sinn, als das öffentlich im Channel zu zeigen.
+        await interaction.response.send_message("Dafür fehlt dir die nötige Rolle.", ephemeral=True)
+        return
+    # Ab hier öffentlich sichtbar für alle im Channel.
+    await interaction.response.send_message("Aktualisiere den Showcase, einen Moment...")
+    await run_update_cycle(initial=False)
+    await interaction.followup.send("✅ Showcase wurde aktualisiert.")
+
+
+def main() -> None:
+    try:
+        bot.run(config.discord_token, log_handler=None)
+    except discord.LoginFailure:
+        log.error("Login fehlgeschlagen: Der DISCORD_TOKEN in der .env ist ungültig oder abgelaufen.")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()

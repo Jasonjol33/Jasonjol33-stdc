@@ -1,0 +1,244 @@
+"""Web-Showcase: die Schiffsliste als eigene Seite mit großen Bildern, Suche, Filtern
+und einem Detail-Fenster pro Schiff - als Ergänzung zum Discord-Showcase.
+
+Zwei Betriebsarten:
+
+1. Im Bot-Prozess (Normalfall, `python bot.py`): bot.py startet den Webserver im selben
+   Event-Loop und füttert ihn nach jedem erfolgreichen UEX-Abruf mit `publish_ships()`.
+   Es gibt dadurch weiterhin nur EINEN UEX-Abruf, und Discord und Web-Seite zeigen denselben
+   Stand. Die Seite hängt nicht von Discord ab: Selbst wenn das Posten im Channel scheitert,
+   ist der frische Stand schon auf der Seite.
+
+2. Eigenständig (`python webapp.py`): holt die Daten selbst von UEX. Praktisch, um die Seite
+   lokal anzusehen, ohne Discord-Token und ohne den Bot zu starten.
+
+Die Seite ist öffentlich und rein lesend; sie liefert nur static/index.html und die
+Schiffsdaten als JSON (/api/ships) aus.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import contextlib
+import json
+import logging
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Awaitable, Callable, Optional
+
+import aiohttp
+from aiohttp import web
+
+from config import WebSettings, load_web_settings
+from uex_api import Ship, UexApiError, fetch_ships
+
+log = logging.getLogger("webapp")
+
+STATIC_DIR = Path(__file__).parent / "static"
+
+
+def ship_to_dict(ship: Ship) -> dict:
+    cheapest = ship.cheapest_price
+    unique_terminals = sorted({p.terminal_name for p in ship.prices})
+    return {
+        "id": ship.id,
+        "name": ship.name,
+        "name_full": ship.name_full,
+        "manufacturer": ship.manufacturer,
+        "is_concept": ship.is_concept,
+        "available_ingame": ship.available_ingame,
+        "image_url": ship.image_url,
+        "store_url": ship.store_url,
+        "pad_type": ship.pad_type,
+        "scu": ship.scu,
+        "crew": ship.crew,
+        "cheapest_price": cheapest.price_buy if cheapest else None,
+        "cheapest_terminal": cheapest.terminal_name if cheapest else None,
+        "extra_locations": max(0, len(unique_terminals) - 1),
+        "all_prices": [
+            {"terminal": p.terminal_name, "price": p.price_buy}
+            for p in sorted(ship.prices, key=lambda p: p.price_buy)
+        ],
+    }
+
+
+class ShipCache:
+    """Hält den letzten guten Schiffsstand und die fertig serialisierte API-Antwort.
+
+    Die JSON-Antwort wird nur bei Änderungen neu gebaut, nicht pro Besucher-Anfrage: Die
+    Seite ist öffentlich und läuft im selben Prozess wie der Bot - ein Ansturm von
+    Anfragen soll möglichst wenig Rechenzeit kosten.
+    """
+
+    def __init__(self) -> None:
+        self.last_updated: Optional[datetime] = None
+        self.last_error: Optional[str] = None
+        self._ships: list[dict] = []
+        self._body: bytes = b""
+        self._rebuild()
+
+    @property
+    def has_data(self) -> bool:
+        return bool(self._ships)
+
+    @property
+    def body(self) -> bytes:
+        return self._body
+
+    def update(self, ships: dict[int, Ship]) -> None:
+        """Neuer, erfolgreich geladener Stand (hebt eine frühere Störungsmeldung auf)."""
+        self._ships = [ship_to_dict(s) for s in ships.values()]
+        self.last_updated = datetime.now(timezone.utc)
+        self.last_error = None
+        self._rebuild()
+
+    def mark_failed(self, reason: str) -> None:
+        """Letzter Abruf fehlgeschlagen: Der alte Stand bleibt sichtbar, die Seite warnt dezent."""
+        self.last_error = reason or "unbekannter Fehler"
+        self._rebuild()
+
+    def _rebuild(self) -> None:
+        payload = {
+            "last_updated": self.last_updated.isoformat() if self.last_updated else None,
+            # True = der letzte UEX-Abruf ist fehlgeschlagen, gezeigt wird der letzte gute Stand.
+            # Bewusst nur ein Flag: interne Fehlertexte gehören nicht an Besucher, nur ins Log.
+            "stale": self.last_error is not None,
+            "total_ships": len(self._ships),
+            "ingame_count": sum(1 for s in self._ships if s["available_ingame"]),
+            "ships": self._ships,
+        }
+        self._body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+
+cache = ShipCache()
+
+
+def publish_ships(ships: dict[int, Ship]) -> None:
+    """Vom Bot aufgerufen: frischer, erfolgreich geladener Stand für die Web-Seite."""
+    cache.update(ships)
+
+
+def publish_failure(reason: str) -> None:
+    """Vom Bot aufgerufen: der letzte UEX-Abruf ist fehlgeschlagen (alter Stand bleibt sichtbar)."""
+    cache.mark_failed(reason)
+
+
+routes = web.RouteTableDef()
+
+
+@routes.get("/")
+async def handle_index(request: web.Request) -> web.FileResponse:
+    return web.FileResponse(STATIC_DIR / "index.html")
+
+
+@routes.get("/api/ships")
+async def handle_ships(request: web.Request) -> web.Response:
+    # Solange noch gar kein Datenstand existiert (Start läuft noch oder UEX war bisher nicht
+    # erreichbar), ehrlich mit 503 antworten statt mit einer leeren "Alles ok"-Liste.
+    return web.Response(
+        body=cache.body,
+        status=200 if cache.has_data else 503,
+        content_type="application/json",
+        charset="utf-8",
+    )
+
+
+def create_app(background_task: Optional[Callable[[], Awaitable[None]]] = None) -> web.Application:
+    """Baut die Anwendung. `background_task` (nur im eigenständigen Betrieb) läuft mit ihr mit."""
+    app = web.Application()
+    app.add_routes(routes)
+
+    if background_task is not None:
+
+        async def _start(app: web.Application) -> None:
+            app["background_task"] = asyncio.create_task(background_task())
+
+        async def _stop(app: web.Application) -> None:
+            task = app.get("background_task")
+            if task:
+                task.cancel()
+                with contextlib.suppress(asyncio.CancelledError):
+                    await task
+
+        app.on_startup.append(_start)
+        app.on_cleanup.append(_stop)
+    return app
+
+
+async def start_server(port: int = 8080, host: str = "0.0.0.0") -> web.AppRunner:
+    """Startet den Webserver im bereits laufenden Event-Loop (Betrieb im Bot-Prozess).
+
+    Wirft eine Exception, wenn der Port nicht gebunden werden kann - der Aufrufer (bot.py)
+    fängt sie ab, damit ein Web-Problem den Discord-Bot nie stoppt.
+    """
+    runner = web.AppRunner(create_app(), access_log=None)  # kein Zugriffs-Log im Bot-Log
+    await runner.setup()
+    try:
+        await web.TCPSite(runner, host, port).start()
+    except BaseException:
+        await runner.cleanup()
+        raise
+    return runner
+
+
+# --------------------------------------------------------------------------------------
+# Eigenständiger Betrieb (python webapp.py): Daten selbst bei UEX abfragen
+# --------------------------------------------------------------------------------------
+
+
+async def refresh_from_uex(settings: WebSettings) -> None:
+    """Holt die Schiffsdaten selbst von UEX und legt sie in den Cache."""
+    try:
+        ships = await fetch_ships(
+            api_key=settings.uex_api_key,
+            include_ground_vehicles=settings.include_ground_vehicles,
+        )
+    except (UexApiError, aiohttp.ClientError, asyncio.TimeoutError) as exc:
+        # Erwartbar (UEX kurz down, Timeout, ...): Warnung genügt, kein Traceback.
+        reason = str(exc) or exc.__class__.__name__
+        log.warning("UEX-Abruf fehlgeschlagen, behalte bisherigen Stand: %s", reason)
+        cache.mark_failed(reason)
+        return
+    except Exception:  # wirklich unerwartet - Seite trotzdem am Leben halten
+        log.exception("Unerwarteter Fehler beim UEX-Abruf.")
+        cache.mark_failed("Unerwarteter Fehler beim Abruf.")
+        return
+
+    if not ships:
+        log.warning("UEX hat 0 Schiffe zurückgegeben - behalte den bisherigen Stand.")
+        cache.mark_failed("UEX lieferte 0 Schiffe.")
+        return
+
+    cache.update(ships)
+    log.info("Schiffsdaten aktualisiert: %d Schiffe geladen.", len(ships))
+
+
+async def standalone_refresh_loop(settings: WebSettings) -> None:
+    failures = 0
+    while True:
+        await refresh_from_uex(settings)
+        if cache.last_error:
+            # Nach einem Fehler nicht das volle Intervall warten (UEX hat gelegentlich kurze
+            # Downtimes), aber auch nicht hämmern: 1, 2, 4, 8 ... Minuten, höchstens das Intervall.
+            failures = min(failures + 1, 10)
+            delay = min(60 * 2 ** (failures - 1), settings.update_interval_minutes * 60)
+        else:
+            failures = 0
+            delay = settings.update_interval_minutes * 60
+        await asyncio.sleep(delay)
+
+
+def main() -> None:
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+    settings = load_web_settings()
+    app = create_app(background_task=lambda: standalone_refresh_loop(settings))
+    log.info(
+        "Starte Web-Showcase eigenständig (ohne Bot) auf http://localhost:%d - UEX-Abruf alle %d Minuten.",
+        settings.port,
+        settings.update_interval_minutes,
+    )
+    web.run_app(app, host="0.0.0.0", port=settings.port)
+
+
+if __name__ == "__main__":
+    main()
