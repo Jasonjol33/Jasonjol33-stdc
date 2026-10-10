@@ -1,15 +1,9 @@
-# Fly.io-Konfiguration für den Star-Citizen-Showcase-Bot (inklusive Web-Seite).
-#
-# WICHTIG: 'app' unten musst du auf deinen eigenen, weltweit eindeutigen
-# Fly.io-App-Namen ändern (z.B. beim ersten Deploy mit `fly launch` automatisch
-# gesetzt, oder manuell hier eintragen).
-#
-# Der Bot läuft als Hintergrund-Prozess und liefert nebenbei die Web-Seite aus
-# (siehe [http_service] unten). Nach dem Deploy ist sie unter https://<app-name>.fly.dev
-# erreichbar.
+# Fly.io config for the Star Citizen showcase bot (incl. web page).
+# The bot runs as a background process and serves the web page alongside it.
+# After deploy the page is reachable at https://jasonjol33-stdc.fly.dev
 
-app = "sc-showcase-bot"
-primary_region = "fra"  # Frankfurt - bei Bedarf auf eine andere Fly.io-Region ändern
+app = "jasonjol33-stdc"
+primary_region = "fra"
 
 [build]
 
@@ -19,16 +13,11 @@ primary_region = "fra"  # Frankfurt - bei Bedarf auf eine andere Fly.io-Region �
 
 [env]
   DATA_DIR = "/app/data"
-  PORT = "8080"  # Port der Web-Seite - muss zu internal_port unten passen
-  # Optional: öffentliche Adresse der Web-Seite. Wenn gesetzt, verlinkt das Kopf-Embed im
-  # Discord-Channel die Seite. Eigenen App-Namen einsetzen und die Raute entfernen:
-  # WEB_URL = "https://sc-showcase-bot.fly.dev"
+  PORT = "8080"
+  WEB_URL = "https://jasonjol33-stdc.fly.dev"
 
-# Öffentliche Web-Seite (die HTTPS-Weiterleitung übernimmt Fly).
-# WICHTIG: Der Bot muss dauerhaft laufen und darf nur auf EINER Maschine laufen (sonst
-# postet er doppelt). Deshalb darf Fly die Maschine weder bei fehlendem Web-Traffic
-# stoppen noch traffic-gesteuert starten. Diese beiden Werte nicht auf "true" stellen
-# und die App nicht hochskalieren.
+# IMPORTANT: the bot must run permanently and on ONE machine only
+# (otherwise it posts twice). Keep both values on false, do not scale up.
 [http_service]
   internal_port = 8080
   force_https = true
