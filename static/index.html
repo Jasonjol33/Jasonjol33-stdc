@@ -442,6 +442,13 @@
   .adv-in{height:42px; width:100%; border-radius:999px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); color:var(--text); padding:0 16px; font:inherit;}
   .adv-in.area{height:auto; border-radius:var(--r-md); padding:10px 14px; resize:vertical;}
   .adv-in:focus{outline:none; border-color:rgb(var(--hud-rgb) / .65); box-shadow:0 0 0 4px rgb(var(--hud-rgb) / .14);}
+  .wish{margin:8px 0 0; padding-left:22px; display:flex; flex-direction:column; gap:6px;}
+  .wish li{display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px;}
+  .wish .w-n{flex:1 1 140px; overflow-wrap:anywhere;}
+  .wish .w-p{color:var(--amber);}
+  .wish .w-c{color:var(--text-faint); font-size:.82rem;}
+  .wish .icon-btn{width:36px; height:36px;}
+  .wish .icon-btn[disabled]{opacity:.35; cursor:default;}
   .res{display:grid; grid-template-columns:150px 1fr; gap:16px; padding:14px; margin-bottom:10px; border-radius:var(--r-lg); border:1px solid var(--stroke); background:rgba(255,255,255,.04);}
   .res .c-img{position:relative; aspect-ratio:16/10; border-radius:12px; overflow:hidden; background:linear-gradient(135deg,#0a1626,#16385a); align-self:start;}
   .res .c-img img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
@@ -612,6 +619,10 @@
                 <option value="only">Nur Concepts</option>
               </select>
             </div>
+            <div class="field" id="roleField" hidden>
+              <label for="roleSelect">Rolle</label>
+              <select id="roleSelect" class="select"><option value="all">Alle Rollen</option></select>
+            </div>
             <div class="field">
               <span class="f-title">Akzentfarbe</span>
               <div class="swatches" id="swatches" role="group" aria-label="Akzentfarbe">
@@ -630,8 +641,9 @@
             </button>
             <button id="exportBtn" class="btn" type="button">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
-              Liste als CSV exportieren
+              Gefilterte Liste als CSV
             </button>
+            <button id="exportAllBtn" class="btn" type="button">Alle Schiffe als CSV</button>
             <button id="resetAllBtn" class="btn" type="button">Alle Filter zurücksetzen</button>
           </div>
           <p class="hint">
@@ -701,7 +713,7 @@
   const state = {
     search: "", manufacturer: "all", availability: "all", sort: "name-asc",
     view: LS.get("sc_view", "grid") === "list" ? "list" : "grid",
-    maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false,
+    maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false, role: "all",
   };
   const favs = new Set((LS.get("sc_favs", []) || []).map(String));
   let compare = [];
@@ -718,6 +730,7 @@
   let openId = null;
   let modalMode = null; // "ship" | "compare"
   let pendingShip = null;
+  let pendingAdvisor = false;
   let lastFocus = null;
 
   const el = {
@@ -892,6 +905,12 @@
         else if (s.role !== a.role) ex.add(`Rolle: ${s.role}`);
         else met.push(`Rolle ${s.role}`);
       }
+      const mw = Number(a.minWeapons) > 0 ? Number(a.minWeapons) : 0;
+      if (mw > 0) {
+        if (s.weapon_count == null) ex.add("Waffendaten unbekannt – nicht prüfbar");
+        else if (s.weapon_count < mw) ex.add(`Nur ${s.weapon_count} Waffenhalterungen`);
+        else met.push(`Mindestens ${mw} Waffenhalterungen (${s.weapon_count})`);
+      }
       if (!s.price_ok) miss.push("bestätigter Preis");
       if (!s.scu_known) miss.push("SCU");
       if (ex.size) excluded.push({ s, reasons: [...ex] }); else cand.push({ s, met, miss });
@@ -965,6 +984,16 @@
     if (p.has("pad")) state.pad = p.get("pad");
     if (["only", "hide"].includes(p.get("c"))) state.concept = p.get("c");
     if (p.get("fav") === "1") state.favOnly = true;
+    if (p.has("r")) state.role = p.get("r");
+    if (p.get("adv") === "1") {
+      pendingAdvisor = true;
+      const pick = (k, ok) => (p.has(k) && ok(p.get(k)) ? p.get(k) : null);
+      const b = pick("ab", (v) => Number(v) > 0), sc = pick("as", (v) => Number(v) > 0), w = pick("aw", (v) => Number(v) > 0);
+      if (b) adv.budget = b; if (sc) adv.minScu = sc; if (w) adv.minWeapons = w;
+      adv.crew = pick("ac", (v) => ["solo", "multi"].includes(v)) || "any";
+      adv.maker = p.get("am") || "all";
+      adv.priority = pick("ap", (v) => ["price", "cargo", "ppscu"].includes(v)) || "price";
+    }
     if (p.has("ship")) pendingShip = p.get("ship");
   }
   function writeHash() {
@@ -979,6 +1008,12 @@
     if (state.pad !== "all") p.set("pad", state.pad);
     if (state.concept !== "all") p.set("c", state.concept);
     if (state.favOnly) p.set("fav", "1");
+    if (state.role !== "all") p.set("r", state.role);
+    if (modalMode === "advisor") {
+      p.set("adv", "1");
+      [["ab", adv.budget], ["as", adv.minScu], ["aw", adv.minWeapons], ["ac", adv.crew !== "any" ? adv.crew : ""], ["am", adv.maker !== "all" ? adv.maker : ""], ["ap", adv.priority]]
+        .forEach(([k, v]) => { if (v !== "" && v != null) p.set(k, v); });
+    }
     if (openId && modalMode === "ship") p.set("ship", openId);
     const h = p.toString();
     try { history.replaceState(null, "", h ? "#" + h : location.pathname + location.search); } catch { /* z. B. file:// */ }
@@ -1030,6 +1065,7 @@
           const id = pendingShip; pendingShip = null;
           if (byId(id)) openShip(id); else { toast("Schiff nicht gefunden"); writeHash(); }
         }
+        if (pendingAdvisor) { pendingAdvisor = false; openAdvisor(); }
       }
     } catch (err) {
       if (seq !== loadSeq) return;
@@ -1066,6 +1102,9 @@
     compare = compare.filter((id) => byId(id));
     const pads = [...new Set(ships.map((s) => s.pad_type).filter(Boolean).map(String))].sort((a, b) => a.localeCompare(b, "de"));
     el.padSelect.innerHTML = '<option value="all">Alle Pads</option>' + pads.map((p) => `<option value="${esc(p)}">Pad ${esc(p)}</option>`).join("");
+    const roles = [...new Set(ships.map((s) => s.role).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
+    $("roleField").hidden = roles.length === 0;
+    $("roleSelect").innerHTML = '<option value="all">Alle Rollen</option>' + roles.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join("");
     el.priceRange.disabled = priceBounds.max <= priceBounds.min;
     el.scuRange.disabled = maxScu <= 0;
     syncControls();
@@ -1131,6 +1170,7 @@
       if (state.pad !== "all" && String(s.pad_type || "") !== state.pad) return false;
       if (state.concept === "only" && !s.is_concept) return false;
       if (state.concept === "hide" && s.is_concept) return false;
+      if (state.role !== "all" && s.role !== state.role) return false;
       if (state.favOnly && !favs.has(String(s.id))) return false;
       return true;
     });
@@ -1179,9 +1219,10 @@
   }
   function cardSpecs(s) {
     const items = specsHtml(s, false);
-    if (!items.length && !s.notes.length) return "";
+    const own = hangar[s.id] && hangar[s.id].owned ? '<span class="spec">✓ Im Hangar</span>' : "";
+    if (!items.length && !s.notes.length && !own) return "";
     const warn = s.notes.length ? `<span class="spec" title="${esc(s.notes.join("; "))}">⚠ Datenhinweis</span>` : "";
-    return `<div class="specs">${items.map(([v, l]) => `<span class="spec"><b>${esc(v)}</b>${l}</span>`).join("")}${warn}</div>`;
+    return `<div class="specs">${items.map(([v, l]) => `<span class="spec"><b>${esc(v)}</b>${l}</span>`).join("")}${warn}${own}</div>`;
   }
 
   function cardHtml(s) {
@@ -1299,6 +1340,7 @@
     if (state.concept === "only") out.push(["Nur Concepts", () => { state.concept = "all"; }]);
     if (state.concept === "hide") out.push(["Ohne Concepts", () => { state.concept = "all"; }]);
     if (state.favOnly) out.push(["Favoriten", () => { state.favOnly = false; }]);
+    if (state.role !== "all") out.push([`Rolle: ${state.role}`, () => { state.role = "all"; }]);
     return out;
   }
   let afActions = [];
@@ -1310,13 +1352,13 @@
       : "";
   }
   function updateAdvDot() {
-    const on = state.maxPrice != null || state.minScu > 0 || state.pad !== "all" || state.concept !== "all";
+    const on = state.maxPrice != null || state.minScu > 0 || state.pad !== "all" || state.concept !== "all" || state.role !== "all";
     el.advToggle.classList.toggle("has-active", on);
     $("filterToggle").classList.toggle("has-active", on || state.availability !== "all" || state.favOnly);
   }
 
   function resetFilters() {
-    Object.assign(state, { search: "", manufacturer: "all", availability: "all", maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false });
+    Object.assign(state, { search: "", manufacturer: "all", availability: "all", maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false, role: "all" });
     el.search.value = "";
     syncControls();
     render();
@@ -1358,6 +1400,7 @@
     el.padSelect.value = [...el.padSelect.options].some((o) => o.value === state.pad) ? state.pad : "all";
     if (el.padSelect.value === "all" && state.pad !== "all" && ships.length) state.pad = "all";
     el.conceptSelect.value = state.concept;
+    $("roleSelect").value = [...$("roleSelect").options].some((o) => o.value === state.role) ? state.role : "all";
     el.priceRange.value = priceToSlider(state.maxPrice);
     el.priceOut.textContent = state.maxPrice == null ? "Kein Limit" : `bis ¤ ${formatCompact(state.maxPrice)}`;
     el.scuRange.value = scuToSlider(state.minScu);
@@ -1551,7 +1594,7 @@
   }
 
   /* ───── Kaufberater ───── */
-  const adv = Object.assign({ budget: "", minScu: "", crew: "any", maker: "all", role: "all", priority: "price", sort: "fit", buyOnly: true, concepts: false }, LS.get("sc_advisor", {}));
+  const adv = Object.assign({ budget: "", minScu: "", minWeapons: "", crew: "any", maker: "all", role: "all", priority: "price", sort: "fit", buyOnly: true, concepts: false }, LS.get("sc_advisor", {}));
   function advisorShell() {
     const makers = [...new Set(ships.map((s) => s.manufacturer))].sort((a, b) => a.localeCompare(b, "de"));
     const roles = [...new Set(ships.map((s) => s.role).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
@@ -1559,11 +1602,13 @@
     return `<div class="modal-spacer"></div><div class="modal-content">
       <h2 id="modalTitle">Kaufberater</h2>
       <p class="modal-meta">Bewertet werden nur bestätigte In-Game-Preise (aUEC) und tatsächlich gelieferte Datenfelder. Fehlende Werte werden nicht geraten.</p>
+      <div class="modal-actions"><button id="advLink" class="btn" type="button">Link zu dieser Auswahl kopieren</button></div>
       <div class="adv-form">
         <div class="field"><label for="advBudget">Maximales Budget (aUEC)</label><input id="advBudget" class="adv-in" type="number" min="0" step="1000" inputmode="numeric" value="${esc(adv.budget)}"></div>
         <div class="field"><label for="advScu">Mindest-Fracht (SCU)</label><input id="advScu" class="adv-in" type="number" min="0" step="1" inputmode="numeric" value="${esc(adv.minScu)}"></div>
         <div class="field"><label for="advCrew">Spielweise</label><select id="advCrew" class="select">${opt("any", "Egal", adv.crew)}${opt("solo", "Solo", adv.crew)}${opt("multi", "Mehrspieler-Crew", adv.crew)}</select></div>
         <div class="field"><label for="advMaker">Hersteller</label><select id="advMaker" class="select">${opt("all", "Alle", adv.maker)}${makers.map((m) => opt(m, m, adv.maker)).join("")}</select></div>
+        ${ships.some((s) => s.weapon_count != null) ? `<div class="field"><label for="advWpn">Kampf: Mindest-Waffenhalterungen</label><input id="advWpn" class="adv-in" type="number" min="0" step="1" inputmode="numeric" value="${esc(adv.minWeapons)}"></div>` : ""}
         ${roles.length ? `<div class="field"><label for="advRole">Einsatzzweck / Rolle</label><select id="advRole" class="select">${opt("all", "Beliebig", adv.role)}${roles.map((m) => opt(m, m, adv.role)).join("")}</select></div>` : ""}
         <div class="field"><label for="advPrio">Priorität</label><select id="advPrio" class="select">${opt("price", "Niedriger Preis", adv.priority)}${opt("cargo", "Viel Fracht", adv.priority)}${opt("ppscu", "Günstiger Preis pro SCU", adv.priority)}</select></div>
         <div class="field"><label for="advSort">Sortierung</label><select id="advSort" class="select">${opt("fit", "Eignung", adv.sort)}${opt("price", "Preis", adv.sort)}${opt("scu", "Fracht (SCU)", adv.sort)}</select></div>
@@ -1574,11 +1619,11 @@
   }
   function readAdvisor() {
     adv.budget = $("advBudget").value; adv.minScu = $("advScu").value; adv.crew = $("advCrew").value; adv.maker = $("advMaker").value;
-    adv.role = $("advRole") ? $("advRole").value : "all"; adv.priority = $("advPrio").value; adv.sort = $("advSort").value;
+    adv.minWeapons = $("advWpn") ? $("advWpn").value : ""; adv.role = $("advRole") ? $("advRole").value : "all"; adv.priority = $("advPrio").value; adv.sort = $("advSort").value;
     adv.buyOnly = $("advBuy").checked; adv.concepts = $("advConc").checked;
     LS.set("sc_advisor", adv);
   }
-  const onAdvInput = debounce(() => { if (modalMode === "advisor" && $("advBudget")) { readAdvisor(); renderAdvisorResults(); } }, 120);
+  const onAdvInput = debounce(() => { if (modalMode === "advisor" && $("advBudget")) { readAdvisor(); renderAdvisorResults(); writeHash(); } }, 120);
   function resCard(r) {
     const s = r.s;
     const budget = Number(adv.budget) > 0 ? Number(adv.budget) : null;
@@ -1595,13 +1640,28 @@
         <div class="modal-actions"><button type="button" class="btn" data-adv-open="${esc(s.id)}">Details</button><button type="button" class="btn" data-adv-cmp="${esc(s.id)}" aria-pressed="${compare.includes(s.id)}">${compare.includes(s.id) ? "Aus Vergleich entfernen" : "Zum Vergleich"}</button></div>
       </div></article>`;
   }
+  let wishOrder = LS.get("sc_wishorder", []); if (!Array.isArray(wishOrder)) wishOrder = [];
+  function wishSorted(list) { const ix = (s) => { const i = wishOrder.indexOf(s.id); return i < 0 ? 1e9 : i; }; return [...list].sort((a, b) => ix(a) - ix(b)); }
+  function wishMove(id, d) {
+    const ids = wishSorted([...favs].map(byId).filter(Boolean).filter((s) => !(hangar[s.id] && hangar[s.id].owned))).map((s) => s.id);
+    const i = ids.indexOf(id), j = i + d;
+    if (i < 0 || j < 0 || j >= ids.length) return;
+    [ids[i], ids[j]] = [ids[j], ids[i]]; wishOrder = ids; LS.set("sc_wishorder", ids); renderAdvisorResults();
+  }
   function wishlistHtml() {
-    const list = [...favs].map(byId).filter(Boolean).filter((s) => !(hangar[s.id] && hangar[s.id].owned));
+    const list = wishSorted([...favs].map(byId).filter(Boolean).filter((s) => !(hangar[s.id] && hangar[s.id].owned)));
     const priced = list.filter((s) => s.price_ok);
     const sum = priced.reduce((t, s) => t + s.cheapest_price, 0), missing = list.length - priced.length;
     const budget = Number(adv.budget) > 0 ? Number(adv.budget) : null;
+    let run = 0;
+    const rows = list.map((s, i) => {
+      if (s.price_ok) run += s.cheapest_price;
+      return `<li><span class="w-n">${esc(s.name)}</span><span class="w-p">${s.price_ok ? `¤ ${formatAuec(s.cheapest_price)}` : "kein bestätigter Preis"}</span><span class="w-c">kumuliert ¤ ${formatAuec(run)}</span>
+        <button type="button" class="icon-btn" data-wish="${esc(s.id)}" data-d="-1" aria-label="${esc(s.name)} nach oben"${i === 0 ? " disabled" : ""}>↑</button>
+        <button type="button" class="icon-btn" data-wish="${esc(s.id)}" data-d="1" aria-label="${esc(s.name)} nach unten"${i === list.length - 1 ? " disabled" : ""}>↓</button></li>`;
+    }).join("");
     return `<section class="sec"><h3 class="section-title">Wunschliste <small>Favoriten ohne „gekauft“ · nur lokal im Browser</small></h3>
-      <p>${list.length} Schiff(e) · Summe bestätigter Preise: <b>¤ ${formatAuec(sum)}</b>${missing ? ` (unvollständig: ${missing} ohne bestätigten Preis)` : ""}${budget != null ? ` · Budget-Differenz: <b>${budget - sum < 0 ? "−" : "+"}¤ ${formatAuec(Math.abs(budget - sum))}</b>` : ""}</p></section>`;
+      <p>${list.length} Schiff(e) · Summe bestätigter Preise: <b>¤ ${formatAuec(sum)}</b>${missing ? ` (unvollständig: ${missing} ohne bestätigten Preis)` : ""}${budget != null ? ` · Budget-Differenz: <b>${budget - sum < 0 ? "−" : "+"}¤ ${formatAuec(Math.abs(budget - sum))}</b>` : ""}</p>${list.length ? `<ol class="wish">${rows}</ol><p class="note">Reihenfolge = geplante Kaufreihenfolge. „Kumuliert“ zählt nur bestätigte Preise.</p>` : ""}</section>`;
   }
   function renderAdvisorResults() {
     const box = $("advResults");
@@ -1648,11 +1708,12 @@
     if (/^[=+\-@\t\r]/.test(t)) t = "'" + t; // Formelinjektion verhindern
     return `"${t.replace(/"/g, '""')}"`;
   }
-  function exportCsv() {
+  function exportCsv(all) {
+    const rows = all === true ? ships : filtered;
     const cols = ["Name", "Hersteller", "Kaufbar", "Günstigster Preis (aUEC)", "Terminal", "SCU", "Crew", "Pad", "Concept", "Pledge-Store",
       "Anzahl Terminals", "Terminals mit Bestpreis", "Preis pro SCU (aUEC)", "Rolle", "Länge (m)", "Masse (kg)", "Max. Geschwindigkeit (m/s)", "Datenhinweise", "Datenstand"];
     const stamp = metaDate();
-    const lines = [cols.map(csvCell).join(";")].concat(filtered.map((s) => [
+    const lines = [cols.map(csvCell).join(";")].concat(rows.map((s) => [
       s.name_full || s.name, s.manufacturer, s.available_ingame ? "ja" : "nein", s.price_ok ? Math.round(s.cheapest_price) : null,
       s.cheapest_terminal, s.scu_known ? s.scu : null, s.crew, s.pad_type, s.is_concept ? "ja" : "nein", s.store_url,
       s.all_prices.length || null, s.best_terminals.join(" / "), ppScu(s) != null ? Math.round(ppScu(s)) : null, s.role, s.length, s.mass, s.max_speed,
@@ -1663,7 +1724,7 @@
     a.href = URL.createObjectURL(blob); a.download = "star-citizen-schiffe.csv";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
-    toast(`${filtered.length} Schiffe exportiert`);
+    toast(`${rows.length} Schiffe exportiert`);
   }
 
   /* ───── Ereignisse ───── */
@@ -1735,10 +1796,12 @@
   });
   const renderSoon = debounce(render, 80);
   el.padSelect.addEventListener("change", (e) => { state.pad = e.target.value; render(); });
+  $("roleSelect").addEventListener("change", (e) => { state.role = e.target.value; render(); });
   el.conceptSelect.addEventListener("change", (e) => { state.concept = e.target.value; render(); });
   $("swatches").addEventListener("click", (e) => { const b = e.target.closest(".swatch"); if (b) applyAccent(b.dataset.accent); });
   $("resetAllBtn").addEventListener("click", resetFilters);
-  $("exportBtn").addEventListener("click", exportCsv);
+  $("exportBtn").addEventListener("click", () => exportCsv(false));
+  $("exportAllBtn").addEventListener("click", () => exportCsv(true));
   $("copyLinkBtn").addEventListener("click", async () => { writeHash(); toast((await copyText(shareUrl())) ? "Link kopiert" : "Kopieren nicht möglich"); });
   $("randomBtn").addEventListener("click", () => {
     const pool = filtered.length ? filtered : ships;
@@ -1781,6 +1844,9 @@
   el.modalBody.addEventListener("click", (e) => {
     const o = e.target.closest("[data-adv-open]");
     if (o) { openShip(o.dataset.advOpen); return; }
+    const w = e.target.closest("[data-wish]");
+    if (w) { wishMove(w.dataset.wish, Number(w.dataset.d)); return; }
+    if (e.target.closest("#advLink")) { writeHash(); copyText(shareUrl()).then((ok) => toast(ok ? "Link kopiert" : "Kopieren nicht möglich")); return; }
     const c = e.target.closest("[data-adv-cmp]");
     if (c) { toggleCompare(c.dataset.advCmp); renderAdvisorResults(); }
   });
