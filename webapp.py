@@ -54,6 +54,7 @@ def ship_to_dict(ship: Ship) -> dict:
         "pad_type": ship.pad_type,
         "scu": ship.scu,
         "crew": ship.crew,
+        "roles": ship.roles,
         "cheapest_price": cheapest.price_buy if cheapest else None,
         "cheapest_terminal": cheapest.terminal_name if cheapest else None,
         "extra_locations": max(0, len(unique_terminals) - 1),

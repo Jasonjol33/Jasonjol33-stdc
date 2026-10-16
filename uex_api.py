@@ -30,6 +30,10 @@ USER_AGENT = "StarCitizenShowcaseBot/1.0 (Discord-Showcase-Bot; siehe README)"
 log = logging.getLogger("uex_api")
 
 
+# Flags, die keine Einsatzrolle beschreiben
+_NOT_ROLES = {"spaceship", "concept", "ground_vehicle", "addon", "showdown_winner"}
+
+
 class UexApiError(RuntimeError):
     """Wird ausgelöst, wenn die UEX-API einen Fehler zurückgibt oder nicht erreichbar ist."""
 
@@ -53,6 +57,8 @@ class Ship:
     image_url: Optional[str]
     store_url: Optional[str]
     prices: List[PriceEntry] = field(default_factory=list)
+    image_url_alt: Optional[str] = None  # Ersatzbild (z.B. von RSI), falls das erste nicht lädt
+    roles: List[str] = field(default_factory=list)  # UEX-Rollen-Flags (is_cargo, is_mining, ...) für den Kaufberater
 
     @property
     def cheapest_price(self) -> Optional[PriceEntry]:
@@ -104,6 +110,7 @@ def parse_ships(
             crew=v.get("crew") or "",
             image_url=v.get("url_photo") or None,
             store_url=v.get("url_store") or None,
+            roles=sorted(k[3:] for k, val in v.items() if k.startswith("is_") and val and k[3:] not in _NOT_ROLES),
         )
 
     skipped_no_match = 0

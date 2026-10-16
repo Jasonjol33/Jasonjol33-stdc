@@ -103,7 +103,7 @@ nur für die Person, die den Befehl ausgeführt hat.
   ihrem aktuellen In-Game-Preis (15 pro Seite, mit "Zurück/Weiter"-Buttons).
 - **`/schiff <name>`** – zeigt den aktuellen günstigsten In-Game-Preis und
   Kauf-Ort für ein einzelnes Schiff (z.B. `/schiff Carrack`).
-- **`/web`** – postet den Link zur Web-Seite (Bilder, Suche, Filter) samt "Öffnen"-Button. Braucht `WEB_URL` in der `.env`; ohne diese Adresse (oder mit `WEB_ENABLED=false`) antwortet der Bot nur privat mit einem Hinweis.
+- **`/web`** – postet den Link zur Web-Seite (Bilder, Suche, Filter) samt "Öffnen"-Button. Die Adresse kommt aus `WEB_URL` (auf Fly.io automatisch aus dem App-Namen abgeleitet); ohne diese Adresse (oder mit `WEB_ENABLED=false`) antwortet der Bot nur privat mit einem Hinweis.
 - **`/aktualisieren`** – erzwingt eine sofortige Aktualisierung, statt auf den
   nächsten automatischen Check zu warten. Kann optional über `ADMIN_ROLE_ID`
   in der `.env` auf eine bestimmte Rolle beschränkt werden (die Ablehnung bei
@@ -152,6 +152,24 @@ zeigt – nur mit deutlich mehr Platz als ein Discord-Embed:
 | `WEB_ENABLED` | `true` (Standard) oder `false`: Web-Seite zusammen mit dem Bot starten oder nicht |
 | `PORT` | Port der Web-Seite, Standard `8080` (auf Fly.io identisch zu `internal_port` in der `fly.toml`) |
 | `WEB_URL` | Öffentliche Adresse, z.B. `https://meine-app.fly.dev`. Wenn gesetzt, verlinkt das Kopf-Embed im Channel die Seite |
+| `RSI_IMAGES` | `missing` (Standard), `all` oder `off`: Schiffsbilder von der offiziellen RSI-Seite ergänzen (siehe unten) |
+
+### Schiffsbilder von der RSI-Seite
+
+Die Bilder kommen standardmäßig von UEX. Zusätzlich liest der Bot zu jedem Schiff die Pledge-Store-Seite
+auf `robertsspaceindustries.com` (die Adresse liefert UEX) und übernimmt deren Vorschaubild (`og:image`).
+
+- `RSI_IMAGES=missing` (Standard): Lücken werden aufgefüllt; bei vorhandenem UEX-Bild springt das
+  RSI-Bild ein, falls es nicht lädt.
+- `RSI_IMAGES=all`: das RSI-Bild hat Vorrang.
+- `RSI_IMAGES=off`: nur UEX-Bilder, es wird nichts bei RSI abgerufen.
+
+Rücksicht auf RSI: Es gibt keine offizielle Bild-API, deshalb wird nur streng nacheinander mit Pause und
+höchstens 40 Seiten pro Update-Zyklus abgerufen, jede Seite nur einmal (Ergebnis liegt in
+`data/rsi_images.json`). Bei einer Blockade (HTTP 403/429) bricht der Bot sofort ab. Die Bilder lädt der
+Browser der Besucher direkt von RSI. Fehlt ein Bild, bleibt alles wie vorher. Die Seite nennt Cloud Imperium
+Games im Fußbereich als Urheber; die Nutzungsbedingungen von CIG für Fan-Projekte gelten für dich.
+Ob es klappt, siehst du im Log: `RSI-Bilder: ... Bilder gefunden`.
 
 ## Hosting auf Fly.io
 

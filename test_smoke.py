@@ -203,6 +203,68 @@ def main() -> int:
     web_embed = build_web_embed("https://beispiel.fly.dev")
     check("/web-Embed enthält den Link zur Web-Seite", "https://beispiel.fly.dev" in (web_embed.description or ""))
 
+    # --- 9) RSI-Bilder (rsi_images.py) -----------------------------------------------
+    import rsi_images
+
+    page = ('<head><meta property="og:title" content="X">'
+            '<meta property="og:image" content="https://media.robertsspaceindustries.com/abc/carrack.jpg"></head>')
+    check("RSI: og:image wird aus den Meta-Tags gelesen",
+          rsi_images.extract_image_url(page, "https://robertsspaceindustries.com/pledge/ships/carrack/carrack")
+          == "https://media.robertsspaceindustries.com/abc/carrack.jpg")
+    check("RSI: relatives og:image wird zu einer vollen RSI-Adresse",
+          rsi_images.extract_image_url('<meta content="/media/x.jpg" property="og:image">',
+                                       "https://robertsspaceindustries.com/pledge/ships/a/b")
+          == "https://robertsspaceindustries.com/media/x.jpg")
+    check("RSI: Bilder von fremden Hosts werden verworfen",
+          rsi_images.extract_image_url('<meta property="og:image" content="https://boese.example/x.jpg">',
+                                       "https://robertsspaceindustries.com/a") is None)
+    check("RSI: Seite ohne og:image liefert None", rsi_images.extract_image_url("<head></head>", "https://robertsspaceindustries.com/a") is None)
+    check("RSI: nur https auf robertsspaceindustries.com ist erlaubt",
+          rsi_images.is_rsi_url("https://media.robertsspaceindustries.com/a.jpg")
+          and not rsi_images.is_rsi_url("http://robertsspaceindustries.com/a")
+          and not rsi_images.is_rsi_url("https://robertsspaceindustries.com.evil.example/a")
+          and not rsi_images.is_rsi_url(None))
+
+    carrack_url = ships[39].store_url
+    fake_cache = {
+        carrack_url: {"image": "https://media.robertsspaceindustries.com/abc/carrack.jpg", "checked": "2026-01-01T00:00:00+00:00"},
+    }
+    rsi_images.load_rsi_images = lambda: fake_cache
+    ships_missing = parse_ships(VEHICLES_SAMPLE, PRICES_SAMPLE)
+    uex_before = ships_missing[39].image_url
+    rsi_images.apply_cached(ships_missing, "missing")
+    check("RSI missing: vorhandenes UEX-Bild bleibt, RSI wird Ersatzbild",
+          ships_missing[39].image_url == uex_before and ships_missing[39].image_url_alt == fake_cache[carrack_url]["image"])
+    ships_missing[39].image_url = None
+    ships_missing[39].image_url_alt = None
+    rsi_images.apply_cached(ships_missing, "missing")
+    check("RSI missing: fehlendes UEX-Bild wird durch das RSI-Bild gefüllt",
+          ships_missing[39].image_url == fake_cache[carrack_url]["image"])
+    ships_all = parse_ships(VEHICLES_SAMPLE, PRICES_SAMPLE)
+    rsi_images.apply_cached(ships_all, "all")
+    rsi_images.apply_cached(ships_all, "all")  # zweiter Aufruf darf nichts verfälschen
+    check("RSI all: RSI-Bild hat Vorrang, UEX-Bild wird Ersatz (auch nach doppeltem Aufruf)",
+          ships_all[39].image_url == fake_cache[carrack_url]["image"] and ships_all[39].image_url_alt == uex_before)
+    ships_off = parse_ships(VEHICLES_SAMPLE, PRICES_SAMPLE)
+    rsi_images.apply_cached(ships_off, "off")
+    check("RSI off: nichts wird verändert", ships_off[39].image_url == uex_before and ships_off[39].image_url_alt is None)
+    generic = "https://media.robertsspaceindustries.com/logo.png"
+    fake_cache.clear()
+    fake_cache.update({f"https://robertsspaceindustries.com/pledge/ships/s{i}": {"image": generic, "checked": "x"} for i in range(4)})
+    fake_cache[ships[39].store_url] = {"image": generic, "checked": "x"}
+    ships_generic = parse_ships(VEHICLES_SAMPLE, PRICES_SAMPLE)
+    ships_generic[39].image_url = None
+    rsi_images.apply_cached(ships_generic, "missing")
+    check("RSI: ein Bild, das bei vielen Schiffen identisch ist (Logo), wird nicht verwendet", ships_generic[39].image_url is None)
+    check("Web-API liefert image_url_alt mit", "image_url_alt" in webapp.ship_to_dict(ships_missing[39]))
+    os.environ.setdefault("DISCORD_TOKEN", "test-token")  # nur damit load_config() im Test nicht abbricht
+    os.environ.setdefault("CHANNEL_ID", "1")
+    os.environ["RSI_IMAGES"] = "aus"
+    check("Config: RSI_IMAGES mit unbekanntem Wert -> missing", load_config().rsi_images_mode == "missing")
+    os.environ["RSI_IMAGES"] = "off"
+    check("Config: RSI_IMAGES=off", load_config().rsi_images_mode == "off")
+    os.environ.pop("RSI_IMAGES", None)
+
     old_env = {k: os.environ.get(k) for k in ("WEB_ENABLED", "PORT", "WEB_URL")}
     try:
         os.environ.update({"WEB_ENABLED": "false", "PORT": "9090", "WEB_URL": "meine-app.fly.dev/"})

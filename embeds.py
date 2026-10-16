@@ -122,13 +122,14 @@ def build_header_embed(
 
 
 def build_web_embed(web_url: str) -> discord.Embed:
-    """Embed für /web: verweist auf die Web-Seite mit Bildern, Suche und Filtern."""
+    """Embed für /web: klickbarer Link zur Web-Seite mit Bildern, Suche und Filtern."""
     embed = discord.Embed(
-        title="🌐 Star Citizen Schiffs-Showcase im Browser",
+        title="🌐 Star Citizen Schiffs-Showcase",
+        url=web_url,  # der Titel ist selbst der Link
         description=(
-            f"Alle Schiffe mit **Bildern**, **Suche** und **Filtern** - "
-            f"mit denselben aktuellen In-Game-Preisen wie hier im Channel.\n\n"
-            f"👉 [{web_url}]({web_url})"
+            f"[Star Citizen Schiffs-Showcase]({web_url})\n\n"
+            "Alle Schiffe mit **Bildern**, **Suche** und **Filtern** - "
+            "mit denselben aktuellen In-Game-Preisen wie hier im Channel."
         ),
         color=EMBED_COLOR,
     )

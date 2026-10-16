@@ -25,6 +25,8 @@ class Config:
     web_enabled: bool = True
     web_port: int = 8080
     web_url: Optional[str] = None
+    # Schiffsbilder von der offiziellen RSI-Seite: "missing" (Standard), "all" oder "off".
+    rsi_images_mode: str = "missing"
 
 
 @dataclass
@@ -63,9 +65,24 @@ def _web_port() -> int:
 
 def _web_url() -> Optional[str]:
     url = os.getenv("WEB_URL", "").strip().rstrip("/")
+    if not url:
+        # Auf Fly.io setzt die Plattform FLY_APP_NAME automatisch - daraus lässt sich die
+        # öffentliche Adresse ableiten, auch wenn WEB_URL nicht gesetzt wurde.
+        fly_app = os.getenv("FLY_APP_NAME", "").strip()
+        if fly_app:
+            url = f"https://{fly_app}.fly.dev"
     if url and not url.lower().startswith(("http://", "https://")):
         url = "https://" + url  # "meine-app.fly.dev" ohne Schema ergäbe in Discord keinen klickbaren Link
     return url or None
+
+
+def _rsi_images_mode() -> str:
+    raw = os.getenv("RSI_IMAGES", "missing").strip().lower()
+    if raw in ("off", "false", "0", "no"):
+        return "off"
+    if raw in ("all", "prefer"):
+        return "all"
+    return "missing"
 
 
 def load_config() -> Config:
@@ -94,6 +111,7 @@ def load_config() -> Config:
         web_enabled=_web_enabled(),
         web_port=_web_port(),
         web_url=_web_url(),
+        rsi_images_mode=_rsi_images_mode(),
     )
 
 

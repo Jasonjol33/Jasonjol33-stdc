@@ -475,6 +475,24 @@
   @media (prefers-reduced-motion:reduce){
     *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
   }
+  /* ───── Kaufberater ───── */
+  #advisorDlg{width:min(680px,94vw); max-height:90vh; padding:22px; border:1px solid var(--stroke-2); border-radius:var(--r-xl); background:var(--panel); color:var(--text); overflow:auto;}
+  #advisorDlg::backdrop{background:rgba(2,6,14,.72); backdrop-filter:blur(4px);}
+  .adv-head{display:flex; justify-content:space-between; align-items:center;}
+  .adv-head h2{margin:0; font-family:var(--font-display); font-size:1.5rem;}
+  .adv-lead{margin:4px 0 16px; color:var(--text-dim);}
+  .adv-form{display:grid; gap:16px;}
+  .adv-opts{display:flex; flex-wrap:wrap; gap:8px;}
+  .adv-opts button{min-height:36px; padding:0 14px; border-radius:99px; border:1px solid var(--stroke-2); background:rgba(255,255,255,.04); color:var(--text-dim); cursor:pointer; font:inherit; font-size:.86rem;}
+  .adv-opts button[aria-pressed="true"]{color:var(--hud-hi); border-color:rgb(var(--hud-rgb) / .6); background:rgb(var(--hud-rgb) / .16);}
+  .adv-check{display:flex; align-items:center; gap:10px; font-size:.88rem; color:var(--text-dim); min-height:28px;}
+  .adv-results{margin-top:20px; display:grid; gap:10px;}
+  .adv-res{display:grid; grid-template-columns:auto 1fr auto; gap:4px 14px; align-items:center; text-align:left; width:100%; padding:12px 16px; border-radius:var(--r-md); border:1px solid var(--stroke); background:var(--card); color:var(--text); cursor:pointer; font:inherit;}
+  .adv-res:hover{border-color:rgb(var(--hud-rgb) / .5);}
+  .adv-rank{grid-row:span 2; font-family:var(--font-display); font-size:1.4rem; color:var(--hud-hi);}
+  .adv-res b{font-size:1rem;} .adv-res small{color:var(--text-dim);}
+  .adv-price{font-family:var(--font-display); color:var(--hud-hi); white-space:nowrap;}
+  .adv-none{color:var(--text-dim); text-align:center; padding:18px 0;}
 </style>
 </head>
 <body>
@@ -498,6 +516,10 @@
         <button id="randomBtn" class="btn btn-primary" type="button">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/></svg>
           Zufälliges Schiff
+        </button>
+        <button id="advisorBtn" class="btn" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 5.6L20 9.5l-4.2 3.9L17 20l-5-3-5 3 1.2-6.6L4 9.5l5.6-.9z"/></svg>
+          Kaufberater
         </button>
       </div>
     </div>
@@ -1437,6 +1459,77 @@
     if (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); el.search.focus(); }
   });
 
+  /* ───── Kaufberater ───── */
+  const ADV_PURPOSES = {
+    all:     { label: "Alles / Einsteiger", roles: ["starter", "civilian", "passenger"] },
+    cargo:   { label: "Fracht & Handel", roles: ["cargo", "industrial", "freight"], scu: true },
+    combat:  { label: "Kampf", roles: ["military", "bomber", "emp", "interdiction", "boarding", "stealth", "carrier", "fighter"] },
+    mining:  { label: "Mining & Salvage", roles: ["mining", "salvage", "refinery", "tractor"] },
+    explore: { label: "Erkundung & Forschung", roles: ["exploration", "science", "research", "scanning", "datarunner", "pathfinder"] },
+    support: { label: "Medizin & Support", roles: ["medical", "refuel", "repair", "rescue"] },
+    group:   { label: "Gruppe / Passagiere", roles: ["passenger", "civilian"], crew: true },
+  };
+  const ADV_BUDGETS = [[0, "Egal"], [150000, "bis ¤ 150.000"], [500000, "bis ¤ 500.000"], [1500000, "bis ¤ 1,5 Mio"], [5000000, "bis ¤ 5 Mio"], [20000000, "bis ¤ 20 Mio"]];
+  const ADV_CREWS = [[1, "Solo"], [3, "2–3 Leute"], [99, "4 oder mehr"]];
+  const adv = { purpose: "all", budget: 0, crew: 1, ingame: true, noConcept: true };
+  const crewMax = (s) => { const n = String(s.crew || "").match(/\d+/g); return n ? Math.max(...n.map(Number)) : 0; };
+
+  function advScore(s) {
+    if (adv.ingame && !s.available_ingame) return null;
+    if (adv.noConcept && s.is_concept) return null;
+    const price = s.cheapest_price;
+    if (adv.budget && !(price != null && price <= adv.budget)) return null;
+    const P = ADV_PURPOSES[adv.purpose], roles = (s.roles || []).map((r) => r.toLowerCase());
+    const hit = P.roles.filter((k) => roles.some((r) => r.includes(k)));
+    const scu = scuOf(s), crew = crewMax(s), why = [];
+    let score = 0;
+    if (hit.length) { score += 60 + hit.length * 5; why.push("passt zum Zweck"); }
+    else if (P.scu && scu >= 24) { score += 40; }          // ohne Rollen-Daten: Fracht über SCU erkennen
+    else if (roles.length || adv.purpose !== "all") return null;
+    if (P.scu && scu) { score += Math.min(40, scu / 8); why.push(scu + " SCU"); }
+    if (crew) {
+      const fit = adv.crew >= crew ? 1 : adv.crew === 1 ? 0.2 : 0.5;
+      score += fit * 15; if (crew > 1 || adv.crew > 1) why.push("Crew " + s.crew);
+      if (adv.crew === 99 && crew >= 4) score += 10;
+    }
+    if (adv.budget && price) score += (price / adv.budget) * 15; // Budget sinnvoll ausnutzen
+    return { s, score, why };
+  }
+
+  function renderAdvisor() {
+    const res = ships.map(advScore).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 6);
+    const box = $("advResults");
+    if (!res.length) { box.innerHTML = '<p class="adv-none">Dazu finde ich nichts. Erhöhe das Budget oder lockere die Filter.</p>'; return; }
+    box.innerHTML = res.map((r, i) => `<button type="button" class="adv-res" data-ship="${esc(r.s.id)}"><span class="adv-rank">${i + 1}</span><b>${esc(r.s.name_full || r.s.name)}</b><span class="adv-price">${r.s.cheapest_price != null ? "¤ " + formatCompact(r.s.cheapest_price) : "Pledge"}</span><small>${esc(r.s.manufacturer)}${r.why.length ? " · " + esc(r.why.join(" · ")) : ""}</small></button>`).join("");
+  }
+  function advButtons(id, items, key) {
+    $(id).innerHTML = items.map(([v, l]) => `<button type="button" data-v="${esc(v)}" aria-pressed="${String(adv[key]) === String(v)}">${esc(l)}</button>`).join("");
+  }
+  function initAdvisor() {
+    const dlg = $("advisorDlg");
+    advButtons("advPurpose", Object.entries(ADV_PURPOSES).map(([k, p]) => [k, p.label]), "purpose");
+    advButtons("advCrew", ADV_CREWS, "crew");
+    $("advBudget").innerHTML = ADV_BUDGETS.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+    const pick = (id, key) => $(id).addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-v]"); if (!b) return;
+      adv[key] = key === "crew" ? Number(b.dataset.v) : b.dataset.v;
+      $(id).querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      renderAdvisor();
+    });
+    pick("advPurpose", "purpose"); pick("advCrew", "crew");
+    $("advBudget").addEventListener("change", (e) => { adv.budget = Number(e.target.value); renderAdvisor(); });
+    $("advIngame").addEventListener("change", (e) => { adv.ingame = e.target.checked; renderAdvisor(); });
+    $("advNoConcept").addEventListener("change", (e) => { adv.noConcept = e.target.checked; renderAdvisor(); });
+    $("advisorBtn").addEventListener("click", () => { renderAdvisor(); dlg.showModal(); });
+    $("advClose").addEventListener("click", () => dlg.close());
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+    $("advResults").addEventListener("click", (e) => {
+      const b = e.target.closest("[data-ship]"); if (!b) return;
+      dlg.close(); openShip(b.dataset.ship);
+    });
+  }
+  initAdvisor();
+
   /* ───── Start ───── */
   applyAccent(["cyan", "violet", "orange", "green", "pink"].includes(LS.get("sc_accent", "cyan")) ? LS.get("sc_accent", "cyan") : "cyan");
   readHash();
@@ -1446,5 +1539,17 @@
   setInterval(() => { if (ships.length) renderStatus(); }, 60 * 1000);
 })();
 </script>
+<dialog id="advisorDlg" aria-labelledby="advTitle">
+  <div class="adv-head"><h2 id="advTitle">Kaufberater</h2><button type="button" class="icon-btn" id="advClose" aria-label="Schließen" title="Schließen (Esc)">✕</button></div>
+  <p class="adv-lead">Sag mir, was du vorhast – ich schlage passende Schiffe vor.</p>
+  <div class="adv-form">
+    <div class="field"><span class="f-title">Wofür?</span><div class="adv-opts" id="advPurpose" role="group" aria-label="Einsatzzweck"></div></div>
+    <div class="field"><label for="advBudget">Budget</label><select id="advBudget" class="select"></select></div>
+    <div class="field"><span class="f-title">Wer fliegt mit?</span><div class="adv-opts" id="advCrew" role="group" aria-label="Crewgröße"></div></div>
+    <label class="adv-check"><input type="checkbox" id="advIngame" checked> Nur im Spiel kaufbar (mit aUEC-Preis)</label>
+    <label class="adv-check"><input type="checkbox" id="advNoConcept" checked> Concept-Schiffe ausblenden</label>
+  </div>
+  <div id="advResults" class="adv-results" aria-live="polite"></div>
+</dialog>
 </body>
 </html>
