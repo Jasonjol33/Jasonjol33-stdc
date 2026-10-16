@@ -674,6 +674,19 @@
   <p>Datenquelle: <a href="https://uexcorp.space" target="_blank" rel="noopener">UEX Corp</a> — community-gepflegt, nicht offiziell von Cloud Imperium Games. Einzelne Schiffsbilder stammen von <a href="https://robertsspaceindustries.com" target="_blank" rel="noopener">robertsspaceindustries.com</a> (© Cloud Imperium Games).</p>
 </footer>
 
+<dialog id="advisorDlg" aria-labelledby="advTitle">
+  <div class="adv-head"><h2 id="advTitle">Kaufberater</h2><button type="button" class="icon-btn" id="advClose" aria-label="Schließen" title="Schließen (Esc)">✕</button></div>
+  <p class="adv-lead">Sag mir, was du vorhast – ich schlage passende Schiffe vor.</p>
+  <div class="adv-form">
+    <div class="field"><span class="f-title">Wofür?</span><div class="adv-opts" id="advPurpose" role="group" aria-label="Einsatzzweck"></div></div>
+    <div class="field"><label for="advBudget">Budget</label><select id="advBudget" class="select"></select></div>
+    <div class="field"><span class="f-title">Wer fliegt mit?</span><div class="adv-opts" id="advCrew" role="group" aria-label="Crewgröße"></div></div>
+    <label class="adv-check"><input type="checkbox" id="advIngame" checked> Nur im Spiel kaufbar (mit aUEC-Preis)</label>
+    <label class="adv-check"><input type="checkbox" id="advNoConcept" checked> Concept-Schiffe ausblenden</label>
+  </div>
+  <div id="advResults" class="adv-results" aria-live="polite"></div>
+</dialog>
+
 <script>
 (function () {
   "use strict";
@@ -1528,7 +1541,7 @@
       dlg.close(); openShip(b.dataset.ship);
     });
   }
-  initAdvisor();
+  try { initAdvisor(); } catch (err) { console.warn("Kaufberater nicht verfügbar:", err); }
 
   /* ───── Start ───── */
   applyAccent(["cyan", "violet", "orange", "green", "pink"].includes(LS.get("sc_accent", "cyan")) ? LS.get("sc_accent", "cyan") : "cyan");
@@ -1539,17 +1552,5 @@
   setInterval(() => { if (ships.length) renderStatus(); }, 60 * 1000);
 })();
 </script>
-<dialog id="advisorDlg" aria-labelledby="advTitle">
-  <div class="adv-head"><h2 id="advTitle">Kaufberater</h2><button type="button" class="icon-btn" id="advClose" aria-label="Schließen" title="Schließen (Esc)">✕</button></div>
-  <p class="adv-lead">Sag mir, was du vorhast – ich schlage passende Schiffe vor.</p>
-  <div class="adv-form">
-    <div class="field"><span class="f-title">Wofür?</span><div class="adv-opts" id="advPurpose" role="group" aria-label="Einsatzzweck"></div></div>
-    <div class="field"><label for="advBudget">Budget</label><select id="advBudget" class="select"></select></div>
-    <div class="field"><span class="f-title">Wer fliegt mit?</span><div class="adv-opts" id="advCrew" role="group" aria-label="Crewgröße"></div></div>
-    <label class="adv-check"><input type="checkbox" id="advIngame" checked> Nur im Spiel kaufbar (mit aUEC-Preis)</label>
-    <label class="adv-check"><input type="checkbox" id="advNoConcept" checked> Concept-Schiffe ausblenden</label>
-  </div>
-  <div id="advResults" class="adv-results" aria-live="polite"></div>
-</dialog>
 </body>
 </html>
