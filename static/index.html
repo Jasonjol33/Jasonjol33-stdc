@@ -476,8 +476,8 @@
     *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
   }
   /* ───── Kaufberater ───── */
-  #advisorDlg{width:min(680px,94vw); max-height:90vh; padding:22px; border:1px solid var(--stroke-2); border-radius:var(--r-xl); background:var(--panel); color:var(--text); overflow:auto;}
-  #advisorDlg::backdrop{background:rgba(2,6,14,.72); backdrop-filter:blur(4px);}
+  #advisorDlg,#toolsDlg{width:min(680px,94vw); max-height:90vh; padding:22px; border:1px solid var(--stroke-2); border-radius:var(--r-xl); background:var(--panel); color:var(--text); overflow:auto;}
+  #advisorDlg::backdrop,#toolsDlg::backdrop{background:rgba(2,6,14,.72); backdrop-filter:blur(4px);}
   .adv-head{display:flex; justify-content:space-between; align-items:center;}
   .adv-head h2{margin:0; font-family:var(--font-display); font-size:1.5rem;}
   .adv-lead{margin:4px 0 16px; color:var(--text-dim);}
@@ -493,6 +493,11 @@
   .adv-res b{font-size:1rem;} .adv-res small{color:var(--text-dim);}
   .adv-price{font-family:var(--font-display); color:var(--hud-hi); white-space:nowrap;}
   .adv-none{color:var(--text-dim); text-align:center; padding:18px 0;}
+  #toolsDlg input.select,#toolsDlg textarea{width:100%; min-height:42px; padding:8px 12px; border-radius:var(--r-md); border:1px solid var(--stroke-2); background:rgba(255,255,255,.04); color:var(--text); font:inherit;}
+  .tl-grid{display:grid; gap:14px;} .tl-row{display:grid; grid-template-columns:1fr auto; gap:2px 12px; padding:6px 0; border-bottom:1px solid var(--stroke); font-size:.9rem; position:relative;}
+  .tl-row>span:last-of-type{font-family:var(--font-display); color:var(--hud-hi);} .tl-bar{grid-column:1/-1; display:block; height:5px; border-radius:9px; background:rgb(var(--hud-rgb) / .55);}
+  .tl-note{color:var(--text-dim); font-size:.84rem; margin:0;} .tl-out{padding:14px; border-radius:var(--r-md); background:var(--card); border:1px solid var(--stroke); display:grid; gap:4px;}
+  .tl-actions{display:flex; flex-wrap:wrap; gap:8px;} .tl-actions .btn{height:40px;}
 </style>
 </head>
 <body>
@@ -521,6 +526,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 5.6L20 9.5l-4.2 3.9L17 20l-5-3-5 3 1.2-6.6L4 9.5l5.6-.9z"/></svg>
           Kaufberater
         </button>
+        <button id="toolsBtn" class="btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>Werkzeuge</button>
       </div>
     </div>
     <div id="statusText">Verbindung zur Schiffsdatenbank wird hergestellt…</div>
@@ -685,6 +691,12 @@
     <label class="adv-check"><input type="checkbox" id="advNoConcept" checked> Concept-Schiffe ausblenden</label>
   </div>
   <div id="advResults" class="adv-results" aria-live="polite"></div>
+</dialog>
+
+<dialog id="toolsDlg" aria-labelledby="tlTitle">
+  <div class="adv-head"><h2 id="tlTitle">Werkzeuge</h2><button type="button" class="icon-btn" id="tlClose" aria-label="Schließen" title="Schließen (Esc)">✕</button></div>
+  <div class="adv-opts" id="tlTabs" role="tablist" aria-label="Werkzeuge" style="margin:14px 0"></div>
+  <div id="tlBody"></div>
 </dialog>
 
 <script>
@@ -1542,6 +1554,95 @@
     });
   }
   try { initAdvisor(); } catch (err) { console.warn("Kaufberater nicht verfügbar:", err); }
+
+  /* ───── Werkzeuge ───── */
+  const wz = {
+    priced: () => ships.filter((s) => s.cheapest_price > 0),
+    avg: (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : 0),
+    median: (a) => { const b = [...a].sort((x, y) => x - y); return b.length ? b[Math.floor(b.length / 2)] : 0; },
+    group: (list, fn) => { const m = {}; list.forEach((s) => (m[fn(s)] = m[fn(s)] || []).push(s)); return Object.entries(m); },
+    opts: (fn) => ships.filter(fn || (() => true)).slice().sort((a, b) => (a.name || "").localeCompare(b.name || "", "de")).map((s) => `<option value="${esc(s.id)}">${esc(s.name_full || s.name)}</option>`).join(""),
+    row: (l, v, w) => `<div class="tl-row"><span>${l}</span><span>${v}</span>${w != null ? `<i class="tl-bar" style="width:${Math.max(2, w)}%"></i>` : ""}</div>`,
+    ship: (s, v) => `<button type="button" class="adv-res" data-ship="${esc(s.id)}"><span class="adv-rank">›</span><b>${esc(s.name_full || s.name)}</b><span class="adv-price">${v}</span><small>${esc(s.manufacturer)}</small></button>`,
+    money: (n) => "¤ " + nfDE.format(Math.round(n)),
+    num: (id, d) => Math.max(0, Number($(id).value) || d),
+    store: (k, d) => LS.get(k, d),
+  };
+  const bars = (list, valFn, labelFn, sortFn) => {
+    const rows = list.map((e) => [e, valFn(e)]).sort(sortFn || ((a, b) => b[1] - a[1])), max = Math.max(1, ...rows.map((r) => r[1]));
+    return rows.map(([e, v]) => wz.row(labelFn(e), nfDE.format(Math.round(v)), (v / max) * 100)).join("");
+  };
+  const calc = (html, update) => ({ html: html + '<div id="tlOut" class="tl-out"></div>', after: (box) => { const run = () => { $("tlOut").innerHTML = update(); }; box.querySelectorAll("input,select").forEach((x) => x.addEventListener("input", run)); run(); } });
+
+  const TOOLS = {
+    stats: ["Statistik", () => {
+      const p = wz.priced().map((s) => s.cheapest_price), pads = wz.group(ships, (s) => s.pad_type || "?");
+      return { html: '<div class="tl-grid">' + [["Schiffe", ships.length], ["Im Spiel kaufbar", ships.filter((s) => s.available_ingame).length], ["Concept-Schiffe", ships.filter((s) => s.is_concept).length], ["Hersteller", new Set(ships.map((s) => s.manufacturer)).size], ["Durchschnittspreis", wz.money(wz.avg(p))], ["Medianpreis", wz.money(wz.median(p))], ["Mit Fracht (SCU)", ships.filter((s) => scuOf(s) > 0).length], ["Größte Ladung", nfDE.format(maxScu) + " SCU"]].map(([l, v]) => wz.row(l, v)).join("") + '<p class="tl-note">Schiffe pro Landeplatz-Größe</p>' + bars(pads, (e) => e[1].length, (e) => "Pad " + esc(e[0])) + "</div>" };
+    }],
+    makers: ["Hersteller", () => ({ html: '<p class="tl-note">Anzahl Schiffe pro Hersteller (Durchschnittspreis in Klammern)</p>' + bars(wz.group(ships, (s) => s.manufacturer), (e) => e[1].length, (e) => `${esc(e[0])} <small>(${wz.money(wz.avg(e[1].map((s) => s.cheapest_price).filter((x) => x > 0)))})</small>`) })],
+    dist: ["Preis-Verteilung", () => {
+      const B = [[0, 100e3], [100e3, 250e3], [250e3, 500e3], [500e3, 1e6], [1e6, 2.5e6], [2.5e6, 5e6], [5e6, 1e12]], P = wz.priced();
+      return { html: bars(B, ([a, b]) => P.filter((s) => s.cheapest_price >= a && s.cheapest_price < b).length, ([a, b]) => `${formatCompact(a)} – ${b > 1e11 ? "∞" : formatCompact(b)}`, (x, y) => x[0][0] - y[0][0]) };
+    }],
+    value: ["Bester Wert pro SCU", () => ({ html: '<p class="tl-note">Günstigste Fracht-Schiffe (aUEC pro SCU Laderaum)</p><div class="adv-results">' + ships.filter((s) => scuOf(s) > 0 && s.cheapest_price > 0).sort((a, b) => a.cheapest_price / scuOf(a) - b.cheapest_price / scuOf(b)).slice(0, 12).map((s) => wz.ship(s, "¤ " + formatCompact(s.cheapest_price / scuOf(s)) + " / SCU")).join("") + "</div>" })],
+    terminal: ["Terminal-Finder", () => {
+      const T = {}; ships.forEach((s) => (s.all_prices || []).forEach((p) => (T[p.terminal] = T[p.terminal] || []).push([s, p.price])));
+      const names = Object.keys(T).sort((a, b) => a.localeCompare(b, "de"));
+      return { html: `<div class="field"><label for="tlTerm">Terminal</label><select id="tlTerm" class="select">${names.map((n) => `<option value="${esc(n)}">${esc(n)} (${T[n].length})</option>`).join("")}</select></div><div id="tlOut" class="adv-results"></div>`,
+        after: (box) => { const run = () => { $("tlOut").innerHTML = (T[$("tlTerm").value] || []).sort((a, b) => a[1] - b[1]).map(([s, pr]) => wz.ship(s, wz.money(pr))).join(""); }; $("tlTerm").addEventListener("change", run); run(); } };
+    }],
+    spread: ["Preisunterschiede", () => ({ html: '<p class="tl-note">Schiffe, die an mehreren Terminals unterschiedlich viel kosten</p><div class="adv-results">' + ships.filter((s) => (s.all_prices || []).length > 1).map((s) => [s, s.all_prices[s.all_prices.length - 1].price - s.all_prices[0].price]).filter((x) => x[1] > 0).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([s, d]) => wz.ship(s, "bis ¤ " + formatCompact(d) + " sparen")).join("") + "</div>" })],
+    save: ["Spar-Rechner", () => calc(`<div class="adv-form"><div class="field"><label for="svShip">Schiff</label><select id="svShip" class="select">${wz.opts((s) => s.cheapest_price > 0)}</select></div><div class="field"><label for="svInc">Verdienst pro Stunde (aUEC)</label><input id="svInc" class="select" type="number" min="1" value="${wz.store("sc_inc", 300000)}"></div><div class="field"><label for="svDay">Spielzeit pro Tag (Stunden)</label><input id="svDay" class="select" type="number" min="0.5" step="0.5" value="${wz.store("sc_day", 2)}"></div></div>`, () => {
+      const s = byId($("svShip").value), inc = wz.num("svInc", 1), day = wz.num("svDay", 1); LS.set("sc_inc", inc); LS.set("sc_day", day);
+      if (!s) return "Kein Schiff gewählt."; const h = s.cheapest_price / inc;
+      return wz.row("Preis", wz.money(s.cheapest_price)) + wz.row("Spielstunden", nfDE.format(Math.ceil(h)) + " h") + wz.row("Spieltage", nfDE.format(Math.ceil(h / day)) + " Tage");
+    })],
+    cargo: ["Fracht-Rechner", () => calc(`<div class="adv-form"><div class="field"><label for="cgShip">Schiff</label><select id="cgShip" class="select">${wz.opts((s) => scuOf(s) > 0)}</select></div><div class="field"><label for="cgBuy">Einkauf pro SCU (aUEC)</label><input id="cgBuy" class="select" type="number" min="0" value="${wz.store("sc_buy", 2000)}"></div><div class="field"><label for="cgSell">Verkauf pro SCU (aUEC)</label><input id="cgSell" class="select" type="number" min="0" value="${wz.store("sc_sell", 2600)}"></div><div class="field"><label for="cgMin">Minuten pro Fahrt</label><input id="cgMin" class="select" type="number" min="1" value="${wz.store("sc_min", 25)}"></div></div>`, () => {
+      const s = byId($("cgShip").value), buy = wz.num("cgBuy", 0), sell = wz.num("cgSell", 0), min = wz.num("cgMin", 1); LS.set("sc_buy", buy); LS.set("sc_sell", sell); LS.set("sc_min", min);
+      if (!s) return "Kein Schiff gewählt."; const trip = scuOf(s) * (sell - buy), perH = trip * (60 / min);
+      return wz.row("Ladung", nfDE.format(scuOf(s)) + " SCU") + wz.row("Gewinn pro Fahrt", wz.money(trip)) + wz.row("Gewinn pro Stunde", wz.money(perH)) + (s.cheapest_price && trip > 0 ? wz.row("Fahrten bis das Schiff bezahlt ist", nfDE.format(Math.ceil(s.cheapest_price / trip))) : "");
+    })],
+    wish: ["Wunschliste", () => {
+      const l = ships.filter((s) => favs.has(String(s.id))), p = l.filter((s) => s.cheapest_price > 0);
+      return { html: l.length ? `<p class="tl-note">Deine Favoriten (Herz-Symbol): ${l.length} Schiffe</p>` + wz.row("Gesamtpreis (nur mit aUEC-Preis)", wz.money(p.reduce((a, s) => a + s.cheapest_price, 0))) + '<div class="adv-results">' + l.map((s) => wz.ship(s, s.cheapest_price ? wz.money(s.cheapest_price) : "Pledge")).join("") + "</div>" : '<p class="adv-none">Noch keine Favoriten. Tippe bei einem Schiff auf das Herz.</p>' };
+    }],
+    hangar: ["Mein Hangar", () => ({ html: `<div class="field"><label for="hgAdd">Schiff hinzufügen</label><select id="hgAdd" class="select">${wz.opts()}</select></div><div class="tl-actions"><button type="button" class="btn" id="hgBtn">Hinzufügen</button></div><div id="tlOut" class="adv-results"></div>`,
+      after: () => { const run = () => { const own = wz.store("sc_hangar", []).map(byId).filter(Boolean), sum = own.reduce((a, s) => a + (s.cheapest_price || 0), 0);
+        $("tlOut").innerHTML = (own.length ? wz.row(own.length + " Schiffe · Gesamtwert", wz.money(sum)) : '<p class="adv-none">Dein Hangar ist leer.</p>') + own.map((s) => wz.ship(s, s.cheapest_price ? wz.money(s.cheapest_price) : "Pledge") + `<button type="button" class="btn" data-rmh="${esc(s.id)}">Entfernen: ${esc(s.name)}</button>`).join(""); };
+        $("hgBtn").addEventListener("click", () => { const l = wz.store("sc_hangar", []), id = $("hgAdd").value; if (!l.includes(id)) LS.set("sc_hangar", [...l, id]); run(); });
+        $("tlOut").addEventListener("click", (e) => { const b = e.target.closest("[data-rmh]"); if (b) { LS.set("sc_hangar", wz.store("sc_hangar", []).filter((x) => x !== b.dataset.rmh)); run(); } }); run(); } })],
+    notes: ["Notizen", () => ({ html: `<div class="field"><label for="ntShip">Schiff</label><select id="ntShip" class="select">${wz.opts()}</select></div><div class="field"><label for="ntText">Notiz (wird nur in deinem Browser gespeichert)</label><textarea id="ntText" rows="5"></textarea></div>`,
+      after: () => { const N = () => wz.store("sc_notes", {}), load = () => { $("ntText").value = N()[$("ntShip").value] || ""; };
+        $("ntShip").addEventListener("change", load); $("ntText").addEventListener("input", () => { const n = N(); n[$("ntShip").value] = $("ntText").value; LS.set("sc_notes", n); }); load(); } })],
+    export: ["Export", () => ({ html: '<p class="tl-note">Exportiert die Schiffe, die gerade nach deinen Filtern angezeigt werden.</p><div class="tl-actions"><button type="button" class="btn" data-ex="csv">CSV herunterladen</button><button type="button" class="btn" data-ex="json">JSON herunterladen</button><button type="button" class="btn" data-ex="text">Als Text kopieren (Discord)</button></div><div id="tlOut" class="tl-note"></div>',
+      after: (box) => box.addEventListener("click", async (e) => { const b = e.target.closest("[data-ex]"); if (!b) return; const L = applyFilters(), k = b.dataset.ex;
+        const dl = (n, c, m) => { const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([c], { type: m })); a.download = n; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); };
+        if (k === "csv") { const q = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`; dl("schiffe.csv", "\ufeff" + ["Name;Hersteller;Preis;Terminal;SCU;Crew;Pad"].concat(L.map((s) => [s.name_full, s.manufacturer, s.cheapest_price ?? "", s.cheapest_terminal ?? "", s.scu || "", s.crew || "", s.pad_type || ""].map(q).join(";"))).join("\n"), "text/csv"); }
+        else if (k === "json") dl("schiffe.json", JSON.stringify(L, null, 2), "application/json");
+        else { try { await navigator.clipboard.writeText(L.map((s) => `${s.name_full} – ${s.cheapest_price ? wz.money(s.cheapest_price) : "nur Pledge"}${s.cheapest_terminal ? " (" + s.cheapest_terminal + ")" : ""}`).join("\n")); } catch { /* Zwischenablage gesperrt */ } }
+        $("tlOut").textContent = L.length + " Schiffe exportiert."; }) })],
+    keys: ["Tastenkürzel", () => ({ html: [["/", "Suche fokussieren (falls vorhanden)"], ["K", "Kaufberater öffnen"], ["W", "Werkzeuge öffnen"], ["Z", "Zufälliges Schiff"], ["Esc", "Fenster schließen"]].map(([k, d]) => wz.row(`<kbd>${k}</kbd>`, d)).join("") })],
+  };
+
+  function initTools() {
+    const dlg = $("toolsDlg"), tabs = $("tlTabs"), body = $("tlBody");
+    tabs.innerHTML = Object.entries(TOOLS).map(([k, [l]]) => `<button type="button" role="tab" data-t="${k}" aria-pressed="false">${l}</button>`).join("");
+    const show = (k) => {
+      tabs.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.t === k)));
+      const r = TOOLS[k][1](); body.innerHTML = r.html; if (r.after) r.after(body);
+    };
+    tabs.addEventListener("click", (e) => { const b = e.target.closest("[data-t]"); if (b) show(b.dataset.t); });
+    body.addEventListener("click", (e) => { const b = e.target.closest("[data-ship]"); if (b) { dlg.close(); openShip(b.dataset.ship); } });
+    $("toolsBtn").addEventListener("click", () => { dlg.showModal(); show(tabs.querySelector("[aria-pressed=true]")?.dataset.t || "stats"); });
+    $("tlClose").addEventListener("click", () => dlg.close());
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "")) return;
+      const k = e.key.toLowerCase();
+      if (k === "w") $("toolsBtn").click(); else if (k === "k") $("advisorBtn").click(); else if (k === "z") $("randomBtn").click();
+    });
+  }
+  try { initTools(); } catch (err) { console.warn("Werkzeuge nicht verfügbar:", err); }
 
   /* ───── Start ───── */
   applyAccent(["cyan", "violet", "orange", "green", "pink"].includes(LS.get("sc_accent", "cyan")) ? LS.get("sc_accent", "cyan") : "cyan");
