@@ -67,3 +67,15 @@ def load_last_prices() -> Dict[str, float]:
 
 def save_last_prices(snapshot: Dict[str, float]) -> None:
     _save_json(SNAPSHOT_FILE, snapshot)
+
+
+RSI_IMAGES_FILE = DATA_DIR / "rsi_images.json"
+
+
+def load_rsi_images() -> Dict[str, dict]:
+    """{'<Store-URL>': {'image': '<Bild-URL oder None>', 'checked': '<ISO-Zeitstempel>'}}"""
+    return _load_json(RSI_IMAGES_FILE)
+
+
+def save_rsi_images(mapping: Dict[str, dict]) -> None:
+    _save_json(RSI_IMAGES_FILE, mapping)
