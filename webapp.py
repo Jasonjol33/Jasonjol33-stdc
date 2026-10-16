@@ -22,6 +22,7 @@ import asyncio
 import contextlib
 import json
 import logging
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Awaitable, Callable, Optional
@@ -48,6 +49,7 @@ def ship_to_dict(ship: Ship) -> dict:
         "is_concept": ship.is_concept,
         "available_ingame": ship.available_ingame,
         "image_url": ship.image_url,
+        "image_url_alt": ship.image_url_alt,
         "store_url": ship.store_url,
         "pad_type": ship.pad_type,
         "scu": ship.scu,
@@ -123,6 +125,71 @@ def publish_failure(reason: str) -> None:
     cache.mark_failed(reason)
 
 
+# --------------------------------------------------------------------------------------
+# Sicherheits-Header und Rate-Limit
+# --------------------------------------------------------------------------------------
+
+# Die Seite ist eine einzelne HTML-Datei mit Inline-Skript/-Style; Bilder kommen von UEX/RSI/Wiki
+# (alle https), Schriften von Google Fonts. Alles andere ist gesperrt.
+CSP = (
+    "default-src 'self'; "
+    "script-src 'self' 'unsafe-inline'; "
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+    "font-src https://fonts.gstatic.com; "
+    "img-src 'self' data: https:; "
+    "connect-src 'self'; "
+    "object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+)
+SECURITY_HEADERS = {
+    "Content-Security-Policy": CSP,
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+}
+
+RATE_LIMIT = 120  # Anfragen pro IP und Fenster
+RATE_WINDOW = 60.0  # Sekunden
+_hits: dict[str, tuple[float, int]] = {}
+
+
+def _client_ip(request: web.Request) -> str:
+    # Hinter Fly.io steht der Proxy davor; die echte Besucher-IP steht in Fly-Client-IP.
+    return request.headers.get("Fly-Client-IP") or request.remote or "unbekannt"
+
+
+def _rate_limited(ip: str) -> bool:
+    now = time.monotonic()
+    start, count = _hits.get(ip, (now, 0))
+    if now - start >= RATE_WINDOW:
+        start, count = now, 0
+    _hits[ip] = (start, count + 1)
+    if len(_hits) > 5000:  # Speicher begrenzen: abgelaufene Einträge wegräumen
+        for k in [k for k, (s, _) in _hits.items() if now - s >= RATE_WINDOW]:
+            del _hits[k]
+    return count + 1 > RATE_LIMIT
+
+
+@web.middleware
+async def protect(request: web.Request, handler):
+    if request.path.startswith("/api/") and _rate_limited(_client_ip(request)):
+        resp: web.StreamResponse = web.Response(status=429, text="Zu viele Anfragen - bitte kurz warten.")
+        resp.headers["Retry-After"] = str(int(RATE_WINDOW))
+    else:
+        try:
+            resp = await handler(request)
+        except web.HTTPException as exc:
+            resp = exc  # auch Fehlerseiten (404 ...) bekommen die Header
+    for k, v in SECURITY_HEADERS.items():
+        resp.headers[k] = v
+    if request.path.startswith("/api/"):
+        resp.headers["Cache-Control"] = "no-store"
+    if isinstance(resp, web.HTTPException):
+        raise resp
+    return resp
+
+
 routes = web.RouteTableDef()
 
 
@@ -145,7 +212,7 @@ async def handle_ships(request: web.Request) -> web.Response:
 
 def create_app(background_task: Optional[Callable[[], Awaitable[None]]] = None) -> web.Application:
     """Baut die Anwendung. `background_task` (nur im eigenständigen Betrieb) läuft mit ihr mit."""
-    app = web.Application()
+    app = web.Application(middlewares=[protect])
     app.add_routes(routes)
 
     if background_task is not None:
@@ -211,6 +278,14 @@ async def refresh_from_uex(settings: WebSettings) -> None:
 
     cache.update(ships)
     log.info("Schiffsdaten aktualisiert: %d Schiffe geladen.", len(ships))
+    try:  # Lücken (SCU, Crew, Pad, Bild) aus dem Star Citizen Wiki füllen
+        import wiki_data
+
+        if wiki_data.fill_gaps(ships, await wiki_data.load_index()):
+            cache.update(ships)
+        wiki_data.report_gaps(ships)
+    except Exception:
+        log.exception("Wiki-Abgleich fehlgeschlagen - Seite läuft mit den UEX-Daten weiter.")
 
 
 async def standalone_refresh_loop(settings: WebSettings) -> None:
