@@ -148,7 +148,7 @@
   .search-field input{background:none; border:none; outline:none; width:100%; color:var(--text); font-family:var(--font-ui); font-size:.97rem;}
   .search-field input::placeholder{color:var(--text-faint);}
   .search-field input::-webkit-search-cancel-button{display:none;}
-  .search-clear{display:none; width:28px; height:28px; border-radius:50%; border:none; background:rgba(255,255,255,.1); color:var(--text-dim); cursor:pointer; flex-shrink:0; font-size:.8rem; line-height:1;}
+  .search-clear{display:none; width:32px; height:32px; border-radius:50%; border:none; background:rgba(255,255,255,.1); color:var(--text-dim); cursor:pointer; flex-shrink:0; font-size:.8rem; line-height:1;}
   .search-clear:hover{background:rgba(255,255,255,.18); color:var(--text);}
   .search-field.has-text .search-clear{display:block;}
   .search-field.has-text .kbd-hint, .search-field:focus-within .kbd-hint{display:none;}
@@ -201,7 +201,8 @@
   input[type=range]::-moz-range-thumb{width:14px; height:14px; border-radius:50%; background:#fff; border:4px solid var(--hud);}
   input[type=range]:disabled{opacity:.4; cursor:not-allowed;}
   .swatches{display:flex; gap:10px; flex-wrap:wrap;}
-  .swatch{width:30px; height:30px; border-radius:50%; border:2px solid transparent; cursor:pointer; background:var(--sw); box-shadow:0 0 0 1px rgba(255,255,255,.2) inset; transition:transform .18s, border-color .18s;}
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;}
+  .swatch{position:relative; flex:0 0 32px; min-width:32px; width:32px; height:32px; border-radius:50%; border:2px solid transparent; cursor:pointer; background:var(--sw); box-shadow:0 0 0 1px rgba(255,255,255,.2) inset; transition:transform .18s, border-color .18s;}
   .swatch:hover{transform:scale(1.12);}
   .swatch[aria-pressed="true"]{border-color:#fff; box-shadow:0 0 14px var(--sw);}
   .adv-actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; padding-top:18px; border-top:1px solid var(--stroke);}
@@ -233,7 +234,7 @@
   .active-filters:empty{display:none;}
   .af{display:inline-flex; align-items:center; gap:8px; height:32px; padding:0 8px 0 13px; border-radius:99px; background:rgb(var(--hud-rgb) / .13); border:1px solid rgb(var(--hud-rgb) / .35); color:var(--hud-hi); font-size:.82rem; cursor:pointer;}
   .af:hover{background:rgb(var(--hud-rgb) / .22);}
-  .af span{width:18px; height:18px; border-radius:50%; background:rgb(var(--hud-rgb) / .25); display:grid; place-items:center; font-size:.68rem;}
+  .af span{width:20px; height:20px; border-radius:50%; background:rgb(var(--hud-rgb) / .25); display:grid; place-items:center; font-size:.68rem;}
   .af-reset{background:none; border-color:var(--stroke-2); color:var(--text-dim); padding:0 13px;}
   .result-count{color:var(--text-faint); font-size:.9rem; margin:12px 2px 0; min-height:1.4em;}
   .result-count strong{font-family:var(--font-display); font-weight:400; color:var(--hud-hi); font-size:1rem;}
@@ -424,44 +425,6 @@
   .cmp .c-rm{align-self:flex-start; border:none; background:rgba(255,255,255,.07); color:var(--text-dim); font-size:.76rem; border-radius:99px; padding:3px 11px; cursor:pointer;}
   .cmp .c-rm:hover{background:rgba(255,122,77,.2); color:#ffb199;}
 
-
-  /* ───── Erweiterungen: Datenblatt, Kaufberater ───── */
-  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
-  .hero-actions{display:flex; flex-wrap:wrap; gap:10px;}
-  .pill-info{color:var(--amber); border-color:rgba(255,179,64,.4); background:rgba(255,179,64,.08); cursor:help;}
-  .sec{margin:0 0 22px;}
-  h3.section-title{margin:0 0 10px;}
-  .kv{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:8px;}
-  .kv div{padding:9px 12px; border-radius:var(--r-md); background:rgba(255,255,255,.045); border:1px solid var(--stroke); min-width:0; overflow-wrap:anywhere;}
-  .kv span{display:block; font-size:.76rem; color:var(--text-faint);}
-  .kv b{font-weight:500;}
-  .kv .nd b{color:var(--text-faint); font-weight:400;}
-  .note{color:var(--text-faint); font-size:.82rem; margin:6px 0 0;}
-  .chk{display:flex; align-items:center; gap:8px; font-size:.88rem; color:var(--text-dim); min-height:32px;}
-  .adv-form{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:14px 18px; margin-bottom:16px;}
-  .adv-in{height:42px; width:100%; border-radius:999px; border:1px solid var(--stroke); background:rgba(255,255,255,.05); color:var(--text); padding:0 16px; font:inherit;}
-  .adv-in.area{height:auto; border-radius:var(--r-md); padding:10px 14px; resize:vertical;}
-  .adv-in:focus{outline:none; border-color:rgb(var(--hud-rgb) / .65); box-shadow:0 0 0 4px rgb(var(--hud-rgb) / .14);}
-  .wish{margin:8px 0 0; padding-left:22px; display:flex; flex-direction:column; gap:6px;}
-  .wish li{display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px;}
-  .wish .w-n{flex:1 1 140px; overflow-wrap:anywhere;}
-  .wish .w-p{color:var(--amber);}
-  .wish .w-c{color:var(--text-faint); font-size:.82rem;}
-  .wish .icon-btn{width:36px; height:36px;}
-  .wish .icon-btn[disabled]{opacity:.35; cursor:default;}
-  .res{display:grid; grid-template-columns:150px 1fr; gap:16px; padding:14px; margin-bottom:10px; border-radius:var(--r-lg); border:1px solid var(--stroke); background:rgba(255,255,255,.04);}
-  .res .c-img{position:relative; aspect-ratio:16/10; border-radius:12px; overflow:hidden; background:linear-gradient(135deg,#0a1626,#16385a); align-self:start;}
-  .res .c-img img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
-  .res .card-name{overflow-wrap:anywhere;}
-  .res-price{margin:8px 0 0;}
-  .why{margin:8px 0 12px; padding-left:18px; color:var(--text-dim); font-size:.86rem;}
-  .why .miss{color:var(--amber);}
-  .excl{margin:14px 0 22px; color:var(--text-dim); font-size:.88rem;}
-  .excl summary{cursor:pointer; padding:8px 0;}
-  .card-name, .card-maker, .c-name{overflow-wrap:anywhere;}
-  @media (pointer:coarse){.btn,.chip,.seg,.af{min-height:44px;} .chk{min-height:44px;}}
-  @media (max-width:640px){.res{grid-template-columns:1fr;} .hero-actions .btn{flex:1 1 100%;}}
-
   .footer{padding:30px 24px 40px; text-align:center; color:var(--text-faint); font-size:.82rem;}
   .footer p{max-width:78ch; margin:0 auto; padding-top:24px; border-top:1px solid var(--stroke);}
   .footer a{color:var(--text-dim);}
@@ -536,11 +499,9 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="8.5" cy="8.5" r="1" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1" fill="currentColor"/><circle cx="8.5" cy="15.5" r="1" fill="currentColor"/></svg>
           Zufälliges Schiff
         </button>
-        <button id="advisorBtn" class="btn" type="button">Kaufberater</button>
       </div>
     </div>
     <div id="statusText">Verbindung zur Schiffsdatenbank wird hergestellt…</div>
-    <div id="srStatus" class="sr-only" role="status"></div>
   </div>
 </header>
 
@@ -549,7 +510,7 @@
     <div class="toolbar-row">
       <label class="search-field" id="searchField">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input id="search" type="search" placeholder="Schiff, Hersteller, Bewaffnung …" aria-label="Suche nach Schiff, Hersteller, Bewaffnung, Ausstattung oder Terminal" autocomplete="off">
+        <input id="search" type="search" placeholder="Schiff oder Hersteller" aria-label="Schiff oder Hersteller suchen" autocomplete="off">
         <kbd class="kbd-hint" aria-hidden="true">/</kbd>
         <button id="searchClear" class="search-clear" type="button" aria-label="Suche leeren">✕</button>
       </label>
@@ -619,18 +580,14 @@
                 <option value="only">Nur Concepts</option>
               </select>
             </div>
-            <div class="field" id="roleField" hidden>
-              <label for="roleSelect">Rolle</label>
-              <select id="roleSelect" class="select"><option value="all">Alle Rollen</option></select>
-            </div>
             <div class="field">
               <span class="f-title">Akzentfarbe</span>
               <div class="swatches" id="swatches" role="group" aria-label="Akzentfarbe">
-                <button class="swatch" type="button" data-accent="cyan" style="--sw:#4cc3ee" aria-label="Cyan" aria-pressed="true"></button>
-                <button class="swatch" type="button" data-accent="violet" style="--sw:#a68eff" aria-label="Violett" aria-pressed="false"></button>
-                <button class="swatch" type="button" data-accent="orange" style="--sw:#ff983e" aria-label="Orange" aria-pressed="false"></button>
-                <button class="swatch" type="button" data-accent="green" style="--sw:#54e8a0" aria-label="Grün" aria-pressed="false"></button>
-                <button class="swatch" type="button" data-accent="pink" style="--sw:#ff76b2" aria-label="Rosa" aria-pressed="false"></button>
+                <button class="swatch" type="button" data-accent="cyan" style="--sw:#4cc3ee" aria-label="Cyan" aria-pressed="true"><span class="sr-only">Cyan</span></button>
+                <button class="swatch" type="button" data-accent="violet" style="--sw:#a68eff" aria-label="Violett" aria-pressed="false"><span class="sr-only">Violett</span></button>
+                <button class="swatch" type="button" data-accent="orange" style="--sw:#ff983e" aria-label="Orange" aria-pressed="false"><span class="sr-only">Orange</span></button>
+                <button class="swatch" type="button" data-accent="green" style="--sw:#54e8a0" aria-label="Grün" aria-pressed="false"><span class="sr-only">Grün</span></button>
+                <button class="swatch" type="button" data-accent="pink" style="--sw:#ff76b2" aria-label="Rosa" aria-pressed="false"><span class="sr-only">Rosa</span></button>
               </div>
             </div>
           </div>
@@ -641,14 +598,12 @@
             </button>
             <button id="exportBtn" class="btn" type="button">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>
-              Gefilterte Liste als CSV
+              Liste als CSV exportieren
             </button>
-            <button id="exportAllBtn" class="btn" type="button">Alle Schiffe als CSV</button>
             <button id="resetAllBtn" class="btn" type="button">Alle Filter zurücksetzen</button>
           </div>
           <p class="hint">
             <span><kbd>/</kbd> Suche</span>
-            <span>Suchbeispiele: <kbd>waffen&gt;=4</kbd> <kbd>schild</kbd> <kbd>scu&gt;=100</kbd> <kbd>raketen</kbd> (nur bei vorhandenen Daten)</span>
             <span><kbd>←</kbd><kbd>→</kbd> im Detailfenster blättern</span>
             <span><kbd>Esc</kbd> schließen</span>
           </p>
@@ -714,7 +669,7 @@
   const state = {
     search: "", manufacturer: "all", availability: "all", sort: "name-asc",
     view: LS.get("sc_view", "grid") === "list" ? "list" : "grid",
-    maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false, role: "all",
+    maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false,
   };
   const favs = new Set((LS.get("sc_favs", []) || []).map(String));
   let compare = [];
@@ -731,7 +686,6 @@
   let openId = null;
   let modalMode = null; // "ship" | "compare"
   let pendingShip = null;
-  let pendingAdvisor = false;
   let lastFocus = null;
 
   const el = {
@@ -747,16 +701,23 @@
     toasts: $("toasts"), toTop: $("toTop"), toolbar: $("controlsBar"),
   };
 
+  function esc(str) {
+    const d = document.createElement("div");
+    d.textContent = str == null ? "" : String(str);
+    return d.innerHTML;
+  }
   const nfDE = new Intl.NumberFormat("de-DE");
   const nfCompact = new Intl.NumberFormat("de-DE", { notation: "compact", maximumFractionDigits: 1 });
   const formatAuec = (n) => nfDE.format(Math.round(n));
   const formatCompact = (n) => nfCompact.format(n);
   const byId = (id) => ships.find((x) => String(x.id) === String(id));
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const scuOf = (s) => Number(s.scu) > 0 ? Number(s.scu) : 0;
+  const ppScu = (s) => (s.cheapest_price != null && scuOf(s) > 0) ? s.cheapest_price / scuOf(s) : null;
 
   function relativeTime(iso) {
-    if (!iso || !Number.isFinite(Date.parse(iso))) return "unbekannt";
-    const diffMin = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 60000));
+    if (!iso) return "unbekannt";
+    const diffMin = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
     if (diffMin < 1) return "gerade eben";
     if (diffMin < 60) return `vor ${diffMin} Min.`;
     const h = Math.floor(diffMin / 60);
@@ -764,208 +725,6 @@
     return `vor ${Math.floor(h / 24)} Tg.`;
   }
   function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
-
-  /*PURE-START*/
-  function esc(v) {
-    return (v == null ? "" : String(v)).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  }
-  const str = (v) => (typeof v === "string" && v.trim() ? v.trim() : (typeof v === "number" && Number.isFinite(v) ? String(v) : null));
-  const numOrNull = (v) => ((typeof v === "number") || (typeof v === "string" && v.trim() !== "")) && Number.isFinite(Number(v)) && Number(v) >= 0 ? Number(v) : null;
-  function safeUrl(u) {
-    if (typeof u !== "string") return null;
-    try { const x = new URL(u.trim()); return x.protocol === "https:" || x.protocol === "http:" ? x.href : null; } catch { return null; }
-  }
-  // Suchbegriffe aus technischen Daten (nur wenn der Wert tatsächlich geliefert wurde)
-  function techWords(s) {
-    const w = [];
-    if (s.weapon_count != null) w.push(s.weapon_count > 0 ? `bewaffnung bewaffnet waffen waffenhalterungen ${s.weapon_count}-waffen` : "keine-waffen");
-    if (s.missile_count > 0) w.push("raketen bewaffnung");
-    if (s.shield_hp > 0) w.push("schild schilde schildkapazität verteidigung");
-    if (s.hull_hp > 0) w.push("rumpf panzerung");
-    if (s.scu_known && s.scu > 0) w.push("fracht cargo laderaum frachter");
-    if (s.crew_max === 1) w.push("solo einsitzer");
-    if (s.max_speed != null || s.scm_speed != null) w.push("geschwindigkeit mobilität");
-    return w;
-  }
-  // Suche: Wörter (UND) plus Wertfilter wie waffen>=4, scu>=100, schild>5000, crew<=2. Unbekannte Werte treffen nie.
-  const QKEY = { waffen: "weapon_count", raketen: "missile_count", schild: "shield_hp", rumpf: "hull_hp", crew: "crew_max", geschwindigkeit: "max_speed", masse: "mass", länge: "length" };
-  function matchQuery(s, q) {
-    for (const w of q.split(/\s+/).filter(Boolean)) {
-      const m = w.match(/^(waffen|raketen|schild|rumpf|crew|scu|geschwindigkeit|masse|länge)(>=|<=|>|<|:|=)(\d+(?:[.,]\d+)?)$/);
-      if (m) {
-        const v = m[1] === "scu" ? (s.scu_known ? s.scu : null) : s[QKEY[m[1]]];
-        if (v == null) return false;
-        const n = Number(m[3].replace(",", "."));
-        if (!({ ">=": v >= n, "<=": v <= n, ">": v > n, "<": v < n, ":": v >= n, "=": v === n })[m[2]]) return false;
-      } else if (!s._hay.includes(w)) return false;
-    }
-    return true;
-  }
-  // Unbekannt (null) ist nie 0: scuOf liefert nur für Filter/Sortierung 0, scu_known unterscheidet.
-  const scuOf = (s) => (Number(s.scu) > 0 ? Number(s.scu) : 0);
-  const ppScu = (s) => (s.price_ok && scuOf(s) > 0 && Number.isFinite(s.cheapest_price) ? s.cheapest_price / scuOf(s) : null);
-
-  // Optionale technische Felder. Werden nur angezeigt, wenn das Backend sie liefert (siehe Backend-Anforderungen).
-  const TECH = [
-    ["role", "Rolle", "", "t"], ["career", "Klasse", "", "t"], ["size_class", "Größenklasse", "", "t"],
-    ["length", "Länge", " m", "n"], ["beam", "Breite", " m", "n"], ["height", "Höhe", " m", "n"], ["mass", "Masse", " kg", "n"],
-    ["scm_speed", "SCM-Geschwindigkeit", " m/s", "n"], ["max_speed", "Max. Geschwindigkeit", " m/s", "n"],
-    ["weapon_count", "Waffenhalterungen", "", "n"], ["missile_count", "Raketen", "", "n"], ["shield_hp", "Schildkapazität", " HP", "n"], ["hull_hp", "Rumpfpunkte", " HP", "n"],
-    ["crew_min", "Crew min.", "", "n"], ["crew_max", "Crew max.", "", "n"],
-  ];
-  const GROUPS = { ov: ["role", "career", "size_class"], mob: ["length", "beam", "height", "mass", "scm_speed", "max_speed"], def: ["weapon_count", "missile_count", "shield_hp", "hull_hp"] };
-
-  function parseCrew(v) {
-    if (typeof v === "number" && Number.isFinite(v) && v >= 0) return { min: null, max: v };
-    if (typeof v === "string") {
-      const m = v.match(/^\s*(\d+)\s*(?:[-–—]\s*(\d+))?\s*$/);
-      if (m) { const a = +m[1], b = m[2] != null ? +m[2] : null; return b == null ? { min: null, max: a } : { min: Math.min(a, b), max: Math.max(a, b) }; }
-    }
-    return null;
-  }
-
-  // Zentrale Validierung: ungültige Einträge werden isoliert, der Rest bleibt nutzbar.
-  function normalizeShips(raw) {
-    const issues = [], out = [], seen = new Set();
-    if (!raw || typeof raw !== "object" || !Array.isArray(raw.ships)) return { ok: false, ships: [], issues: ["Antwort enthält keine Schiffsliste (ships)."] };
-    raw.ships.forEach((r, i) => {
-      if (!r || typeof r !== "object") { issues.push(`Eintrag ${i}: kein Objekt`); return; }
-      const id = str(r.id);
-      if (id == null) { issues.push(`Eintrag ${i}: ID fehlt`); return; }
-      if (seen.has(id)) { issues.push(`Doppelte ID ${id} ignoriert`); return; }
-      const name = str(r.name) || str(r.name_full);
-      if (!name) { issues.push(`ID ${id}: Name fehlt`); return; }
-      seen.add(id);
-      const notes = [];
-      const s = { ...r, id, name, name_full: str(r.name_full) || name, manufacturer: str(r.manufacturer) || "Unbekannt" };
-      if (!str(r.manufacturer)) notes.push("Hersteller unbekannt");
-      if (typeof r.available_ingame !== "boolean") notes.push("Verfügbarkeit nicht eindeutig (als nicht kaufbar behandelt)");
-      if (r.is_concept != null && typeof r.is_concept !== "boolean") notes.push("Concept-Status ungültig");
-      s.available_ingame = r.available_ingame === true;
-      s.is_concept = r.is_concept === true;
-      s.image_url = safeUrl(r.image_url); s.image_url_alt = safeUrl(r.image_url_alt); s.store_url = safeUrl(r.store_url);
-      s.pad_type = str(r.pad_type);
-      // Preise: nur endliche Werte > 0 mit Terminalnamen; 0/negativ/Text gelten als ungültig, nie als „gratis“.
-      if (r.all_prices != null && !Array.isArray(r.all_prices)) notes.push("Preisliste ungültig");
-      const prices = []; let bad = 0;
-      (Array.isArray(r.all_prices) ? r.all_prices : []).forEach((p) => {
-        const price = p && (typeof p.price === "number" || (typeof p.price === "string" && p.price.trim() !== "")) ? Number(p.price) : NaN;
-        const terminal = p && str(p.terminal);
-        if (Number.isFinite(price) && price > 0 && terminal) prices.push({ ...p, terminal, price }); else bad++;
-      });
-      prices.sort((a, b) => a.price - b.price || a.terminal.localeCompare(b.terminal, "de"));
-      if (bad) notes.push(`${bad} ungültige(r) Preiseintrag/-einträge ignoriert`);
-      const srcP = numOrNull(r.cheapest_price);
-      s.all_prices = prices;
-      if (prices.length) {
-        const min = prices[0].price;
-        s.best_terminals = prices.filter((p) => p.price === min).map((p) => p.terminal);
-        if (r.cheapest_price != null && srcP !== min) notes.push("Zusammenfassungspreis weicht von der Preisliste ab (Preisliste verwendet)");
-        if (r.cheapest_terminal && !s.best_terminals.includes(String(r.cheapest_terminal))) notes.push("Günstigstes Terminal weicht von der Preisliste ab");
-        Object.assign(s, { cheapest_price: min, cheapest_terminal: s.best_terminals[0], extra_locations: prices.length - 1, price_ok: true });
-      } else if (srcP != null && srcP > 0) {
-        notes.push("Preis nur als Zusammenfassung ohne Preisliste");
-        Object.assign(s, { cheapest_price: srcP, cheapest_terminal: str(r.cheapest_terminal), best_terminals: str(r.cheapest_terminal) ? [str(r.cheapest_terminal)] : [], extra_locations: Math.max(0, Math.floor(Number(r.extra_locations) || 0)), price_ok: true });
-      } else {
-        if (r.cheapest_price != null) notes.push("Preis ungültig");
-        Object.assign(s, { cheapest_price: null, cheapest_terminal: null, best_terminals: [], extra_locations: 0, price_ok: false });
-      }
-      if (s.available_ingame && !s.price_ok) notes.push("Als kaufbar markiert, aber ohne bestätigten Preis");
-      // SCU / Crew / Technik: null = unbekannt
-      s.scu = numOrNull(r.scu); s.scu_known = s.scu != null;
-      if (r.scu != null && r.scu !== "" && !s.scu_known) notes.push("SCU ungültig");
-      for (const [k, , , type] of TECH) {
-        if (r[k] == null || r[k] === "") { s[k] = null; continue; }
-        s[k] = type === "n" ? numOrNull(r[k]) : str(r[k]);
-        if (s[k] == null) notes.push(`Feld ${k} ungültig`);
-      }
-      const pc = parseCrew(r.crew);
-      if (s.crew_min == null && pc) s.crew_min = pc.min;
-      if (s.crew_max == null && pc) s.crew_max = pc.max;
-      s.crew = r.crew == null || r.crew === "" ? null : r.crew;
-      if (s.crew != null && !pc) notes.push("Crew-Angabe nicht auswertbar");
-      s.features = Array.isArray(r.features) ? r.features.map(str).filter(Boolean).slice(0, 20) : [];
-      s.notes = notes;
-      s._hay = [s.name, s.name_full, s.manufacturer, s.role, s.career, s.size_class, s.pad_type ? "pad " + s.pad_type : "", ...prices.map((p) => p.terminal), ...s.features, ...techWords(s)].filter(Boolean).join(" ").toLowerCase();
-      notes.forEach((n) => issues.push(`${name} (${id}): ${n}`));
-      out.push(s);
-    });
-    return { ok: true, ships: out, issues };
-  }
-
-  // Kaufberater: harte Kriterien schließen aus (mit Grund), weiche Wertung nur aus vorhandenen, normalisierten Daten.
-  function advisorRun(list, a) {
-    const budget = Number(a.budget) > 0 ? Number(a.budget) : null;
-    const minScu = Number(a.minScu) > 0 ? Number(a.minScu) : 0;
-    const cand = [], excluded = [];
-    for (const s of list) {
-      const ex = new Set(), met = [], miss = [];
-      if (a.buyOnly) {
-        if (!s.available_ingame) ex.add("Nicht im Spiel kaufbar");
-        else if (!s.price_ok) ex.add("Kein bestätigter Preis – Kaufbarkeit nicht prüfbar");
-        else met.push("Im Spiel kaufbar");
-      }
-      if (!a.concepts && s.is_concept) ex.add("Concept-Schiff");
-      if (a.maker && a.maker !== "all" && s.manufacturer !== a.maker) ex.add("Anderer Hersteller");
-      if (budget != null) {
-        if (!s.price_ok) ex.add("Kein bestätigter Preis – Budget nicht prüfbar");
-        else if (s.cheapest_price > budget) ex.add(`Über Budget (¤ ${formatAuec(s.cheapest_price)})`);
-        else met.push(`Im Budget (Rest ¤ ${formatAuec(budget - s.cheapest_price)})`);
-      }
-      if (minScu > 0) {
-        if (!s.scu_known) ex.add("SCU unbekannt – Mindest-Fracht nicht prüfbar");
-        else if (s.scu < minScu) ex.add(`Nur ${s.scu} SCU`);
-        else met.push(`Mindestens ${minScu} SCU (${s.scu})`);
-      }
-      if (a.crew === "solo") {
-        if (s.crew_min != null && s.crew_min > 1) ex.add(`Mindestens ${s.crew_min} Crew nötig`);
-        else if (s.crew_max === 1 || s.crew_min === 1) met.push("Solo möglich");
-        else miss.push("Mindest-Crew unbekannt (Solo-Eignung nicht belegt)");
-      }
-      if (a.crew === "multi") {
-        if (s.crew_max == null) miss.push("Crew-Größe unbekannt");
-        else if (s.crew_max < 2) ex.add("Nur 1 Crew-Platz");
-        else met.push(`Platz für ${s.crew_max} Crew`);
-      }
-      if (a.role && a.role !== "all") {
-        if (!s.role) ex.add("Rolle unbekannt – nicht prüfbar");
-        else if (s.role !== a.role) ex.add(`Rolle: ${s.role}`);
-        else met.push(`Rolle ${s.role}`);
-      }
-      const mw = Number(a.minWeapons) > 0 ? Number(a.minWeapons) : 0;
-      if (mw > 0) {
-        if (s.weapon_count == null) ex.add("Waffendaten unbekannt – nicht prüfbar");
-        else if (s.weapon_count < mw) ex.add(`Nur ${s.weapon_count} Waffenhalterungen`);
-        else met.push(`Mindestens ${mw} Waffenhalterungen (${s.weapon_count})`);
-      }
-      if (!s.price_ok) miss.push("bestätigter Preis");
-      if (!s.scu_known) miss.push("SCU");
-      if (ex.size) excluded.push({ s, reasons: [...ex] }); else cand.push({ s, met, miss });
-    }
-    const norm = (vals, inv) => {
-      const v = vals.filter((x) => x != null);
-      if (!v.length) return vals.map(() => null);
-      const lo = Math.min(...v), hi = Math.max(...v);
-      return vals.map((x) => (x == null ? null : hi === lo ? 1 : inv ? (hi - x) / (hi - lo) : (x - lo) / (hi - lo)));
-    };
-    const N = [norm(cand.map((c) => (c.s.price_ok ? c.s.cheapest_price : null)), true), norm(cand.map((c) => (c.s.scu_known ? c.s.scu : null)), false), norm(cand.map((c) => ppScu(c.s)), true)];
-    const names = ["Preis", "Fracht", "Preis/SCU"], pk = { price: 0, cargo: 1, ppscu: 2 }[a.priority] ?? 0;
-    cand.forEach((c, i) => {
-      const parts = N.map((arr, k) => [names[k], arr[i], k === pk ? 3 : 1]).filter((x) => x[1] != null);
-      const w = parts.reduce((t, x) => t + x[2], 0);
-      c.score = w ? parts.reduce((t, x) => t + x[1] * x[2], 0) / w : null;
-      c.parts = parts.map((x) => [x[0], Math.round(x[1] * 100)]);
-      c.limited = N[pk][i] == null;
-    });
-    const price = (c) => (c.s.price_ok ? c.s.cheapest_price : Infinity);
-    cand.sort((x, y) => {
-      if (a.sort === "price") return price(x) - price(y);
-      if (a.sort === "scu") return (y.s.scu ?? -1) - (x.s.scu ?? -1);
-      return (y.score ?? -1) - (x.score ?? -1) || price(x) - price(y);
-    });
-    return { results: cand, excluded };
-  }
-  /*PURE-END*/
 
   function makerColor(name) {
     let h = 7;
@@ -1004,23 +763,13 @@
     if (p.has("q")) state.search = p.get("q");
     if (p.has("m")) state.manufacturer = p.get("m");
     if (["ingame", "pledge"].includes(p.get("a"))) state.availability = p.get("a");
-    if (["name-asc", "name-desc", "price-asc", "price-desc", "scu-desc", "ppscu-asc", "manufacturer"].includes(p.get("s"))) state.sort = p.get("s");
+    if (p.has("s")) state.sort = p.get("s");
     if (["grid", "list"].includes(p.get("v"))) state.view = p.get("v");
     if (p.has("p") && Number(p.get("p")) > 0) state.maxPrice = Number(p.get("p"));
     if (p.has("scu") && Number(p.get("scu")) > 0) state.minScu = Number(p.get("scu"));
     if (p.has("pad")) state.pad = p.get("pad");
     if (["only", "hide"].includes(p.get("c"))) state.concept = p.get("c");
     if (p.get("fav") === "1") state.favOnly = true;
-    if (p.has("r")) state.role = p.get("r");
-    if (p.get("adv") === "1") {
-      pendingAdvisor = true;
-      const pick = (k, ok) => (p.has(k) && ok(p.get(k)) ? p.get(k) : null);
-      const b = pick("ab", (v) => Number(v) > 0), sc = pick("as", (v) => Number(v) > 0), w = pick("aw", (v) => Number(v) > 0);
-      if (b) adv.budget = b; if (sc) adv.minScu = sc; if (w) adv.minWeapons = w;
-      adv.crew = pick("ac", (v) => ["solo", "multi"].includes(v)) || "any";
-      adv.maker = p.get("am") || "all";
-      adv.priority = pick("ap", (v) => ["price", "cargo", "ppscu"].includes(v)) || "price";
-    }
     if (p.has("ship")) pendingShip = p.get("ship");
   }
   function writeHash() {
@@ -1035,12 +784,6 @@
     if (state.pad !== "all") p.set("pad", state.pad);
     if (state.concept !== "all") p.set("c", state.concept);
     if (state.favOnly) p.set("fav", "1");
-    if (state.role !== "all") p.set("r", state.role);
-    if (modalMode === "advisor") {
-      p.set("adv", "1");
-      [["ab", adv.budget], ["as", adv.minScu], ["aw", adv.minWeapons], ["ac", adv.crew !== "any" ? adv.crew : ""], ["am", adv.maker !== "all" ? adv.maker : ""], ["ap", adv.priority]]
-        .forEach(([k, v]) => { if (v !== "" && v != null) p.set(k, v); });
-    }
     if (openId && modalMode === "ship") p.set("ship", openId);
     const h = p.toString();
     try { history.replaceState(null, "", h ? "#" + h : location.pathname + location.search); } catch { /* z. B. file:// */ }
@@ -1052,71 +795,52 @@
   }
 
   /* ───── Daten laden ───── */
-  let issues = [], fetchedAt = 0, refreshFailed = false, loadSeq = 0, inflight = null, lastError = "";
+  let loading = false;
   async function loadShips(isRefresh) {
+    // Schnelles Mehrfachklicken: ein laufender Abruf genügt, weitere Klicks werden ignoriert
+    // (verhindert abgebrochene Requests und unnötige Last).
+    if (loading) return;
+    loading = true;
     clearTimeout(retryTimer);
-    if (inflight) { if (!isRefresh) return; inflight.abort(); } // kein paralleler Abruf; manueller Abruf ersetzt den laufenden
-    const ctrl = new AbortController();
-    inflight = ctrl;
-    const seq = ++loadSeq;
-    const timer = setTimeout(() => ctrl.abort(), 20000);
     if (isRefresh) el.refreshBtn.classList.add("spinning");
     if (firstLoad && failedAttempts === 0) {
       el.statusText.textContent = "Verbindung zur Schiffsdatenbank wird hergestellt…";
       showSkeleton();
     }
     try {
-      const res = await fetch("/api/ships", { cache: "no-store", signal: ctrl.signal });
+      const res = await fetch("/api/ships", { cache: "no-store", signal: AbortSignal.timeout(20000) });
       if (!res.ok) throw new Error("HTTP " + res.status);
-      let data;
-      try { data = await res.json(); } catch { throw new Error("Antwort ist kein gültiges JSON"); }
-      if (seq !== loadSeq) return; // veraltete Antwort eines abgelösten Abrufs
-      const v = normalizeShips(data);
-      if (!v.ok) throw new Error(v.issues[0]);
-      if (v.ships.length === 0 && ships.length > 0) throw new Error("Leere Schiffsliste – letzter Datenstand bleibt erhalten");
-      issues = v.issues;
-      if (issues.length) console.warn(`[Schiffsdaten] ${issues.length} Hinweis(e) bei der Validierung:`, issues);
+      const data = await res.json();
       // Hat sich serverseitig nichts geändert, nur die Statuszeile auffrischen
-      const unchanged = Boolean(data.last_updated) && data.last_updated === meta.last_updated && !refreshFailed;
-      ships = v.ships;
-      meta = { ...data }; delete meta.ships;
-      fetchedAt = Date.now(); refreshFailed = false; lastError = ""; failedAttempts = 0;
+      // (spart Flackern durch unnötiges Neuzeichnen aller Karten).
+      const unchanged = Boolean(data.last_updated) && data.last_updated === meta.last_updated;
+      ships = data.ships || [];
+      meta = data;
+      failedAttempts = 0;
       const wasFirst = firstLoad;
       firstLoad = false;
       if (!unchanged || wasFirst) onDataChanged();
       renderStatus();
-      $("srStatus").textContent = `${ships.length} Schiffe geladen${issues.length ? `, ${issues.length} Datenhinweise` : ""}.`;
       if (!unchanged || wasFirst) {
         render();
-        if (pendingShip != null) {
-          const id = pendingShip; pendingShip = null;
-          if (byId(id)) openShip(id); else { toast("Schiff nicht gefunden"); writeHash(); }
-        }
-        if (pendingAdvisor) { pendingAdvisor = false; openAdvisor(); }
+        if (pendingShip != null) { const id = pendingShip; pendingShip = null; if (byId(id)) openShip(id); }
       }
     } catch (err) {
-      if (seq !== loadSeq) return;
-      console.warn("Schiffsdaten konnten nicht geladen werden:", err && err.message ? err.message : err);
-      lastError = err && err.name === "AbortError" ? "Zeitüberschreitung" : (err && err.message) || "Unbekannter Fehler";
+      console.warn("Schiffsdaten konnten nicht geladen werden:", err);
       if (ships.length === 0) {
-        // Noch kein Datenstand: erst Skeleton, ab dem 2. Fehlversuch Meldung; Wiederholung mit wachsendem Abstand (3–30 s).
+        // Noch kein Datenstand: Server startet evtl. gerade oder UEX war nicht erreichbar.
+        // Zuerst das Skeleton behalten (ein Kaltstart dauert meist nur Sekunden), ab dem
+        // 2. Fehlversuch die Meldung zeigen. Im Hintergrund wird mit wachsendem Abstand
+        // weiterprobiert (3, 6, 12, 24, max. 30 Sekunden).
         failedAttempts += 1;
         if (failedAttempts >= 2) {
-          const invalid = /Schiffsliste|JSON/.test(lastError);
-          el.statusText.textContent = invalid ? "Ungültige Antwort der Datenquelle" : "Datenquelle gerade nicht erreichbar";
-          $("srStatus").textContent = el.statusText.textContent;
+          el.statusText.textContent = "Datenquelle gerade nicht erreichbar";
           showError();
         }
         retryTimer = setTimeout(() => loadShips(), Math.min(3000 * 2 ** (failedAttempts - 1), 30000));
-      } else {
-        // Gültige Daten bleiben stehen; der Fehler wird nur gekennzeichnet.
-        refreshFailed = true;
-        renderStatus();
-        if (isRefresh) toast("Aktualisierung fehlgeschlagen – letzter Datenstand bleibt");
       }
     } finally {
-      clearTimeout(timer);
-      if (inflight === ctrl) inflight = null;
+      loading = false;
       if (isRefresh) setTimeout(() => el.refreshBtn.classList.remove("spinning"), 400);
     }
   }
@@ -1129,9 +853,6 @@
     compare = compare.filter((id) => byId(id));
     const pads = [...new Set(ships.map((s) => s.pad_type).filter(Boolean).map(String))].sort((a, b) => a.localeCompare(b, "de"));
     el.padSelect.innerHTML = '<option value="all">Alle Pads</option>' + pads.map((p) => `<option value="${esc(p)}">Pad ${esc(p)}</option>`).join("");
-    const roles = [...new Set(ships.map((s) => s.role).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
-    $("roleField").hidden = roles.length === 0;
-    $("roleSelect").innerHTML = '<option value="all">Alle Rollen</option>' + roles.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join("");
     el.priceRange.disabled = priceBounds.max <= priceBounds.min;
     el.scuRange.disabled = maxScu <= 0;
     syncControls();
@@ -1140,8 +861,8 @@
 
   /* ───── Kopfbereich: Kennzahlen ───── */
   function renderStatus() {
-    const total = ships.length; // aus validierten Daten abgeleitet, nicht aus Server-Zusammenfassung
-    const ingame = ships.filter((s) => s.available_ingame).length;
+    const total = meta.total_ships ?? ships.length;
+    const ingame = meta.ingame_count ?? ships.filter((s) => s.available_ingame).length;
     const pct = total > 0 ? Math.round((ingame / total) * 100) : 0;
     const makers = new Set(ships.map((s) => s.manufacturer)).size;
     const priced = ships.filter((s) => s.cheapest_price != null && s.cheapest_price > 0);
@@ -1157,15 +878,8 @@
     if (priciest) tiles += `<button type="button" class="tile" data-ship="${esc(priciest.id)}" title="Teuerstes Schiff öffnen"><strong class="t-price">¤ ${formatCompact(priciest.cheapest_price)}</strong><span class="t-label">Teuerstes: ${esc(priciest.name)}</span></button>`;
     if (avg != null) tiles += `<div class="tile"><strong class="t-price">¤ ${formatCompact(avg)}</strong><span class="t-label">Durchschnittspreis</span></div>`;
 
-    const t = Date.parse(meta.last_updated), age = Number.isFinite(t) ? Date.now() - t : null;
-    const stale = meta.stale === true || (age != null && age > 24 * 3600 * 1000);
-    let live = `<span class="pill pill-live"><span class="live-dot" aria-hidden="true"></span>Datenstand ${relativeTime(meta.last_updated)}</span>`;
-    if (fetchedAt) live += `<span class="pill" title="Zeitpunkt des letzten erfolgreichen Abrufs in diesem Browser">Abgerufen ${new Date(fetchedAt).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })}</span>`;
-    if (meta.game_version || meta.patch) live += `<span class="pill">Patch ${esc(meta.game_version || meta.patch)}</span>`;
-    if (meta.source) live += `<span class="pill">Quelle: ${esc(meta.source)}</span>`;
-    if (stale) live += `<span class="pill pill-warn" title="Datenstand ist älter als 24 Stunden oder der Server meldet einen fehlgeschlagenen Abruf bei der Quelle.">⚠ Stand evtl. veraltet</span>`;
-    if (issues.length) live += `<span class="pill pill-info" title="${esc(issues.slice(0, 8).join("\n"))}">Teilweise unvollständig: ${issues.length} Hinweis(e)</span>`;
-    if (refreshFailed) live += `<span class="pill pill-warn" title="${esc(lastError)}">⚠ Aktualisierung fehlgeschlagen – letzter Datenstand wird angezeigt</span>`;
+    let live = `<span class="pill pill-live"><span class="live-dot" aria-hidden="true"></span>Aktualisiert ${relativeTime(meta.last_updated)}</span>`;
+    if (meta.stale) live += `<span class="pill pill-warn" title="Der letzte Abruf bei UEX ist fehlgeschlagen – angezeigt wird der letzte bekannte Stand.">⚠ Stand evtl. veraltet</span>`;
     el.statusText.innerHTML = `<div class="tiles">${tiles}</div><div class="live-row">${live}</div>`;
 
     if (!statsAnimated) {
@@ -1188,7 +902,7 @@
   function applyFilters(forCounts) {
     const q = state.search.trim().toLowerCase();
     let list = ships.filter((s) => {
-      if (q && !matchQuery(s, q)) return false;
+      if (q && !((s.name || "").toLowerCase().includes(q) || (s.name_full || "").toLowerCase().includes(q) || (s.manufacturer || "").toLowerCase().includes(q))) return false;
       if (!forCounts && state.manufacturer !== "all" && s.manufacturer !== state.manufacturer) return false;
       if (state.availability === "ingame" && !s.available_ingame) return false;
       if (state.availability === "pledge" && s.available_ingame) return false;
@@ -1197,12 +911,11 @@
       if (state.pad !== "all" && String(s.pad_type || "") !== state.pad) return false;
       if (state.concept === "only" && !s.is_concept) return false;
       if (state.concept === "hide" && s.is_concept) return false;
-      if (state.role !== "all" && s.role !== state.role) return false;
       if (state.favOnly && !favs.has(String(s.id))) return false;
       return true;
     });
     if (forCounts) return list;
-    const hasPrice = (s) => s.price_ok;
+    const hasPrice = (s) => s.cheapest_price != null;
     const byName = (a, b) => (a.name || "").localeCompare(b.name || "", "de");
     list = [...list].sort((a, b) => {
       switch (state.sort) {
@@ -1214,7 +927,7 @@
         case "price-desc":
           if (hasPrice(a) !== hasPrice(b)) return hasPrice(a) ? -1 : 1;
           return (b.cheapest_price ?? 0) - (a.cheapest_price ?? 0);
-        case "scu-desc": if (a.scu_known !== b.scu_known) return a.scu_known ? -1 : 1; return scuOf(b) - scuOf(a) || byName(a, b);
+        case "scu-desc": return scuOf(b) - scuOf(a) || byName(a, b);
         case "ppscu-asc": {
           const pa = ppScu(a), pb = ppScu(b);
           if ((pa != null) !== (pb != null)) return pa != null ? -1 : 1;
@@ -1232,8 +945,6 @@
     const alt = img.dataset.alt;
     if (alt) { delete img.dataset.alt; img.src = alt; } else { img.remove(); }
   };
-  // error-Ereignisse bubblen nicht -> Capture-Listener ersetzt die Inline-onerror-Attribute
-  document.addEventListener("error", (e) => { const t = e.target; if (t && t.tagName === "IMG" && t.dataset && "imgfb" in t.dataset) window.shipImgFallback(t); }, true);
 
   /* ───── Karten ───── */
   function specsHtml(s, withPerScu) {
@@ -1246,33 +957,29 @@
   }
   function cardSpecs(s) {
     const items = specsHtml(s, false);
-    const own = hangar[s.id] && hangar[s.id].owned ? '<span class="spec">✓ Im Hangar</span>' : "";
-    if (!items.length && !s.notes.length && !own) return "";
-    const warn = s.notes.length ? `<span class="spec" title="${esc(s.notes.join("; "))}">⚠ Datenhinweis</span>` : "";
-    return `<div class="specs">${items.map(([v, l]) => `<span class="spec"><b>${esc(v)}</b>${l}</span>`).join("")}${warn}${own}</div>`;
+    if (!items.length) return "";
+    return `<div class="specs">${items.map(([v, l]) => `<span class="spec"><b>${esc(v)}</b>${l}</span>`).join("")}</div>`;
   }
 
   function cardHtml(s) {
     const id = esc(s.id);
     const initial = esc((s.name || "?").charAt(0).toUpperCase());
     const img = s.image_url
-      ? `<img src="${esc(s.image_url)}"${s.image_url_alt ? ` data-alt="${esc(s.image_url_alt)}"` : ""} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-imgfb="">`
+      ? `<img src="${esc(s.image_url)}"${s.image_url_alt ? ` data-alt="${esc(s.image_url_alt)}"` : ""} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="shipImgFallback(this)">`
       : "";
     const tag = s.is_concept ? '<span class="tag">Concept</span>' : "";
     const badge = s.available_ingame ? '<span class="badge badge-ingame">Kaufbar</span>' : '<span class="badge badge-pledge">Nur Pledge</span>';
     const isFav = favs.has(String(s.id));
     const inCmp = compare.includes(String(s.id));
-    const gauge = (s.available_ingame && s.price_ok && priceBounds.max > 0)
+    const gauge = (s.available_ingame && s.cheapest_price != null && priceBounds.max > 0)
       ? `<div class="gauge" title="Preis im Verhältnis zum teuersten Schiff"><i style="width:${clamp(Math.round(Math.sqrt(s.cheapest_price / priceBounds.max) * 100), 4, 100)}%"></i></div>` : "";
-    const priceBlock = (s.available_ingame && s.price_ok)
+    const priceBlock = s.available_ingame
       ? `<div class="price-block">
            <span class="price"><span class="cur">¤</span>${formatAuec(s.cheapest_price)}<span class="unit">aUEC</span></span>
-           <span class="terminal">${esc(s.cheapest_terminal || "Terminal unbekannt")}${s.extra_locations > 0 ? ` <span class="extra" title="Auch an ${s.extra_locations} weiteren Terminals kaufbar – Klick für alle Preise">+${s.extra_locations} weitere</span>` : ""}</span>
+           <span class="terminal">${esc(s.cheapest_terminal)}${s.extra_locations > 0 ? ` <span class="extra" title="Auch an ${s.extra_locations} weiteren Terminals kaufbar – Klick für alle Preise">+${s.extra_locations} weitere</span>` : ""}</span>
            ${gauge}
          </div>`
-      : s.available_ingame
-        ? `<div class="price-block"><span class="price unavailable">Kein bestätigter Preis</span><span class="terminal">Als kaufbar markiert, Preis unbekannt</span></div>`
-        : `<div class="price-block"><span class="price unavailable">Nicht im Spiel kaufbar</span><span class="terminal">Nur im Pledge-Store</span></div>`;
+      : `<div class="price-block"><span class="price unavailable">Nicht im Spiel kaufbar</span><span class="terminal">Nur im Pledge-Store</span></div>`;
     return `
       <article class="card" data-id="${id}" style="--mk:${makerColor(s.manufacturer)}">
         <div class="card-image">
@@ -1367,7 +1074,6 @@
     if (state.concept === "only") out.push(["Nur Concepts", () => { state.concept = "all"; }]);
     if (state.concept === "hide") out.push(["Ohne Concepts", () => { state.concept = "all"; }]);
     if (state.favOnly) out.push(["Favoriten", () => { state.favOnly = false; }]);
-    if (state.role !== "all") out.push([`Rolle: ${state.role}`, () => { state.role = "all"; }]);
     return out;
   }
   let afActions = [];
@@ -1379,13 +1085,13 @@
       : "";
   }
   function updateAdvDot() {
-    const on = state.maxPrice != null || state.minScu > 0 || state.pad !== "all" || state.concept !== "all" || state.role !== "all";
+    const on = state.maxPrice != null || state.minScu > 0 || state.pad !== "all" || state.concept !== "all";
     el.advToggle.classList.toggle("has-active", on);
     $("filterToggle").classList.toggle("has-active", on || state.availability !== "all" || state.favOnly);
   }
 
   function resetFilters() {
-    Object.assign(state, { search: "", manufacturer: "all", availability: "all", maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false, role: "all" });
+    Object.assign(state, { search: "", manufacturer: "all", availability: "all", maxPrice: null, minScu: 0, pad: "all", concept: "all", favOnly: false });
     el.search.value = "";
     syncControls();
     render();
@@ -1427,7 +1133,6 @@
     el.padSelect.value = [...el.padSelect.options].some((o) => o.value === state.pad) ? state.pad : "all";
     if (el.padSelect.value === "all" && state.pad !== "all" && ships.length) state.pad = "all";
     el.conceptSelect.value = state.concept;
-    $("roleSelect").value = [...$("roleSelect").options].some((o) => o.value === state.role) ? state.role : "all";
     el.priceRange.value = priceToSlider(state.maxPrice);
     el.priceOut.textContent = state.maxPrice == null ? "Kein Limit" : `bis ¤ ${formatCompact(state.maxPrice)}`;
     el.scuRange.value = scuToSlider(state.minScu);
@@ -1461,7 +1166,7 @@
     const list = compare.map(byId).filter(Boolean);
     el.tray.classList.toggle("show", list.length > 0);
     el.trayLabel.textContent = `${list.length} von ${MAX_COMPARE} gewählt`;
-    el.trayItems.innerHTML = list.map((s) => `<button type="button" class="tray-item" data-rm="${esc(s.id)}" aria-label="${esc(s.name)} entfernen" title="${esc(s.name)} entfernen">${s.image_url ? `<img src="${esc(s.image_url)}" alt="" referrerpolicy="no-referrer" data-imgfb="">` : ""}${esc((s.name || "?").charAt(0))}</button>`).join("");
+    el.trayItems.innerHTML = list.map((s) => `<button type="button" class="tray-item" data-rm="${esc(s.id)}" aria-label="${esc(s.name)} entfernen" title="${esc(s.name)} entfernen">${s.image_url ? `<img src="${esc(s.image_url)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}${esc((s.name || "?").charAt(0))}</button>`).join("");
     el.cmpOpen.disabled = list.length < 2;
   }
 
@@ -1480,18 +1185,18 @@
     const top = prices.reduce((m, p) => Math.max(m, p.price), 0) || 1;
     const rows = prices.length
       ? prices.map((p, i) => `
-          <li class="price-row${p.price === best ? " best" : ""}">
+          <li class="price-row${i === 0 ? " best" : ""}">
             <span class="bar" style="--w:${Math.round((p.price / top) * 100)}%"></span>
-            <span class="p-term">${esc(p.terminal)}${p.price === best && prices.length > 1 ? '<span class="best-tag">Günstigster</span>' : ""}</span>
-            ${p.price > best ? `<span class="p-delta">+${formatAuec(p.price - best)}</span>` : ""}
+            <span class="p-term">${esc(p.terminal)}${i === 0 && prices.length > 1 ? '<span class="best-tag">Günstigster</span>' : ""}</span>
+            ${i > 0 && best ? `<span class="p-delta">+${formatAuec(p.price - best)}</span>` : ""}
             <span class="p-val">¤ ${formatAuec(p.price)}</span>
             <button type="button" class="p-copy" data-copy="${Math.round(p.price)}" aria-label="Preis kopieren" title="Preis kopieren"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="3"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg></button>
           </li>`).join("")
-      : `<li class="none">${s.available_ingame ? "Kein bestätigter In-Game-Preis geliefert." : "Kein In-Game-Kaufpreis bekannt."} Echtgeld-Pledge-Preise werden hier nicht geführt.</li>`;
+      : `<li class="none">Aktuell an keinem Terminal im Spiel kaufbar.</li>`;
     const stats = specsHtml(s, true).map(([v, l]) => `<div class="stat-box"><b>${esc(v)}</b><span>${l}</span></div>`).join("");
     const same = ships.filter((x) => x.manufacturer === s.manufacturer && String(x.id) !== String(s.id)).slice(0, 8);
     const imgBlock = s.image_url
-      ? `<div class="modal-image"><img src="${esc(s.image_url)}"${s.image_url_alt ? ` data-alt="${esc(s.image_url_alt)}"` : ""} alt="${esc(s.name_full)}" referrerpolicy="no-referrer" data-imgfb=""></div>`
+      ? `<div class="modal-image"><img src="${esc(s.image_url)}"${s.image_url_alt ? ` data-alt="${esc(s.image_url_alt)}"` : ""} alt="${esc(s.name_full)}" referrerpolicy="no-referrer" onerror="shipImgFallback(this)"></div>`
       : `<div class="modal-spacer"></div>`;
     el.modalBody.innerHTML = `
       ${imgBlock}
@@ -1503,10 +1208,8 @@
           ${s.is_concept ? '<span class="tag">Concept</span>' : ""}
         </div>
         ${stats ? `<div class="stat-grid">${stats}</div>` : ""}
-        <h3 class="section-title">Preise an Terminals <small>${prices.length ? `${prices.length} ${prices.length === 1 ? "Terminal" : "Terminals"}` : ""}</small></h3>
+        <p class="section-title">Preise an Terminals <small>${prices.length ? `${prices.length} ${prices.length === 1 ? "Terminal" : "Terminals"}` : ""}</small></p>
         <ul class="price-list">${rows}</ul>
-        <p class="note">Alle Preise in aUEC (In-Game). Echtgeld-Pledge-Preise sind nicht enthalten.</p>
-        ${sectionsHtml(s)}
         <div class="modal-actions">
           ${s.store_url ? `<a class="btn btn-primary" href="${esc(s.store_url)}" target="_blank" rel="noopener">Im Pledge-Store ansehen ↗</a>` : ""}
           <button id="mCmp" class="btn" type="button" aria-pressed="${compare.includes(String(s.id))}"></button>
@@ -1514,7 +1217,6 @@
         ${same.length ? `<div class="more-from"><p class="section-title">Mehr von ${esc(s.manufacturer)}</p><div class="chips-row">${same.map((x) => `<button type="button" class="chip" data-goto="${esc(x.id)}">${esc(x.name)}</button>`).join("")}</div></div>` : ""}
       </div>`;
     updateMCmpLabel();
-    fillHangar(openId);
     el.modalFav.setAttribute("aria-pressed", String(favs.has(String(s.id))));
     const list = navList();
     const idx = list.findIndex((x) => String(x.id) === openId);
@@ -1547,16 +1249,15 @@
     const rowsDef = [
       ["Hersteller", (s) => esc(s.manufacturer), () => null, null],
       ["Status", (s) => (s.available_ingame ? "Kaufbar" : "Nur Pledge"), () => null, null],
-      ["Günstigster Preis", (s) => (s.price_ok ? `<span class="p">¤ ${formatAuec(s.cheapest_price)}</span>` : "Kein bestätigter Preis"), (s) => (s.price_ok ? s.cheapest_price : null), "low"],
-      ["Terminal", (s) => esc(s.best_terminals.join(" / ") || "Keine Daten"), () => null, null],
-      ["Laderaum (SCU)", (s) => (s.scu_known ? esc(s.scu) : "Keine Daten"), (s) => (s.scu_known ? s.scu : null), "high"],
-      ["Preis pro SCU", (s) => { const p = ppScu(s); return p != null ? `¤ ${formatAuec(p)}` : "Nicht berechenbar"; }, ppScu, "low"],
-      ["Crew", (s) => esc(s.crew ?? "Keine Daten"), () => null, null],
-      ["Landepad", (s) => esc(s.pad_type || "Keine Daten"), () => null, null],
+      ["Günstigster Preis", (s) => (s.cheapest_price != null ? `<span class="p">¤ ${formatAuec(s.cheapest_price)}</span>` : "–"), (s) => s.cheapest_price, "low"],
+      ["Terminal", (s) => esc(s.cheapest_terminal || "–"), () => null, null],
+      ["Laderaum (SCU)", (s) => (scuOf(s) ? esc(s.scu) : "–"), (s) => (scuOf(s) || null), "high"],
+      ["Preis pro SCU", (s) => { const p = ppScu(s); return p != null ? `¤ ${formatAuec(p)}` : "–"; }, ppScu, "low"],
+      ["Crew", (s) => esc(s.crew || "–"), () => null, null],
+      ["Landepad", (s) => esc(s.pad_type || "–"), () => null, null],
       ["Concept", (s) => (s.is_concept ? "Ja" : "Nein"), () => null, null],
-      ...extraCompareRows(list),
     ];
-    const head = list.map((s) => `<th scope="col"><div class="c-head"><div class="c-img">${s.image_url ? `<img src="${esc(s.image_url)}" alt="" referrerpolicy="no-referrer" data-imgfb="">` : ""}</div><span class="c-name">${esc(s.name)}</span><button type="button" class="c-rm" data-rm="${esc(s.id)}">Entfernen</button></div></th>`).join("");
+    const head = list.map((s) => `<th scope="col"><div class="c-head"><div class="c-img">${s.image_url ? `<img src="${esc(s.image_url)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()">` : ""}</div><span class="c-name">${esc(s.name)}</span><button type="button" class="c-rm" data-rm="${esc(s.id)}">Entfernen</button></div></th>`).join("");
     const body = rowsDef.map(([label, fmt, score, mode]) => {
       const vals = list.map(score);
       const t = mode ? best(vals, mode) : null;
@@ -1566,7 +1267,7 @@
       <div class="modal-spacer"></div>
       <div class="modal-content">
         <h2 id="modalTitle">Schiffe vergleichen</h2>
-        <p class="modal-meta">Grün markiert wird nur bei klarer Regel und mindestens zwei vorhandenen Werten: niedrigster Preis, größter Laderaum, günstigster Preis pro SCU, höchste Geschwindigkeit. Der Preis pro SCU ist nur eine Vergleichskennzahl.</p>
+        <p class="modal-meta">Grün markiert ist jeweils der beste Wert: niedrigster Preis, größter Laderaum, günstigster Preis pro SCU.</p>
         <div class="cmp-wrap"><table class="cmp"><thead><tr><th scope="col"></th>${head}</tr></thead><tbody>${body}</tbody></table></div>
       </div>`;
     el.modal_scroll();
@@ -1591,167 +1292,20 @@
     if (next) openShip(next.id);
   }
 
-  /* ───── Detail: technische Abschnitte & lokaler Hangar ───── */
-  let hangar = LS.get("sc_hangar", {}); if (!hangar || typeof hangar !== "object" || Array.isArray(hangar)) hangar = {};
-  const kv = (l, v) => `<div${v == null || v === "" ? ' class="nd"' : ""}><span>${esc(l)}</span><b>${v == null || v === "" ? "Keine Daten" : esc(v)}</b></div>`;
-  const techVal = (s, k) => { const d = TECH.find((t) => t[0] === k); return s[k] == null ? null : d[3] === "n" ? nfDE.format(s[k]) + d[2] : s[k]; };
-  const metaDate = () => (meta.last_updated && Number.isFinite(Date.parse(meta.last_updated)) ? new Date(meta.last_updated).toLocaleString("de-DE") : null);
-  function sectionsHtml(s) {
-    const grp = (keys) => keys.map((k) => kv(TECH.find((t) => t[0] === k)[1], techVal(s, k)));
-    const has = (keys) => keys.some((k) => s[k] != null);
-    const sec = (title, items, ok) => `<section class="sec"><h3 class="section-title">${title}</h3><div class="kv">${items.join("")}</div>${ok ? "" : '<p class="note">Die Datenquelle liefert hierzu aktuell keine Werte (Backend-Erweiterung nötig).</p>'}</section>`;
-    const crew = s.crew_min != null && s.crew_max != null && s.crew_min !== s.crew_max ? `${s.crew_min}–${s.crew_max}` : (s.crew ?? (s.crew_max != null ? String(s.crew_max) : null));
-    return sec("Übersicht &amp; Rolle", [...grp(GROUPS.ov), kv("Concept", s.is_concept ? "Ja" : "Nein"), kv("In-Game kaufbar", s.available_ingame ? (s.price_ok ? "Ja, bestätigter Preis" : "Als kaufbar markiert, ohne bestätigten Preis") : "Nein")], true)
-      + sec("Größe &amp; Mobilität", grp(GROUPS.mob), has(GROUPS.mob))
-      + sec("Bewaffnung &amp; Verteidigung", grp(GROUPS.def), has(GROUPS.def))
-      + sec("Fracht, Crew &amp; Ausstattung", [kv("Fracht", s.scu_known ? `${nfDE.format(s.scu)} SCU` : null), kv("Crew", crew), kv("Landepad", s.pad_type ? "Pad " + s.pad_type : null), kv("Ausstattung", s.features.length ? s.features.join(", ") : null)], true)
-      + sec("Quellen &amp; Aktualität", [kv("Datenstand", metaDate()), kv("Quelle", meta.source || "UEX Corp (laut Seitenfuß)"), kv("Patch-Stand", meta.game_version || meta.patch || null), kv("Datenprüfung", s.notes.length ? s.notes.join("; ") : "Keine Auffälligkeiten")], true)
-      + `<section class="sec"><h3 class="section-title">Mein Hangar <small>nur lokal in diesem Browser, keine Geräte-Synchronisierung</small></h3><label class="chk"><input type="checkbox" id="hgOwned"> Bereits gekauft</label><label for="hgNote" class="note">Eigene Notiz</label><textarea id="hgNote" class="adv-in area" maxlength="500" rows="2"></textarea></section>`;
-  }
-  function fillHangar(id) {
-    const h = hangar[id] || {};
-    $("hgOwned").checked = h.owned === true;
-    $("hgNote").value = typeof h.note === "string" ? h.note : "";
-  }
-  function saveHangar() {
-    if (!openId) return;
-    const owned = $("hgOwned").checked, note = $("hgNote").value.slice(0, 500);
-    if (owned || note) hangar[openId] = { owned, note }; else delete hangar[openId];
-    LS.set("sc_hangar", hangar);
-  }
-
-  /* ───── Kaufberater ───── */
-  const adv = Object.assign({ budget: "", minScu: "", minWeapons: "", crew: "any", maker: "all", role: "all", priority: "price", sort: "fit", buyOnly: true, concepts: false }, LS.get("sc_advisor", {}));
-  function advisorShell() {
-    const makers = [...new Set(ships.map((s) => s.manufacturer))].sort((a, b) => a.localeCompare(b, "de"));
-    const roles = [...new Set(ships.map((s) => s.role).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
-    const opt = (v, l, cur) => `<option value="${esc(v)}"${String(cur) === String(v) ? " selected" : ""}>${esc(l)}</option>`;
-    return `<div class="modal-spacer"></div><div class="modal-content">
-      <h2 id="modalTitle">Kaufberater</h2>
-      <p class="modal-meta">Bewertet werden nur bestätigte In-Game-Preise (aUEC) und tatsächlich gelieferte Datenfelder. Fehlende Werte werden nicht geraten.</p>
-      <div class="modal-actions"><button id="advLink" class="btn" type="button">Link zu dieser Auswahl kopieren</button></div>
-      <div class="adv-form">
-        <div class="field"><label for="advBudget">Maximales Budget (aUEC)</label><input id="advBudget" class="adv-in" type="number" min="0" step="1000" inputmode="numeric" value="${esc(adv.budget)}"></div>
-        <div class="field"><label for="advScu">Mindest-Fracht (SCU)</label><input id="advScu" class="adv-in" type="number" min="0" step="1" inputmode="numeric" value="${esc(adv.minScu)}"></div>
-        <div class="field"><label for="advCrew">Spielweise</label><select id="advCrew" class="select">${opt("any", "Egal", adv.crew)}${opt("solo", "Solo", adv.crew)}${opt("multi", "Mehrspieler-Crew", adv.crew)}</select></div>
-        <div class="field"><label for="advMaker">Hersteller</label><select id="advMaker" class="select">${opt("all", "Alle", adv.maker)}${makers.map((m) => opt(m, m, adv.maker)).join("")}</select></div>
-        ${ships.some((s) => s.weapon_count != null) ? `<div class="field"><label for="advWpn">Kampf: Mindest-Waffenhalterungen</label><input id="advWpn" class="adv-in" type="number" min="0" step="1" inputmode="numeric" value="${esc(adv.minWeapons)}"></div>` : ""}
-        ${roles.length ? `<div class="field"><label for="advRole">Einsatzzweck / Rolle</label><select id="advRole" class="select">${opt("all", "Beliebig", adv.role)}${roles.map((m) => opt(m, m, adv.role)).join("")}</select></div>` : ""}
-        <div class="field"><label for="advPrio">Priorität</label><select id="advPrio" class="select">${opt("price", "Niedriger Preis", adv.priority)}${opt("cargo", "Viel Fracht", adv.priority)}${opt("ppscu", "Günstiger Preis pro SCU", adv.priority)}</select></div>
-        <div class="field"><label for="advSort">Sortierung</label><select id="advSort" class="select">${opt("fit", "Eignung", adv.sort)}${opt("price", "Preis", adv.sort)}${opt("scu", "Fracht (SCU)", adv.sort)}</select></div>
-        <div class="field"><span class="f-title">Auswahl</span><label class="chk"><input type="checkbox" id="advBuy"${adv.buyOnly ? " checked" : ""}> Nur im Spiel kaufbar</label><label class="chk"><input type="checkbox" id="advConc"${adv.concepts ? " checked" : ""}> Concept-Schiffe einbeziehen</label></div>
-      </div>
-      ${roles.length ? "" : '<p class="note">Einsatzzwecke (Kampf, Bergbau, Medizin …) sind nicht wählbar: Die Datenquelle liefert derzeit keine Rollen- oder Bewaffnungsdaten.</p>'}
-      <div id="advResults" aria-live="polite"></div></div>`;
-  }
-  function readAdvisor() {
-    adv.budget = $("advBudget").value; adv.minScu = $("advScu").value; adv.crew = $("advCrew").value; adv.maker = $("advMaker").value;
-    adv.minWeapons = $("advWpn") ? $("advWpn").value : ""; adv.role = $("advRole") ? $("advRole").value : "all"; adv.priority = $("advPrio").value; adv.sort = $("advSort").value;
-    adv.buyOnly = $("advBuy").checked; adv.concepts = $("advConc").checked;
-    LS.set("sc_advisor", adv);
-  }
-  const onAdvInput = debounce(() => { if (modalMode === "advisor" && $("advBudget")) { readAdvisor(); renderAdvisorResults(); writeHash(); } }, 120);
-  function resCard(r) {
-    const s = r.s;
-    const budget = Number(adv.budget) > 0 ? Number(adv.budget) : null;
-    const bstat = budget == null ? "Kein Budget gesetzt" : s.price_ok ? (s.cheapest_price <= budget ? "Im Budget" : "Über Budget") : "Budget nicht prüfbar";
-    const score = r.score != null ? `Eignung ${Math.round(r.score * 100)} %${r.limited ? " (eingeschränkt bewertbar)" : ""}` : "Nicht ausreichend bewertbar";
-    return `<article class="res">
-      <div class="c-img">${s.image_url ? `<img src="${esc(s.image_url)}" alt="" loading="lazy" referrerpolicy="no-referrer" data-imgfb="">` : ""}</div>
-      <div>
-        <h3 class="card-name">${esc(s.name_full)}</h3>
-        <p class="card-maker"><i class="mk" style="--mk:${makerColor(s.manufacturer)}"></i>${esc(s.manufacturer)}</p>
-        <p class="res-price">${s.price_ok ? `<span class="price"><span class="cur">¤</span>${formatAuec(s.cheapest_price)}<span class="unit">aUEC</span></span> <span class="terminal">${esc(s.cheapest_terminal || "Terminal unbekannt")}${s.extra_locations > 0 ? ` +${s.extra_locations} weitere` : ""}</span>` : '<span class="price unavailable">Kein bestätigter Preis</span>'}</p>
-        <p class="note"><b>${esc(score)}</b> · ${esc(bstat)}${scuOf(s) ? ` · ${nfDE.format(s.scu)} SCU` : ""}${s.crew != null ? ` · Crew ${esc(s.crew)}` : ""}${s.pad_type ? ` · Pad ${esc(s.pad_type)}` : ""}</p>
-        <ul class="why"><li>Erfüllt: ${r.met.length ? esc(r.met.join(", ")) : "keine prüfbaren Kriterien gesetzt"}</li>${r.parts.length ? `<li>Wertung (relativ innerhalb der Treffer): ${r.parts.map(([n, v]) => `${esc(n)} ${v} %`).join(" · ")}</li>` : ""}${r.miss.length ? `<li class="miss">Fehlende Daten: ${esc(r.miss.join(", "))}</li>` : ""}</ul>
-        <div class="modal-actions"><button type="button" class="btn" data-adv-open="${esc(s.id)}">Details</button><button type="button" class="btn" data-adv-cmp="${esc(s.id)}" aria-pressed="${compare.includes(s.id)}">${compare.includes(s.id) ? "Aus Vergleich entfernen" : "Zum Vergleich"}</button></div>
-      </div></article>`;
-  }
-  let wishOrder = LS.get("sc_wishorder", []); if (!Array.isArray(wishOrder)) wishOrder = [];
-  function wishSorted(list) { const ix = (s) => { const i = wishOrder.indexOf(s.id); return i < 0 ? 1e9 : i; }; return [...list].sort((a, b) => ix(a) - ix(b)); }
-  function wishMove(id, d) {
-    const ids = wishSorted([...favs].map(byId).filter(Boolean).filter((s) => !(hangar[s.id] && hangar[s.id].owned))).map((s) => s.id);
-    const i = ids.indexOf(id), j = i + d;
-    if (i < 0 || j < 0 || j >= ids.length) return;
-    [ids[i], ids[j]] = [ids[j], ids[i]]; wishOrder = ids; LS.set("sc_wishorder", ids); renderAdvisorResults();
-  }
-  function wishlistHtml() {
-    const list = wishSorted([...favs].map(byId).filter(Boolean).filter((s) => !(hangar[s.id] && hangar[s.id].owned)));
-    const priced = list.filter((s) => s.price_ok);
-    const sum = priced.reduce((t, s) => t + s.cheapest_price, 0), missing = list.length - priced.length;
-    const budget = Number(adv.budget) > 0 ? Number(adv.budget) : null;
-    let run = 0;
-    const rows = list.map((s, i) => {
-      if (s.price_ok) run += s.cheapest_price;
-      return `<li><span class="w-n">${esc(s.name)}</span><span class="w-p">${s.price_ok ? `¤ ${formatAuec(s.cheapest_price)}` : "kein bestätigter Preis"}</span><span class="w-c">kumuliert ¤ ${formatAuec(run)}</span>
-        <button type="button" class="icon-btn" data-wish="${esc(s.id)}" data-d="-1" aria-label="${esc(s.name)} nach oben"${i === 0 ? " disabled" : ""}>↑</button>
-        <button type="button" class="icon-btn" data-wish="${esc(s.id)}" data-d="1" aria-label="${esc(s.name)} nach unten"${i === list.length - 1 ? " disabled" : ""}>↓</button></li>`;
-    }).join("");
-    return `<section class="sec"><h3 class="section-title">Wunschliste <small>Favoriten ohne „gekauft“ · nur lokal im Browser</small></h3>
-      <p>${list.length} Schiff(e) · Summe bestätigter Preise: <b>¤ ${formatAuec(sum)}</b>${missing ? ` (unvollständig: ${missing} ohne bestätigten Preis)` : ""}${budget != null ? ` · Budget-Differenz: <b>${budget - sum < 0 ? "−" : "+"}¤ ${formatAuec(Math.abs(budget - sum))}</b>` : ""}</p>${list.length ? `<ol class="wish">${rows}</ol><p class="note">Reihenfolge = geplante Kaufreihenfolge. „Kumuliert“ zählt nur bestätigte Preise.</p>` : ""}</section>`;
-  }
-  function renderAdvisorResults() {
-    const box = $("advResults");
-    if (!box) return;
-    if (!ships.length) { box.innerHTML = '<p class="none">Noch keine Schiffsdaten geladen.</p>'; return; }
-    const { results, excluded } = advisorRun(ships, adv);
-    box.innerHTML = `<h3 class="section-title">${results.length} Empfehlung(en) <small>${excluded.length} ausgeschlossen</small></h3>`
-      + (results.length ? results.slice(0, 12).map(resCard).join("") + (results.length > 12 ? `<p class="note">Es werden die besten 12 von ${results.length} Treffern gezeigt.</p>` : "") : '<p class="none">Kein Schiff erfüllt alle harten Kriterien. Budget oder Auswahl lockern.</p>')
-      + `<details class="excl"><summary>Ausgeschlossene Schiffe und Gründe (${excluded.length})</summary><ul>${excluded.slice(0, 40).map((x) => `<li><b>${esc(x.s.name)}</b>: ${esc(x.reasons.join("; "))}</li>`).join("")}</ul>${excluded.length > 40 ? `<p class="note">… und ${excluded.length - 40} weitere.</p>` : ""}</details>`
-      + wishlistHtml();
-  }
-  function openAdvisor() {
-    const wasOpen = !el.modalBackdrop.classList.contains("hidden");
-    modalMode = "advisor"; openId = null;
-    el.modalFrame.classList.add("wide", "mode-compare");
-    el.modalBody.innerHTML = advisorShell();
-    renderAdvisorResults();
-    el.modal_scroll();
-    if (!wasOpen) { lastFocus = document.activeElement; el.modalBackdrop.classList.remove("hidden"); document.body.style.overflow = "hidden"; el.modalClose.focus(); }
-    writeHash();
-  }
-
-  /* ───── Vergleich: zusätzliche Zeilen (Markierung nur bei klarer Regel: Preis↓, SCU↑, Preis/SCU↓, Geschwindigkeit↑) ───── */
-  function extraCompareRows(list) {
-    const rows = [];
-    const prices = list.filter((s) => s.price_ok).map((s) => s.cheapest_price);
-    const mn = prices.length ? Math.min(...prices) : null;
-    rows.push(["Preisunterschied", (s) => (!s.price_ok ? "Kein bestätigter Preis" : s.cheapest_price === mn ? "Günstigster" : `+¤ ${formatAuec(s.cheapest_price - mn)}`), () => null, null]);
-    const b = Number(adv.budget) > 0 ? Number(adv.budget) : null;
-    if (b != null) rows.push([`Budget (¤ ${formatAuec(b)})`, (s) => (!s.price_ok ? "Nicht prüfbar" : s.cheapest_price <= b ? "Im Budget" : "Über Budget"), () => null, null]);
-    [["length", null], ["beam", null], ["height", null], ["mass", null], ["scm_speed", "high"], ["max_speed", "high"], ["weapon_count", null], ["missile_count", null], ["shield_hp", null], ["hull_hp", null]].forEach(([k, mode]) => {
-      if (list.some((s) => s[k] != null)) rows.push([TECH.find((t) => t[0] === k)[1], (s) => esc(techVal(s, k) ?? "Keine Daten"), (s) => s[k], mode]);
-    });
-    ["role", "career"].forEach((k) => { if (list.some((s) => s[k])) rows.push([TECH.find((t) => t[0] === k)[1], (s) => esc(s[k] || "Keine Daten"), () => null, null]); });
-    if (list.some((s) => s.features.length)) rows.push(["Ausstattung", (s) => esc(s.features.join(", ") || "Keine Daten"), () => null, null]);
-    rows.push(["Datenqualität", (s) => (s.notes.length ? `${s.notes.length} Hinweis(e)` : "Keine Auffälligkeiten"), () => null, null]);
-    rows.push(["Datenstand", () => esc(metaDate() || "Unbekannt"), () => null, null]);
-    return rows;
-  }
-
   /* ───── CSV-Export ───── */
-  function csvCell(v) {
-    let t = v == null || v === "" ? "k. A." : String(v);
-    if (/^[=+\-@\t\r]/.test(t)) t = "'" + t; // Formelinjektion verhindern
-    return `"${t.replace(/"/g, '""')}"`;
-  }
-  function exportCsv(all) {
-    const rows = all === true ? ships : filtered;
-    const cols = ["Name", "Hersteller", "Kaufbar", "Günstigster Preis (aUEC)", "Terminal", "SCU", "Crew", "Pad", "Concept", "Pledge-Store",
-      "Anzahl Terminals", "Terminals mit Bestpreis", "Preis pro SCU (aUEC)", "Rolle", "Länge (m)", "Masse (kg)", "Max. Geschwindigkeit (m/s)", "Datenhinweise", "Datenstand"];
-    const stamp = metaDate();
-    const lines = [cols.map(csvCell).join(";")].concat(rows.map((s) => [
-      s.name_full || s.name, s.manufacturer, s.available_ingame ? "ja" : "nein", s.price_ok ? Math.round(s.cheapest_price) : null,
-      s.cheapest_terminal, s.scu_known ? s.scu : null, s.crew, s.pad_type, s.is_concept ? "ja" : "nein", s.store_url,
-      s.all_prices.length || null, s.best_terminals.join(" / "), ppScu(s) != null ? Math.round(ppScu(s)) : null, s.role, s.length, s.mass, s.max_speed,
-      s.notes.join("; ") || "keine", stamp,
-    ].map(csvCell).join(";")));
+  function exportCsv() {
+    const cols = ["Name", "Hersteller", "Kaufbar", "Günstigster Preis (aUEC)", "Terminal", "SCU", "Crew", "Pad", "Concept", "Pledge-Store"];
+    const q = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    const lines = [cols.map(q).join(";")].concat(filtered.map((s) => [
+      s.name_full || s.name, s.manufacturer, s.available_ingame ? "ja" : "nein", s.cheapest_price != null ? Math.round(s.cheapest_price) : "",
+      s.cheapest_terminal || "", scuOf(s) || "", s.crew || "", s.pad_type || "", s.is_concept ? "ja" : "nein", s.store_url || "",
+    ].map(q).join(";")));
     const blob = new Blob(["\ufeff" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob); a.download = "star-citizen-schiffe.csv";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1500);
-    toast(`${rows.length} Schiffe exportiert`);
+    toast(`${filtered.length} Schiffe exportiert`);
   }
 
   /* ───── Ereignisse ───── */
@@ -1823,12 +1377,10 @@
   });
   const renderSoon = debounce(render, 80);
   el.padSelect.addEventListener("change", (e) => { state.pad = e.target.value; render(); });
-  $("roleSelect").addEventListener("change", (e) => { state.role = e.target.value; render(); });
   el.conceptSelect.addEventListener("change", (e) => { state.concept = e.target.value; render(); });
   $("swatches").addEventListener("click", (e) => { const b = e.target.closest(".swatch"); if (b) applyAccent(b.dataset.accent); });
   $("resetAllBtn").addEventListener("click", resetFilters);
-  $("exportBtn").addEventListener("click", () => exportCsv(false));
-  $("exportAllBtn").addEventListener("click", () => exportCsv(true));
+  $("exportBtn").addEventListener("click", exportCsv);
   $("copyLinkBtn").addEventListener("click", async () => { writeHash(); toast((await copyText(shareUrl())) ? "Link kopiert" : "Kopieren nicht möglich"); });
   $("randomBtn").addEventListener("click", () => {
     const pool = filtered.length ? filtered : ships;
@@ -1863,20 +1415,6 @@
     }
   });
 
-  $("advisorBtn").addEventListener("click", openAdvisor);
-  el.modalBody.addEventListener("input", (e) => {
-    if (modalMode === "ship" && (e.target.id === "hgNote" || e.target.id === "hgOwned")) saveHangar();
-    else if (modalMode === "advisor") onAdvInput();
-  });
-  el.modalBody.addEventListener("click", (e) => {
-    const o = e.target.closest("[data-adv-open]");
-    if (o) { openShip(o.dataset.advOpen); return; }
-    const w = e.target.closest("[data-wish]");
-    if (w) { wishMove(w.dataset.wish, Number(w.dataset.d)); return; }
-    if (e.target.closest("#advLink")) { writeHash(); copyText(shareUrl()).then((ok) => toast(ok ? "Link kopiert" : "Kopieren nicht möglich")); return; }
-    const c = e.target.closest("[data-adv-cmp]");
-    if (c) { toggleCompare(c.dataset.advCmp); renderAdvisorResults(); }
-  });
   el.toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
   window.addEventListener("scroll", () => el.toTop.classList.toggle("show", window.scrollY > 700), { passive: true });
 
@@ -1887,7 +1425,7 @@
       if (e.key === "ArrowLeft") { stepShip(-1); return; }
       if (e.key === "ArrowRight") { stepShip(1); return; }
       if (e.key === "Tab") { // Fokus im Fenster halten
-        const f = [...el.modalFrame.querySelectorAll("button:not([disabled]), a[href], select, input, textarea")].filter((n) => n.offsetParent !== null);
+        const f = [...el.modalFrame.querySelectorAll("button:not([disabled]), a[href], select, input")].filter((n) => n.offsetParent !== null);
         if (!f.length) return;
         const first = f[0], last = f[f.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
@@ -1904,7 +1442,7 @@
   readHash();
   syncControls();
   loadShips();
-  setInterval(() => { if (!document.hidden) loadShips(); }, 5 * 60 * 1000);
+  setInterval(() => loadShips(), 5 * 60 * 1000);
   setInterval(() => { if (ships.length) renderStatus(); }, 60 * 1000);
 })();
 </script>
