@@ -21,6 +21,7 @@ Starten mit: python bot.py
 
 from __future__ import annotations
 
+import asyncio
 import logging
 import sys
 from collections import defaultdict
@@ -34,6 +35,8 @@ from config import load_config
 from embeds import build_header_embed, build_list_pages, build_manufacturer_embeds, build_web_embed, format_auec
 from storage import load_last_prices, load_message_ids, save_last_prices, save_message_ids
 from uex_api import Ship, UexApiError, fetch_ships
+import rsi_images  # Schiffsbilder von der offiziellen RSI-Seite
+import wiki_data  # Datenlücken (SCU, Crew, Pad, Bild) aus dem Star Citizen Wiki füllen
 import webapp  # Web-Seite, läuft im selben Prozess wie der Bot
 
 logging.basicConfig(
@@ -60,6 +63,8 @@ bot = ShowcaseBot(command_prefix="!sc-showcase-unused!", intents=intents)
 HEADER_KEY = "__header__"
 
 web_runner = None  # gesetzt, sobald die Web-Seite läuft; None = (noch) nicht gestartet
+rsi_task: "asyncio.Task | None" = None  # läuft die RSI-Bildsuche gerade im Hintergrund?
+latest_ships: Dict[int, Ship] = {}  # jüngster erfolgreicher Stand (verhindert veraltetes Neu-Veröffentlichen)
 
 
 def group_by_manufacturer(ships: Dict[int, Ship]) -> Dict[str, List[Ship]]:
@@ -106,6 +111,36 @@ async def ensure_web_server() -> None:
         )
         return
     log.info("Web-Seite läuft auf Port %d%s.", config.web_port, f" ({config.web_url})" if config.web_url else "")
+
+
+async def _enrich_rsi_images(ships: Dict[int, Ship]) -> None:
+    """Hintergrund: fehlende RSI-Bilder holen und die Web-Seite danach einmal aktualisieren."""
+    try:
+        found = await rsi_images.enrich(ships, config.rsi_images_mode)
+        if found and ships is latest_ships:
+            rsi_images.apply_cached(ships, config.rsi_images_mode)
+            webapp.publish_ships(ships)
+    except Exception:
+        log.exception("RSI-Bildsuche fehlgeschlagen - die Seite läuft mit den vorhandenen Bildern weiter.")
+    await _fill_gaps_from_wiki(ships)
+
+
+async def _fill_gaps_from_wiki(ships: Dict[int, Ship]) -> None:
+    """Hintergrund: Lücken aus dem Star Citizen Wiki füllen und die Seite danach aktualisieren."""
+    try:
+        index = await wiki_data.load_index()
+        if wiki_data.fill_gaps(ships, index) and ships is latest_ships:
+            webapp.publish_ships(ships)
+        wiki_data.report_gaps(ships)
+    except Exception:
+        log.exception("Wiki-Abgleich fehlgeschlagen - die Seite läuft mit den UEX-Daten weiter.")
+
+
+def start_rsi_enrichment(ships: Dict[int, Ship]) -> None:
+    global rsi_task
+    if rsi_task is not None and not rsi_task.done():
+        return
+    rsi_task = asyncio.create_task(_enrich_rsi_images(ships))
 
 
 async def get_channel() -> discord.abc.Messageable:
@@ -182,7 +217,11 @@ async def run_update_cycle(initial: bool = False) -> None:
 
     # Web-Seite sofort mit dem frischen Stand versorgen - bewusst VOR allem, was Discord
     # betrifft: Die Seite soll auch dann aktuell sein, wenn das Posten im Channel scheitert.
+    global latest_ships
+    latest_ships = ships
+    rsi_images.apply_cached(ships, config.rsi_images_mode)  # bereits bekannte RSI-Bilder (nur Datei lesen)
     webapp.publish_ships(ships)
+    start_rsi_enrichment(ships)  # Neues im Hintergrund nachholen, blockiert nichts
 
     last_prices = load_last_prices()
     changes = [] if initial else compute_changes(ships, last_prices)
@@ -322,6 +361,7 @@ async def schiff_command(interaction: discord.Interaction, name: str) -> None:
         await interaction.followup.send("Die UEX-API ist gerade nicht erreichbar. Bitte später erneut versuchen.")
         return
 
+    rsi_images.apply_cached(ships, config.rsi_images_mode)
     matches = [s for s in ships.values() if name.lower() in s.name.lower()]
     if not matches:
         await interaction.followup.send(f"Kein Schiff gefunden, das zu „{name}“ passt.")
