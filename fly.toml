@@ -24,6 +24,14 @@ primary_region = "fra"
   auto_stop_machines = false
   auto_start_machines = false
 
+  # Liveness-Check: 200 = Webserver lebt (Details zu den Daten stehen im JSON-Body).
+  [[http_service.checks]]
+    grace_period = "30s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    path = "/healthz"
+
 [[vm]]
   size = "shared-cpu-1x"
   memory = "256mb"

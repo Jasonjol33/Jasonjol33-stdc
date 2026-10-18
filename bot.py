@@ -45,7 +45,8 @@ logging.basicConfig(
 )
 log = logging.getLogger("bot")
 
-config = load_config()
+# Ohne Discord-Zugangsdaten bricht der Import nicht mehr ab: dann läuft nur die Web-Seite (siehe main()).
+config = load_config(require_discord=False)
 
 
 class ShowcaseBot(commands.Bot):
@@ -53,6 +54,8 @@ class ShowcaseBot(commands.Bot):
         # Läuft genau einmal pro Prozessstart, nach dem Login und vor der Gateway-Verbindung:
         # früher als on_ready und unabhängig davon, wie oft Discord die Verbindung neu aufbaut.
         await ensure_web_server()
+        # Erster Datenstand für die Web-Seite, ohne auf das Discord-Gateway (on_ready) zu warten.
+        asyncio.create_task(prefetch_web_data())
 
 
 # Wir brauchen keine privilegierten Intents (kein Message Content, keine
@@ -134,6 +137,31 @@ async def _fill_gaps_from_wiki(ships: Dict[int, Ship]) -> None:
         wiki_data.report_gaps(ships)
     except Exception:
         log.exception("Wiki-Abgleich fehlgeschlagen - die Seite läuft mit den UEX-Daten weiter.")
+
+
+async def prefetch_web_data() -> None:
+    """Holt den ersten Schiffsstand sofort nach dem Start, nur für die Web-Seite.
+
+    Bisher kam der erste Stand erst in on_ready (nach der Gateway-Verbindung): Bei einer
+    Discord-Verzögerung blieb die Seite bei "Verbindung wird hergestellt". Hat der normale
+    Update-Zyklus schon Daten geliefert, wird dieses Ergebnis verworfen.
+    """
+    global latest_ships
+    try:
+        ships = await fetch_ships(
+            api_key=config.uex_api_key,
+            include_ground_vehicles=config.include_ground_vehicles,
+        )
+    except Exception as exc:  # on_ready/run_update_cycle meldet Fehler dann sichtbar für die Seite
+        log.warning("Erster Web-Abruf bei UEX fehlgeschlagen (%s) - der Update-Zyklus versucht es erneut.", exc)
+        return
+    if not ships or webapp.cache.has_data:
+        return
+    latest_ships = ships
+    rsi_images.apply_cached(ships, config.rsi_images_mode)
+    webapp.publish_ships(ships)
+    start_rsi_enrichment(ships)
+    log.info("Web-Seite vorab mit %d Schiffen versorgt (ohne auf Discord zu warten).", len(ships))
 
 
 def start_rsi_enrichment(ships: Dict[int, Ship]) -> None:
@@ -424,11 +452,21 @@ async def refresh_command(interaction: discord.Interaction) -> None:
 
 
 def main() -> None:
+    if not config.discord_enabled:
+        log.warning(
+            "DISCORD_TOKEN oder CHANNEL_ID fehlt - starte NUR die Web-Seite (ohne Discord-Bot). "
+            "Zugangsdaten per .env bzw. `fly secrets set` nachtragen, um den Bot zu aktivieren."
+        )
+        webapp.main()
+        return
     try:
         bot.run(config.discord_token, log_handler=None)
     except discord.LoginFailure:
-        log.error("Login fehlgeschlagen: Der DISCORD_TOKEN in der .env ist ungültig oder abgelaufen.")
-        sys.exit(1)
+        log.error(
+            "Login fehlgeschlagen: Der DISCORD_TOKEN ist ungültig oder abgelaufen - "
+            "die Web-Seite läuft trotzdem weiter (ohne Discord-Bot)."
+        )
+        webapp.main()
 
 
 if __name__ == "__main__":

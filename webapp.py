@@ -100,6 +100,15 @@ class ShipCache:
         self.last_error = reason or "unbekannter Fehler"
         self._rebuild()
 
+    def health(self) -> dict:
+        """Kurzstatus für /healthz."""
+        return {
+            "status": "ok" if self.has_data else "no_data",
+            "ships": len(self._ships),
+            "stale": self.last_error is not None,
+            "last_updated": self.last_updated.isoformat() if self.last_updated else None,
+        }
+
     def _rebuild(self) -> None:
         payload = {
             "last_updated": self.last_updated.isoformat() if self.last_updated else None,
@@ -197,6 +206,13 @@ routes = web.RouteTableDef()
 @routes.get("/")
 async def handle_index(request: web.Request) -> web.FileResponse:
     return web.FileResponse(STATIC_DIR / "index.html")
+
+
+@routes.get("/healthz")
+async def handle_health(request: web.Request) -> web.Response:
+    # Liveness: Antwort 200 heißt "der Webserver lebt" - auch wenn UEX gerade keine Daten liefert,
+    # damit eine UEX-Störung nicht als Absturz der App gewertet wird. Die Details stehen im Body.
+    return web.json_response(cache.health(), headers={"Cache-Control": "no-store"})
 
 
 @routes.get("/api/ships")

@@ -28,6 +28,11 @@ class Config:
     # Schiffsbilder von der offiziellen RSI-Seite: "missing" (Standard), "all" oder "off".
     rsi_images_mode: str = "missing"
 
+    @property
+    def discord_enabled(self) -> bool:
+        """True, wenn Token und Channel-ID gesetzt sind. Sonst läuft nur die Web-Seite."""
+        return bool(self.discord_token) and self.channel_id > 0
+
 
 @dataclass
 class WebSettings:
@@ -85,24 +90,32 @@ def _rsi_images_mode() -> str:
     return "missing"
 
 
-def load_config() -> Config:
-    token = os.getenv("DISCORD_TOKEN", "").strip()
-    if not token:
-        raise RuntimeError(
-            "DISCORD_TOKEN fehlt. Bitte in der .env-Datei eintragen "
-            "(siehe README.md, Schritt 'Bot erstellen')."
-        )
+def load_config(require_discord: bool = True) -> Config:
+    """Liest die Konfiguration.
 
+    require_discord=True (Standard): fehlendes/ungültiges DISCORD_TOKEN oder CHANNEL_ID -> RuntimeError.
+    require_discord=False: stattdessen bleiben beide leer (discord_enabled == False); dann läuft
+    nur die Web-Seite. So bricht ein Discord-Konfigurationsproblem die Website nicht mehr ab.
+    """
+    token = os.getenv("DISCORD_TOKEN", "").strip()
     channel_id = _int_or_none(os.getenv("CHANNEL_ID", ""))
-    if channel_id is None:
-        raise RuntimeError(
-            "CHANNEL_ID fehlt oder ist ungültig. Bitte die Discord-Channel-ID "
-            "(nur Ziffern) in der .env eintragen."
-        )
+    if require_discord:
+        if not token:
+            raise RuntimeError(
+                "DISCORD_TOKEN fehlt. Bitte in der .env-Datei eintragen "
+                "(siehe README.md, Schritt 'Bot erstellen')."
+            )
+        if channel_id is None:
+            raise RuntimeError(
+                "CHANNEL_ID fehlt oder ist ungültig. Bitte die Discord-Channel-ID "
+                "(nur Ziffern) in der .env eintragen."
+            )
+    elif not token or channel_id is None:
+        token, channel_id = "", 0
 
     return Config(
         discord_token=token,
-        channel_id=channel_id,
+        channel_id=channel_id or 0,
         guild_id=_int_or_none(os.getenv("GUILD_ID", "")),
         update_interval_minutes=_update_interval(),
         uex_api_key=os.getenv("UEX_API_KEY", "").strip() or None,
