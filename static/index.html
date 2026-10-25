@@ -2347,7 +2347,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 const $=id=>document.getElementById(id);
 const STORE={profile:'scx_profile_v1',fleet:'scx_fleet_v1',builds:'scx_builds_v1',buildCompare:'scx_build_compare_v1',routes:'scx_routes_v1',crews:'scx_crews_v1',events:'scx_events_v1',missions:'scx_missions_v1',guide:'scx_guide_v1',check:'scx_check_v1',gallery:'scx_gallery_v1'};
 const API='/api/citizenhq';
-const NEWS_API='https://api.star-citizen.wiki/api/comm-links?page[number]=1&page[size]=10&sort=-created_at';
+const NEWS_API='/api/wiki/comm-links';
 let accountActive=false, syncingReady=false, syncTimer=null, lastLocationRows=[], chosenRouteFrom=null, chosenRouteTo=null, oreRows=[], galleryObjectUrls=[];
 const read=(k,d)=>{try{const x=JSON.parse(localStorage.getItem(k));return x==null?d:x}catch{return d}};
 const write=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));if(k.startsWith('scx_')){queueUserSync();updateDashboard()}return true}catch{return false}};
@@ -2360,7 +2360,22 @@ const safeUrl=v=>{try{const u=new URL(String(v||''),location.href);return ['http
 const fmt=n=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:2}).format(Number(n)||0);
 const money=n=>fmt(n)+' aUEC';
 const arr=(d,depth=0)=>{if(Array.isArray(d))return d;if(!d||typeof d!=='object'||depth>5)return [];for(const k of ['data','items','results','routes','missions','locations','systems','commodities','ships','ores','market','records','result','hits'])if(Array.isArray(d[k]))return d[k];for(const k of ['data','items','results','locations','result','hits'])if(d[k]&&typeof d[k]==='object'){const found=arr(d[k],depth+1);if(found.length)return found}return []};
-async function getJson(url,timeout=11000){const ctl=new AbortController();const t=setTimeout(()=>ctl.abort(),timeout);try{const r=await fetch(url,{signal:ctl.signal,headers:{'Accept':'application/json'},cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
+/* Gemeinsame GET-Schicht: Kurzzeit-Cache, Deduplizierung paralleler Anfragen und Abkuehlphase nach HTTP 429,
+   damit die Seite sich nicht selbst in das Server-Rate-Limit laeuft. */
+const SCX_NET={mem:new Map(),pending:new Map(),blockedUntil:0,ttl:15000,persistTtl:120000};
+function scxPersistable(u){return /^\/api\/(citizenhq\/|wiki\/|mission-feed)/.test(u)}
+function scxCacheRead(u){const m=SCX_NET.mem.get(u);if(m&&Date.now()-m.t<SCX_NET.ttl)return m.raw;if(scxPersistable(u)){try{const o=JSON.parse(sessionStorage.getItem('scxc:'+u)||'null');if(o&&Date.now()-o.t<SCX_NET.persistTtl){SCX_NET.mem.set(u,{t:o.t,raw:o.raw});return o.raw}}catch{}}return null}
+function scxCacheWrite(u,raw){SCX_NET.mem.set(u,{t:Date.now(),raw});if(scxPersistable(u)&&raw.length<400000){try{sessionStorage.setItem('scxc:'+u,JSON.stringify({t:Date.now(),raw}))}catch{}}}
+async function scxGet(u,init){
+ const hit=scxCacheRead(u);if(hit!==null)return hit;
+ if(Date.now()<SCX_NET.blockedUntil){const st=SCX_NET.mem.get(u);if(st)return st.raw;const e=new Error('Zu viele Anfragen - bitte kurz warten.');e.status=429;throw e}
+ if(SCX_NET.pending.has(u))return SCX_NET.pending.get(u);
+ const p=(async()=>{try{const r=await fetch(u,init);const raw=await r.text();
+  if(r.status===429){const ra=parseInt(r.headers.get('Retry-After'),10);SCX_NET.blockedUntil=Date.now()+Math.min(Number.isFinite(ra)?ra:30,60)*1000}
+  if(!r.ok){const e=new Error('HTTP '+r.status);e.status=r.status;e.raw=raw;throw e}
+  scxCacheWrite(u,raw);return raw}finally{SCX_NET.pending.delete(u)}})();
+ SCX_NET.pending.set(u,p);return p}
+async function getJson(url,timeout=11000){const ctl=new AbortController();const t=setTimeout(()=>ctl.abort(),timeout);try{if(typeof url==='string'&&url.startsWith('/api/')){const raw=await scxGet(url,{signal:ctl.signal,headers:{'Accept':'application/json'},cache:'no-store'});return JSON.parse(raw)}const r=await fetch(url,{signal:ctl.signal,headers:{'Accept':'application/json'},cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}finally{clearTimeout(t)}}
 function status(id,msg,type=''){const e=$(id);if(e){e.textContent=msg;e.classList.remove('ok','error');if(type)e.classList.add(type)}}
 function feedback(msg,type=''){const e=$('scxAuthMessage');if(e){e.textContent=msg;e.classList.remove('good','bad');if(type)e.classList.add(type)}}
 function cardStats(items){return `<div class="scx-result-stat"><span>${safe(items[0])}</span><strong>${safe(items[1])}</strong></div>`}
@@ -2452,7 +2467,7 @@ async function galleryDelete(id){const db=await openGalleryDb();return new Promi
 async function galleryClear(){const db=await openGalleryDb();return new Promise((resolve,reject)=>{const tx=db.transaction('images','readwrite');tx.objectStore('images').clear();tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>{db.close();reject(tx.error)}})}
 async function renderGallery(){const box=$('scxGalleryGrid');if(!box)return;galleryObjectUrls.forEach(URL.revokeObjectURL);galleryObjectUrls=[];try{const rows=await galleryAll();box.innerHTML=rows.map(x=>{const url=URL.createObjectURL(x.blob);galleryObjectUrls.push(url);return `<div class="scx-gallery-item"><img src="${url}" alt="${safe(x.name)}"><span>${safe(x.name)}</span><button type="button" data-gallery-remove="${x.id}" aria-label="Bild entfernen">×</button></div>`}).join('')||'<p class="scx-muted">Noch keine Bilder ausgewählt.</p>';status('scxGalleryStatus',rows.length+' Bilder auf diesem Gerät','ok')}catch{box.innerHTML='<p class="scx-muted">Dein Browser unterstützt den lokalen Bildspeicher nicht.</p>';status('scxGalleryStatus','Bildspeicher nicht verfügbar','error')}}
 async function handleGalleryFiles(files){const fileList=[...files];try{const existing=await galleryAll();let slots=Math.max(0,8-existing.length),added=0;for(const f of fileList){if(!slots)break;if(!f.type.startsWith('image/'))continue;if(f.size>1.5*1024*1024){status('scxGalleryStatus','Übersprungen: '+f.name+' ist größer als 1,5 MB.','error');continue}await galleryPut({name:f.name,blob:f,created_at:new Date().toISOString()});slots--;added++}await renderGallery();if(added)status('scxGalleryStatus',added+' Bilder lokal gespeichert','ok')}catch{status('scxGalleryStatus','Bild konnte nicht gespeichert werden.','error')}}
-async function apiMaybe(path,options={}){const r=await fetch(path,{credentials:'same-origin',headers:{'Content-Type':'application/json','Accept':'application/json',...(options.headers||{})},...options});if(!r.ok){let msg='HTTP '+r.status;try{const d=await r.json();msg=d.detail||d.message||msg}catch{};throw new Error(msg)}if(r.status===204)return null;return r.json()}
+async function apiMaybe(path,options={}){const method=String(options.method||'GET').toUpperCase();const init={credentials:'same-origin',headers:{'Content-Type':'application/json','Accept':'application/json',...(options.headers||{})},...options};if(method==='GET'){let raw;try{raw=await scxGet(path,init)}catch(e){let msg=e.message;if(e.raw){try{const d=JSON.parse(e.raw);msg=d.detail||d.message||msg}catch{}}throw new Error(msg)}return raw?JSON.parse(raw):null}const r=await fetch(path,init);SCX_NET.mem.clear();if(!r.ok){let msg='HTTP '+r.status;try{const d=await r.json();msg=d.detail||d.message||msg}catch{};throw new Error(msg)}if(r.status===204)return null;return r.json()}
 async function apiOrLocal(path,method,data,localAction){try{const result=await apiMaybe(path,{method,body:data==null?undefined:JSON.stringify(data)});return {backend:true,result}}catch(e){return {backend:false,result:localAction?localAction():null,error:e}}}
 async function renderSharedBoards(){
  // Start with local copy so the board remains usable offline.

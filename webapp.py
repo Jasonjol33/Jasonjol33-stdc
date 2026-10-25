@@ -150,7 +150,7 @@ CSP = (
     "script-src 'self' 'unsafe-inline'; "
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
     "font-src https://fonts.gstatic.com; "
-    "img-src 'self' data: https:; "
+    "img-src 'self' data: blob: https:; "
     "connect-src 'self'; "
     "object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 )
@@ -576,6 +576,240 @@ async def account_put_user_data(request: web.Request) -> web.Response:
         data[username]["user_data"] = cleaned
         _save_accounts(data)
     return web.json_response({"ok": True})
+
+
+# --------------------------------------------------------------------------------------
+# Star Citizen Wiki: Comm-Link-Feed als Same-Origin-Proxy (CSP erlaubt nur connect-src 'self')
+# --------------------------------------------------------------------------------------
+
+_WIKI_NEWS_TTL = 300.0  # Sekunden
+_wiki_news_cache: dict = {"ts": 0.0, "body": None}
+
+
+@routes.get("/api/wiki/comm-links")
+async def handle_wiki_comm_links(request: web.Request) -> web.Response:
+    """Holt die neuesten Comm-Links serverseitig und cached sie kurz (schont das Rate-Limit)."""
+    now = time.monotonic()
+    cached = _wiki_news_cache["body"]
+    if cached is not None and now - _wiki_news_cache["ts"] < _WIKI_NEWS_TTL:
+        return web.Response(body=cached, content_type="application/json", charset="utf-8",
+                            headers={"Cache-Control": "public, max-age=120", "X-Proxy-Cache": "HIT"})
+    url = "https://api.star-citizen.wiki/api/comm-links"
+    params = {"page[number]": "1", "page[size]": "10", "sort": "-created_at"}
+    timeout = aiohttp.ClientTimeout(total=12, connect=5)
+    try:
+        async with aiohttp.ClientSession(
+            timeout=timeout,
+            headers={"Accept": "application/json", "User-Agent": "StarCitizenShowcase/1.2"},
+        ) as session:
+            async with session.get(url, params=params) as upstream:
+                body = await upstream.read()
+                if upstream.status != 200:
+                    log.warning("Star Citizen Wiki comm-links returned HTTP %s", upstream.status)
+                    if cached is not None:  # lieber veraltete Daten als gar keine
+                        return web.Response(body=cached, content_type="application/json", charset="utf-8",
+                                            headers={"X-Proxy-Cache": "STALE"})
+                    return web.json_response({"message": "Wiki-API lieferte einen Fehler.",
+                                              "upstream_status": upstream.status}, status=502)
+                try:
+                    json.loads(body)
+                except (ValueError, TypeError):
+                    return web.json_response({"message": "Wiki-API lieferte kein gültiges JSON."}, status=502)
+    except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
+        log.warning("Wiki-Comm-Link-Proxy fehlgeschlagen: %s", type(exc).__name__)
+        if cached is not None:
+            return web.Response(body=cached, content_type="application/json", charset="utf-8",
+                                headers={"X-Proxy-Cache": "STALE"})
+        return web.json_response({"message": "Wiki-API nicht erreichbar.", "error": type(exc).__name__}, status=502)
+    _wiki_news_cache.update(ts=now, body=body)
+    return web.Response(body=body, content_type="application/json", charset="utf-8",
+                        headers={"Cache-Control": "public, max-age=120", "X-Proxy-Cache": "MISS"})
+
+
+# --------------------------------------------------------------------------------------
+# Community-Board (Crew-Gesuche, Events) und Organisationsverzeichnis
+# Lesen ist öffentlich, Schreiben/Löschen/RSVP braucht ein angemeldetes Konto.
+# --------------------------------------------------------------------------------------
+
+COMMUNITY_FILE = ACCOUNT_DIR / "community.json"
+_COMMUNITY_LOCK = __import__("threading").Lock()
+_MAX_POSTS = 200
+_MAX_EVENTS = 200
+
+
+def _community() -> dict:
+    ACCOUNT_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        data = json.loads(COMMUNITY_FILE.read_text(encoding="utf-8")) if COMMUNITY_FILE.exists() else {}
+    except (OSError, json.JSONDecodeError):
+        log.exception("Community-Datei konnte nicht gelesen werden.")
+        data = {}
+    if not isinstance(data, dict):
+        data = {}
+    data.setdefault("posts", [])
+    data.setdefault("events", [])
+    return data
+
+
+def _save_community(data: dict) -> None:
+    ACCOUNT_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = COMMUNITY_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.replace(COMMUNITY_FILE)
+
+
+def _clip(value, limit: int) -> str:
+    return str(value or "").strip()[:limit]
+
+
+def _public_post(p: dict) -> dict:
+    return {k: p.get(k, "") for k in ("id", "pilot_name", "activity", "role", "when", "description", "created_at")}
+
+
+def _public_event(e: dict) -> dict:
+    return {
+        "id": e.get("id"), "title": e.get("title", ""), "event_type": e.get("event_type", ""),
+        "starts_at": e.get("starts_at", ""), "description": e.get("description", ""),
+        "max_attendees": e.get("max_attendees", 8), "rsvp_count": len(e.get("rsvps", [])),
+        "created_at": e.get("created_at", ""),
+    }
+
+
+@routes.get("/api/community/posts")
+async def community_posts(request: web.Request) -> web.Response:
+    return web.json_response([_public_post(p) for p in reversed(_community()["posts"])])
+
+
+@routes.post("/api/community/posts")
+async def community_create_post(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    try:
+        body = await request.json()
+    except Exception:
+        return _json_error("Ungültige Anfrage.")
+    if not isinstance(body, dict):
+        return _json_error("Ungültige Anfrage.")
+    name = _clip(body.get("pilot_name"), 80)
+    if len(name) < 2:
+        return _json_error("Bitte einen Piloten-/Crewnamen angeben.")
+    post = {
+        "id": secrets.token_urlsafe(8), "owner": username, "pilot_name": name,
+        "activity": _clip(body.get("activity"), 60), "role": _clip(body.get("role"), 60),
+        "when": _clip(body.get("when"), 80), "description": _clip(body.get("description"), 1000),
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    with _COMMUNITY_LOCK:
+        data = _community()
+        data["posts"] = (data["posts"] + [post])[-_MAX_POSTS:]
+        _save_community(data)
+    return web.json_response(_public_post(post), status=201)
+
+
+@routes.delete("/api/community/posts/{post_id}")
+async def community_delete_post(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    post_id = request.match_info["post_id"]
+    with _COMMUNITY_LOCK:
+        data = _community()
+        target = next((p for p in data["posts"] if p.get("id") == post_id), None)
+        if target is None:
+            return _json_error("Eintrag nicht gefunden.", 404)
+        if target.get("owner") != username:
+            return _json_error("Nur der Ersteller kann den Eintrag löschen.", 403)
+        data["posts"] = [p for p in data["posts"] if p.get("id") != post_id]
+        _save_community(data)
+    return web.json_response({"ok": True})
+
+
+@routes.get("/api/community/events")
+async def community_events(request: web.Request) -> web.Response:
+    return web.json_response([_public_event(e) for e in _community()["events"]])
+
+
+@routes.post("/api/community/events")
+async def community_create_event(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    try:
+        body = await request.json()
+    except Exception:
+        return _json_error("Ungültige Anfrage.")
+    if not isinstance(body, dict):
+        return _json_error("Ungültige Anfrage.")
+    title = _clip(body.get("title"), 120)
+    if len(title) < 3:
+        return _json_error("Bitte einen Event-Titel angeben.")
+    try:
+        max_att = max(1, min(500, int(body.get("max_attendees") or 8)))
+    except (TypeError, ValueError):
+        max_att = 8
+    event = {
+        "id": secrets.token_urlsafe(8), "owner": username, "title": title,
+        "event_type": _clip(body.get("event_type"), 60), "starts_at": _clip(body.get("starts_at"), 40),
+        "description": _clip(body.get("description"), 1000), "max_attendees": max_att, "rsvps": [],
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    with _COMMUNITY_LOCK:
+        data = _community()
+        data["events"] = (data["events"] + [event])[-_MAX_EVENTS:]
+        _save_community(data)
+    return web.json_response(_public_event(event), status=201)
+
+
+@routes.post("/api/community/events/{event_id}/rsvp")
+async def community_rsvp(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    event_id = request.match_info["event_id"]
+    with _COMMUNITY_LOCK:
+        data = _community()
+        event = next((e for e in data["events"] if e.get("id") == event_id), None)
+        if event is None:
+            return _json_error("Event nicht gefunden.", 404)
+        rsvps = event.setdefault("rsvps", [])
+        if username not in rsvps:
+            if len(rsvps) >= int(event.get("max_attendees") or 8):
+                return _json_error("Das Event ist voll.", 409)
+            rsvps.append(username)
+            _save_community(data)
+        result = _public_event(event)
+    return web.json_response(result)
+
+
+@routes.delete("/api/community/events/{event_id}")
+async def community_delete_event(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    event_id = request.match_info["event_id"]
+    with _COMMUNITY_LOCK:
+        data = _community()
+        target = next((e for e in data["events"] if e.get("id") == event_id), None)
+        if target is None:
+            return _json_error("Event nicht gefunden.", 404)
+        if target.get("owner") != username:
+            return _json_error("Nur der Ersteller kann das Event löschen.", 403)
+        data["events"] = [e for e in data["events"] if e.get("id") != event_id]
+        _save_community(data)
+    return web.json_response({"ok": True})
+
+
+@routes.get("/api/organizations")
+async def organizations_directory(request: web.Request) -> web.Response:
+    """Öffentliches Verzeichnis: nur Profile, die eine Organisation eingetragen haben.
+    Es werden ausschließlich bewusst öffentliche Profilfelder ausgegeben (keine Kontonamen)."""
+    rows = []
+    for account in _accounts().values():
+        prof = account.get("profile") if isinstance(account, dict) else None
+        if isinstance(prof, dict) and str(prof.get("org", "")).strip():
+            rows.append({k: str(prof.get(k, ""))[:500] for k in ("org", "name", "role", "bio", "discord")})
+    return web.json_response(rows[:100])
 
 
 def create_app(background_task: Optional[Callable[[], Awaitable[None]]] = None) -> web.Application:
