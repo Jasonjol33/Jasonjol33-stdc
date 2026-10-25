@@ -219,6 +219,179 @@ async def handle_health(request: web.Request) -> web.Response:
     return web.json_response(cache.health(), headers={"Cache-Control": "no-store"})
 
 
+def _extract_api_rows(payload, keys=("data", "items", "results")):
+    """Normalize common list and paginated JSON response shapes without losing rows."""
+    if isinstance(payload, list):
+        return payload
+    if not isinstance(payload, dict):
+        return []
+    for key in keys:
+        value = payload.get(key)
+        if isinstance(value, list):
+            return value
+        if isinstance(value, dict):
+            nested = _extract_api_rows(value, keys)
+            if nested:
+                return nested
+    return []
+
+
+@routes.get("/api/mission-feed")
+async def handle_mission_feed(request: web.Request) -> web.Response:
+    """Same-origin proxy for CitizenHQ's documented mission endpoint."""
+    url = "https://citizenhq.space/api/v1/missions"
+    timeout = aiohttp.ClientTimeout(total=15, connect=5)
+    try:
+        async with aiohttp.ClientSession(
+            timeout=timeout,
+            headers={"Accept": "application/json", "User-Agent": "StarCitizenShowcase/1.2"},
+        ) as session:
+            async with session.get(url) as upstream:
+                payload_text = await upstream.text()
+                if upstream.status != 200:
+                    log.warning("CitizenHQ missions returned HTTP %s", upstream.status)
+                    return web.json_response({
+                        "message": "CitizenHQ lieferte einen Fehler.",
+                        "upstream_status": upstream.status,
+                    }, status=502)
+                try:
+                    payload = json.loads(payload_text)
+                except (ValueError, TypeError):
+                    return web.json_response({"message": "CitizenHQ lieferte kein gültiges JSON."}, status=502)
+
+        rows = _extract_api_rows(payload, ("missions", "items", "results", "data", "records"))
+        if not rows:
+            log.warning("CitizenHQ missions response had no recognizable rows")
+            return web.json_response({
+                "message": "Die Missionsquelle lieferte keine erkennbaren Missionsdatensätze.",
+                "response_type": type(payload).__name__,
+                "top_level_keys": list(payload.keys())[:30] if isinstance(payload, dict) else [],
+            }, status=502)
+        return web.json_response({"data": rows, "source": "CitizenHQ", "count": len(rows)})
+    except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
+        log.warning("CitizenHQ missions proxy failed: %s", type(exc).__name__)
+        return web.json_response({
+            "message": "CitizenHQ konnte vom Server nicht erreicht werden.",
+            "error": type(exc).__name__,
+        }, status=502)
+
+
+@routes.get("/api/citizenhq/{path:.*}")
+async def handle_citizenhq_proxy(request: web.Request) -> web.Response:
+    """Same-origin proxy for CitizenHQ API calls, avoiding browser CORS/network failures."""
+    import re
+
+    path = request.match_info.get("path", "").strip("/")
+    if not path or not re.fullmatch(r"[A-Za-z0-9/_-]+", path):
+        return web.json_response({"message": "Ungültiger API-Pfad."}, status=400)
+    url = f"https://citizenhq.space/api/v1/{path}"
+    if request.query_string:
+        url += "?" + request.query_string
+    timeout = aiohttp.ClientTimeout(total=18, connect=5)
+    headers = {"Accept": "application/json", "User-Agent": "StarCitizenShowcase/1.2"}
+
+    # Der Universe Explorer benötigt eine echte Liste. CitizenHQ kann abhängig von
+    # Datenstand/API-Antwort ein leeres oder anders verschachteltes Ergebnis liefern.
+    # In diesem Fall wird die Star Citizen Wiki API als zweite Datenquelle verwendet.
+    if path == "locations":
+        query = request.query.get("q", "").strip()
+        system = request.query.get("system", "").strip().lower()
+        try:
+            async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+                async with session.get(url) as upstream:
+                    raw = await upstream.text()
+                    try:
+                        payload = json.loads(raw)
+                    except (ValueError, TypeError):
+                        payload = None
+                    rows = _extract_api_rows(payload, ("data", "items", "results", "locations", "records"))
+                    # Some APIs wrap their list in several object layers.
+                    for _ in range(4):
+                        if rows or not isinstance(payload, dict):
+                            break
+                        next_payload = next((payload.get(k) for k in ("data", "results", "result", "locations") if isinstance(payload.get(k), dict)), None)
+                        if next_payload is None:
+                            break
+                        payload = next_payload
+                        rows = _extract_api_rows(payload, ("data", "items", "results", "locations", "records"))
+                    if rows:
+                        return web.json_response({"data": rows, "source": "CitizenHQ", "count": len(rows)}, headers={"Cache-Control": "no-store"})
+                    log.warning("CitizenHQ locations returned no recognizable rows; trying Star Citizen Wiki API (HTTP %s)", upstream.status)
+
+                # Use documented public Wiki endpoint as fallback. Search locally so this
+                # also works when the upstream's filter parameter names change.
+                wiki_rows = []
+                for page in range(1, 6):
+                    wiki_url = "https://api.star-citizen.wiki/api/locations"
+                    params = {"page[number]": str(page), "page[size]": "200"}
+                    async with session.get(wiki_url, params=params) as fallback:
+                        if fallback.status != 200:
+                            log.warning("Star Citizen Wiki locations returned HTTP %s", fallback.status)
+                            break
+                        try:
+                            wiki_payload = await fallback.json(content_type=None)
+                        except (ValueError, aiohttp.ContentTypeError):
+                            break
+                    page_rows = _extract_api_rows(wiki_payload, ("data", "items", "results", "locations", "records"))
+                    if not page_rows and isinstance(wiki_payload, dict):
+                        # Common paginated shape: {data: {data: [...]}}.
+                        nested = wiki_payload.get("data")
+                        if isinstance(nested, dict):
+                            page_rows = _extract_api_rows(nested, ("data", "items", "results", "locations", "records"))
+                    if not page_rows:
+                        break
+                    wiki_rows.extend(page_rows)
+                    if query and any(query.casefold() in str(x.get("name", "")).casefold() for x in wiki_rows if isinstance(x, dict)):
+                        break
+                    meta = wiki_payload.get("meta", {}) if isinstance(wiki_payload, dict) else {}
+                    last_page = meta.get("last_page") or meta.get("lastPage") if isinstance(meta, dict) else None
+                    if last_page and page >= int(last_page):
+                        break
+                    if len(page_rows) < 200:
+                        break
+
+                filtered = []
+                for item in wiki_rows:
+                    if not isinstance(item, dict):
+                        continue
+                    name = str(item.get("name") or item.get("label") or item.get("title") or "")
+                    item_system = str(item.get("system") or item.get("systemName") or "")
+                    if query and query.casefold() not in name.casefold() and query.casefold() not in str(item.get("parentName") or "").casefold():
+                        continue
+                    if system and system not in item_system.casefold():
+                        continue
+                    normalized = dict(item)
+                    normalized.setdefault("name", name or "Unbekannter Ort")
+                    normalized.setdefault("system", item_system)
+                    normalized.setdefault("type", item.get("type") or item.get("kind") or item.get("category") or "Ort")
+                    filtered.append(normalized)
+                if filtered:
+                    return web.json_response({"data": filtered[:100], "source": "Star Citizen Wiki API", "count": len(filtered)}, headers={"Cache-Control": "no-store"})
+                return web.json_response({"data": [], "source": "CitizenHQ + Star Citizen Wiki API", "count": 0, "message": "Keine passenden Orte in den Datenquellen gefunden."}, headers={"Cache-Control": "no-store"})
+        except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
+            log.warning("Standortquellen fehlgeschlagen: %s", type(exc).__name__)
+            return web.json_response({"data": [], "source": "Standort-API", "message": "Standortquellen sind nicht erreichbar.", "error": type(exc).__name__}, status=502)
+
+    try:
+        async with aiohttp.ClientSession(timeout=timeout, headers=headers) as session:
+            async with session.get(url) as upstream:
+                body = await upstream.read()
+                content_type = upstream.headers.get("Content-Type", "application/json")
+                return web.Response(
+                    body=body,
+                    status=upstream.status,
+                    content_type=content_type.split(";", 1)[0],
+                    headers={"Cache-Control": "no-store", "X-Proxy-Source": "CitizenHQ"},
+                )
+    except (aiohttp.ClientError, asyncio.TimeoutError) as exc:
+        log.warning("CitizenHQ-Proxy fehlgeschlagen für %s: %s", path, type(exc).__name__)
+        return web.json_response({
+            "message": "CitizenHQ konnte vom Server nicht erreicht werden.",
+            "endpoint": path,
+            "error": type(exc).__name__,
+        }, status=502)
+
+
 @routes.get("/api/ships")
 async def handle_ships(request: web.Request) -> web.Response:
     # Solange noch gar kein Datenstand existiert (Start läuft noch oder UEX war bisher nicht

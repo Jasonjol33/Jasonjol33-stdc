@@ -1,0 +1,6004 @@
+{
+  "fetched": "2026-10-25T02:04:25.898475+00:00",
+  "index": {
+    "avengerstalker": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Stalker"
+    },
+    "aegsavengerstalkerdisplay": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Stalker"
+    },
+    "aegisdynamicsavengerstalker": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Stalker"
+    },
+    "aegsavengerstalker": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Stalker"
+    },
+    "avengertitan": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Titan"
+    },
+    "aegsavengertitan": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Titan"
+    },
+    "aegisdynamicsavengertitan": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Titan"
+    },
+    "avengertitanrenegade": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Titan-Renegade"
+    },
+    "aegsavengertitanrenegade": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Titan-Renegade"
+    },
+    "aegisdynamicsavengertitanrenegade": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Titan-Renegade"
+    },
+    "avengerwarlock": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Warlock"
+    },
+    "aegsavengerwarlock": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Warlock"
+    },
+    "aegisdynamicsavengerwarlock": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-avenger/Avenger-Warlock"
+    },
+    "eclipse": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/eclipse/Eclipse"
+    },
+    "aegseclipse": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/eclipse/Eclipse"
+    },
+    "aegisdynamicseclipse": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/eclipse/Eclipse"
+    },
+    "aegseclipsebis2950": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/eclipse/Eclipse"
+    },
+    "gladius": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius"
+    },
+    "aegsgladius": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius"
+    },
+    "aegisdynamicsgladius": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius"
+    },
+    "gladiuspirate": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius-Pirate-Edition"
+    },
+    "aegsgladiuspir": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius-Pirate-Edition"
+    },
+    "aegisdynamicsgladiuspirate": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius-Pirate-Edition"
+    },
+    "gladiusvaliant": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius-Valiant"
+    },
+    "aegsgladiusvaliant": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius-Valiant"
+    },
+    "aegisdynamicsgladiusvaliant": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/gladius/Gladius-Valiant"
+    },
+    "hammerhead": {
+      "scu": 64.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead"
+    },
+    "aegshammerheadgs": {
+      "scu": 64.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead"
+    },
+    "aegisdynamicshammerhead": {
+      "scu": 64.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead"
+    },
+    "aegshammerhead": {
+      "scu": 40.0,
+      "crew": "9-11",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead"
+    },
+    "hammerhead2949bestinshowedition": {
+      "scu": 0.0,
+      "crew": "9-11",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead-Best-In-Show-Edition-2949"
+    },
+    "aegshammerheadshowdown": {
+      "scu": 0.0,
+      "crew": "9-11",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead-Best-In-Show-Edition-2949"
+    },
+    "aegisdynamicshammerhead2949bestinshowedition": {
+      "scu": 0.0,
+      "crew": "9-11",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hammerhead/Hammerhead-Best-In-Show-Edition-2949"
+    },
+    "idrism": {
+      "scu": 1326.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegsidrism": {
+      "scu": 1326.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegisdynamicsidrism": {
+      "scu": 1326.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "idrisp": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-idris/Idris-P"
+    },
+    "aegsidrisp": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-idris/Idris-P"
+    },
+    "aegisdynamicsidrisp": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-idris/Idris-P"
+    },
+    "aegsidrispfw25": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-idris/Idris-P"
+    },
+    "aegsidrisptsg": {
+      "scu": 1374.0,
+      "crew": "28-21",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-idris/Idris-P"
+    },
+    "idrispwikelowarspecial": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegsidrispcollectormilitary": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegisdynamicsidrispwikelowarspecial": {
+      "scu": 1374.0,
+      "crew": "28-22",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "javelin": {
+      "scu": 0.0,
+      "crew": "1-15",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegsjavelin": {
+      "scu": 0.0,
+      "crew": "1-15",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegisdynamicsjavelin": {
+      "scu": 0.0,
+      "crew": "1-15",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "reclaimer": {
+      "scu": 420.0,
+      "crew": "5-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reclaimer/Reclaimer"
+    },
+    "aegsreclaimer": {
+      "scu": 420.0,
+      "crew": "5-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reclaimer/Reclaimer"
+    },
+    "aegisdynamicsreclaimer": {
+      "scu": 420.0,
+      "crew": "5-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reclaimer/Reclaimer"
+    },
+    "reclaimer2949bestinshowedition": {
+      "scu": 420.0,
+      "crew": "5-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reclaimer/Reclaimer-Best-In-Show-Edition-2949"
+    },
+    "aegsreclaimershowdown": {
+      "scu": 420.0,
+      "crew": "5-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reclaimer/Reclaimer-Best-In-Show-Edition-2949"
+    },
+    "aegisdynamicsreclaimer2949bestinshowedition": {
+      "scu": 420.0,
+      "crew": "5-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reclaimer/Reclaimer-Best-In-Show-Edition-2949"
+    },
+    "redeemer": {
+      "scu": 2.0,
+      "crew": "4-13",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/redeemer/Redeemer"
+    },
+    "aegsredeemer": {
+      "scu": 2.0,
+      "crew": "4-13",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/redeemer/Redeemer"
+    },
+    "aegisdynamicsredeemer": {
+      "scu": 2.0,
+      "crew": "4-13",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/redeemer/Redeemer"
+    },
+    "retaliator": {
+      "scu": 0.0,
+      "crew": "7-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-retaliator/Retaliator-Bomber"
+    },
+    "aegsretaliator": {
+      "scu": 0.0,
+      "crew": "7-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-retaliator/Retaliator-Bomber"
+    },
+    "aegisdynamicsretaliator": {
+      "scu": 0.0,
+      "crew": "7-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aegis-retaliator/Retaliator-Bomber"
+    },
+    "sabre": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre"
+    },
+    "aegssabre": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre"
+    },
+    "aegisdynamicssabre": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre"
+    },
+    "sabrecomet": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Comet"
+    },
+    "aegssabrecomet": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Comet"
+    },
+    "aegisdynamicssabrecomet": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Comet"
+    },
+    "sabrefirebird": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Firebird"
+    },
+    "aegssabrefirebird": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Firebird"
+    },
+    "aegisdynamicssabrefirebird": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Firebird"
+    },
+    "sabrefirebirdwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegssabrefirebirdcollectormilt": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegisdynamicssabrefirebirdwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "sabreperegrine": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Peregrine"
+    },
+    "aegssabreperegrine": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Peregrine"
+    },
+    "aegisdynamicssabreperegrine": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Peregrine"
+    },
+    "sabreperegrinewikelospeedyspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegssabreperegrinecollectorcompetition": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegisdynamicssabreperegrinewikelospeedyspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "sabreraven": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegssabreraven": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aegisdynamicssabreraven": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "sabreravenex": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Raven-EX"
+    },
+    "aegssabreravenex": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Raven-EX"
+    },
+    "aegisdynamicssabreravenex": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/sabre/Sabre-Raven-EX"
+    },
+    "tiburon": {
+      "scu": 64.0,
+      "crew": "7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/tiburon/Tiburon"
+    },
+    "aegstiburon": {
+      "scu": 64.0,
+      "crew": "7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/tiburon/Tiburon"
+    },
+    "aegisdynamicstiburon": {
+      "scu": 64.0,
+      "crew": "7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/tiburon/Tiburon"
+    },
+    "vanguardharbinger": {
+      "scu": 0.0,
+      "crew": "2-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Harbinger"
+    },
+    "aegsvanguardharbinger": {
+      "scu": 0.0,
+      "crew": "2-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Harbinger"
+    },
+    "aegisdynamicsvanguardharbinger": {
+      "scu": 0.0,
+      "crew": "2-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Harbinger"
+    },
+    "vanguardhoplite": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Hoplite"
+    },
+    "aegsvanguardhoplite": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Hoplite"
+    },
+    "aegisdynamicsvanguardhoplite": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Hoplite"
+    },
+    "vanguardsentinel": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Sentinel"
+    },
+    "aegsvanguardsentinel": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Sentinel"
+    },
+    "aegisdynamicsvanguardsentinel": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Sentinel"
+    },
+    "vanguardwarden": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Warden"
+    },
+    "aegsvanguard": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Warden"
+    },
+    "aegisdynamicsvanguardwarden": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanguard/Vanguard-Warden"
+    },
+    "arrow": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-arrow/Arrow"
+    },
+    "anvlarrow": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-arrow/Arrow"
+    },
+    "anvilaerospacearrow": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-arrow/Arrow"
+    },
+    "asgard": {
+      "scu": 180.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-asgard/Asgard"
+    },
+    "anvlasgard": {
+      "scu": 180.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-asgard/Asgard"
+    },
+    "anvilaerospaceasgard": {
+      "scu": 180.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-asgard/Asgard"
+    },
+    "asgardwikelowarspecial": {
+      "scu": 180.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlasgardcollectormilitary": {
+      "scu": 180.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospaceasgardwikelowarspecial": {
+      "scu": 180.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "ballista": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Ballista"
+    },
+    "anvlballista": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Ballista"
+    },
+    "anvilaerospaceballista": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Ballista"
+    },
+    "ballistadunestalker": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Anvil-Ballista-Dunestalker"
+    },
+    "anvlballistadunestalker": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Anvil-Ballista-Dunestalker"
+    },
+    "anvilaerospaceballistadunestalker": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Anvil-Ballista-Dunestalker"
+    },
+    "ballistasnowblind": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Anvil-Ballista-Snowblind"
+    },
+    "anvlballistasnowblind": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Anvil-Ballista-Snowblind"
+    },
+    "anvilaerospaceballistasnowblind": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-ballista/Anvil-Ballista-Snowblind"
+    },
+    "c8pisces": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlc8pisces": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacec8pisces": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "c8rpiscesrescue": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-pisces/C8R-Pisces"
+    },
+    "anvlc8rpisces": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-pisces/C8R-Pisces"
+    },
+    "anvilaerospacec8rpiscesrescue": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-pisces/C8R-Pisces"
+    },
+    "c8xpiscesexpedition": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-pisces/C8X-Pisces-Expedition"
+    },
+    "anvlc8xpiscesexpedition": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-pisces/C8X-Pisces-Expedition"
+    },
+    "anvilaerospacec8xpiscesexpedition": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-pisces/C8X-Pisces-Expedition"
+    },
+    "carrack": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack"
+    },
+    "anvlcarrackbis2950": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack"
+    },
+    "anvilaerospacecarrack": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack"
+    },
+    "anvlcarrack": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack"
+    },
+    "carrackexpedition": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack-Expedition"
+    },
+    "anvlcarrackexpedition": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack-Expedition"
+    },
+    "anvilaerospacecarrackexpedition": {
+      "scu": 456.0,
+      "crew": "6-12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/carrack/Carrack-Expedition"
+    },
+    "centurion": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/centurion/Centurion"
+    },
+    "anvlcenturion": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/centurion/Centurion"
+    },
+    "anvilaerospacecenturion": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/centurion/Centurion"
+    },
+    "f7ahornetmki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlhornetf7amk1": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef7ahornetmki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f7ahornetmkii": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlhornetf7amk2": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef7ahornetmkii": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f7chornetmki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-Hornet-Mk-I"
+    },
+    "anvlhornetf7c": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-Hornet-Mk-I"
+    },
+    "anvilaerospacef7chornetmki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-Hornet-Mk-I"
+    },
+    "f7chornetmkii": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-Hornet-Mk-II"
+    },
+    "anvlhornetf7cmk2": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-Hornet-Mk-II"
+    },
+    "anvilaerospacef7chornetmkii": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-Hornet-Mk-II"
+    },
+    "f7chornetwildfiremki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-Hornet-Wildfire-Mk-I"
+    },
+    "anvlhornetf7cwildfire": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-Hornet-Wildfire-Mk-I"
+    },
+    "anvilaerospacef7chornetwildfiremki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-Hornet-Wildfire-Mk-I"
+    },
+    "f7cmhornetheartseekermki": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Heartseeker-Mk-I"
+    },
+    "anvlhornetf7cmheartseeker": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Heartseeker-Mk-I"
+    },
+    "anvilaerospacef7cmhornetheartseekermki": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Heartseeker-Mk-I"
+    },
+    "f7cmhornetheartseekermkii": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Heartseeker-Mk-I"
+    },
+    "anvlhornetf7cmmk2heartseeker": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Heartseeker-Mk-I"
+    },
+    "anvilaerospacef7cmhornetheartseekermkii": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Heartseeker-Mk-I"
+    },
+    "f7cmsuperhornetmki": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Mk-I"
+    },
+    "anvlhornetf7cm": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Mk-I"
+    },
+    "anvilaerospacef7cmsuperhornetmki": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-M-Super-Hornet-Mk-I"
+    },
+    "f7cmsuperhornetmkii": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-M-Super-Hornet-Mk-II"
+    },
+    "anvlhornetf7cmmk2": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-M-Super-Hornet-Mk-II"
+    },
+    "anvilaerospacef7cmsuperhornetmkii": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-M-Super-Hornet-Mk-II"
+    },
+    "f7crhornettrackermki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-R-Hornet-Tracker-Mk-I"
+    },
+    "anvlhornetf7cr": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-R-Hornet-Tracker-Mk-I"
+    },
+    "anvilaerospacef7crhornettrackermki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-R-Hornet-Tracker-Mk-I"
+    },
+    "f7crhornettrackermkii": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-R-Hornet-Tracker-Mk-II"
+    },
+    "anvlhornetf7crmk2": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-R-Hornet-Tracker-Mk-II"
+    },
+    "anvilaerospacef7crhornettrackermkii": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-R-Hornet-Tracker-Mk-II"
+    },
+    "f7cshornetghostmki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-S-Hornet-Ghost-Mk-I"
+    },
+    "anvlhornetf7cs": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-S-Hornet-Ghost-Mk-I"
+    },
+    "anvilaerospacef7cshornetghostmki": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet/F7C-S-Hornet-Ghost-Mk-I"
+    },
+    "f7cshornetghostmkii": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-S-Hornet-Ghost-Mk-II"
+    },
+    "anvlhornetf7csmk2": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-S-Hornet-Ghost-Mk-II"
+    },
+    "anvilaerospacef7cshornetghostmkii": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-hornet-mkii/F7C-S-Hornet-Ghost-Mk-II"
+    },
+    "f7hornetmkwikelo": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlhornetf7mk2collectormod": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef7hornetmkwikelo": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f8alightning": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef8alightning": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f8clightning": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8cplat": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef8clightning": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8c": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f8clightningexecutiveedition": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8cexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef8clightningexecutiveedition": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f8clightningwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8ccollectorstealth": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef8clightningwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "f8clightningwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8ccollectormilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef8clightningwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "gladiator": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-gladiator/Gladiator"
+    },
+    "anvlgladiator": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-gladiator/Gladiator"
+    },
+    "anvilaerospacegladiator": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-gladiator/Gladiator"
+    },
+    "hawk": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hawk/Hawk"
+    },
+    "anvlhawk": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hawk/Hawk"
+    },
+    "anvilaerospacehawk": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hawk/Hawk"
+    },
+    "hurricane": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hurricane/Hurricane"
+    },
+    "anvlhurricane": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hurricane/Hurricane"
+    },
+    "anvilaerospacehurricane": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hurricane/Hurricane"
+    },
+    "paladin": {
+      "scu": 4.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/paladin/Paladin"
+    },
+    "anvlpaladin": {
+      "scu": 4.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/paladin/Paladin"
+    },
+    "anvilaerospacepaladin": {
+      "scu": 4.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/paladin/Paladin"
+    },
+    "spartan": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spartan/Spartan"
+    },
+    "anvlspartan": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spartan/Spartan"
+    },
+    "anvilaerospacespartan": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spartan/Spartan"
+    },
+    "terrapin": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/terrapin/Terrapin"
+    },
+    "anvlterrapin": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/terrapin/Terrapin"
+    },
+    "anvilaerospaceterrapin": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/terrapin/Terrapin"
+    },
+    "terrapinmedic": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/terrapin/Terrapin-Medic"
+    },
+    "anvlterrapinmedic": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/terrapin/Terrapin-Medic"
+    },
+    "anvilaerospaceterrapinmedic": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/terrapin/Terrapin-Medic"
+    },
+    "terrapinmedicwikelosaviorspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlterrapinmediccollectormedic": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospaceterrapinmedicwikelosaviorspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "valkyrie": {
+      "scu": 90.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-valkyrie/Valkyrie"
+    },
+    "anvlvalkyriebis2950": {
+      "scu": 90.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-valkyrie/Valkyrie"
+    },
+    "anvilaerospacevalkyrie": {
+      "scu": 90.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-valkyrie/Valkyrie"
+    },
+    "anvlvalkyrie": {
+      "scu": 90.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/anvil-valkyrie/Valkyrie"
+    },
+    "khartual": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/khartu/Khartu-Al"
+    },
+    "xianscout": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/khartu/Khartu-Al"
+    },
+    "aopoakhartual": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/khartu/Khartu-Al"
+    },
+    "nox": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nox/Nox"
+    },
+    "xiannox": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nox/Nox"
+    },
+    "aopoanox": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nox/Nox"
+    },
+    "noxkue": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nox/Nox-Kue"
+    },
+    "xiannoxkue": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nox/Nox-Kue"
+    },
+    "aopoanoxkue": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nox/Nox-Kue"
+    },
+    "noxwikelospecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "xiannoxcollectormod": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aopoanoxwikelospecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "santokyi": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aopoa-santokyai/Santoky-i"
+    },
+    "xnaasantokyai": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aopoa-santokyai/Santoky-i"
+    },
+    "aopoasantokyi": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aopoa-santokyai/Santoky-i"
+    },
+    "atls": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "argoatls": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "argoastronauticsatls": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "atlsgeo": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS-GEO"
+    },
+    "argoatlsgeo": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS-GEO"
+    },
+    "argoastronauticsatlsgeo": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS-GEO"
+    },
+    "argoatlsgeoikti": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "banusouliargoatlsgeoikti": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoatlsikti": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS-IKTI-Akuma"
+    },
+    "banusouliargoatlsikti": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS-IKTI-Akuma"
+    },
+    "argoatlsiktiakuma": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoatlsgeoiktintls": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "unknownargoatlsiktiakuma": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoatlsiktirad": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoatlsiktiargos": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "banusouliargoatlsiktirad": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "csvsm": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/csv/CSV-SM"
+    },
+    "argocsvcargo": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/csv/CSV-SM"
+    },
+    "argoastronauticscsvsm": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/csv/CSV-SM"
+    },
+    "mole": {
+      "scu": 32.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo-mole/MOLE"
+    },
+    "argomole": {
+      "scu": 32.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo-mole/MOLE"
+    },
+    "argoastronauticsmole": {
+      "scu": 32.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo-mole/MOLE"
+    },
+    "molealliance": {
+      "scu": 32.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argomolebtala": {
+      "scu": 32.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoastronauticsmolealliance": {
+      "scu": 32.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "moth": {
+      "scu": 224.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/moth/MOTH"
+    },
+    "argomoth": {
+      "scu": 224.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/moth/MOTH"
+    },
+    "argoastronauticsmoth": {
+      "scu": 224.0,
+      "crew": "4-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/moth/MOTH"
+    },
+    "mpuvcargo": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Cargo"
+    },
+    "argompuv": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Cargo"
+    },
+    "argoastronauticsmpuvcargo": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Cargo"
+    },
+    "mpuvpersonnel": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Personnel"
+    },
+    "argompuvtransport": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Personnel"
+    },
+    "argoastronauticsmpuvpersonnel": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Personnel"
+    },
+    "mpuvtractor": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Tractor"
+    },
+    "argompuv1t": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Tractor"
+    },
+    "argoastronauticsmpuvtractor": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo/MPUV-Tractor"
+    },
+    "raft": {
+      "scu": 192.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/raft/RAFT"
+    },
+    "argoraft": {
+      "scu": 192.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/raft/RAFT"
+    },
+    "argoastronauticsraft": {
+      "scu": 192.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/raft/RAFT"
+    },
+    "raftwikeloworkspecial": {
+      "scu": 192.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoraftcollectorindust": {
+      "scu": 192.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoastronauticsraftwikeloworkspecial": {
+      "scu": 192.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "srv": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo-srv/SRV"
+    },
+    "argosrv": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo-srv/SRV"
+    },
+    "argoastronauticssrv": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/argo-srv/SRV"
+    },
+    "atlscoolmetalcolor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "argoatlsgeocollectorgrad03": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "argoastronauticsatlscoolmetalcolor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "atlsorangeline": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoatlsgeocollectorgrad02": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "argoastronauticsatlsorangeline": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "atlssnowlandcolor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "argoatlsgeocollectorgrad01": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "argoastronauticsatlssnowlandcolor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/atls/ATLS"
+    },
+    "defender": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/defender/Defender"
+    },
+    "banudefender": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/defender/Defender"
+    },
+    "banusoulidefender": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/defender/Defender"
+    },
+    "hoverquad": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hoverquad/HoverQuad"
+    },
+    "cnouhoverquad": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hoverquad/HoverQuad"
+    },
+    "consolidatedoutlandhoverquad": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hoverquad/HoverQuad"
+    },
+    "mustangalpha": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Alpha"
+    },
+    "cnoumustangalpha": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Alpha"
+    },
+    "consolidatedoutlandmustangalpha": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Alpha"
+    },
+    "mustangbeta": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Beta"
+    },
+    "cnoumustangbeta": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Beta"
+    },
+    "consolidatedoutlandmustangbeta": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Beta"
+    },
+    "mustangcitizencon2948edition": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Alpha-Vindicator"
+    },
+    "cnoumustangalphacitizencon2018": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Alpha-Vindicator"
+    },
+    "consolidatedoutlandmustangcitizencon2948edition": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Alpha-Vindicator"
+    },
+    "mustangdelta": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Delta"
+    },
+    "cnoumustangdelta": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Delta"
+    },
+    "consolidatedoutlandmustangdelta": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Delta"
+    },
+    "mustanggamma": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Gamma"
+    },
+    "cnoumustanggamma": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Gamma"
+    },
+    "consolidatedoutlandmustanggamma": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Gamma"
+    },
+    "mustangomega": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Omega"
+    },
+    "cnoumustangomega": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Omega"
+    },
+    "consolidatedoutlandmustangomega": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mustang/Mustang-Omega"
+    },
+    "nomad": {
+      "scu": 24.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nomad/Nomad"
+    },
+    "cnounomad": {
+      "scu": 24.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nomad/Nomad"
+    },
+    "consolidatedoutlandnomad": {
+      "scu": 24.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nomad/Nomad"
+    },
+    "corsairpyamexec": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakcorsairexecstealthindustrial": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetarycorsairpyamexec": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakcorsairexecmilitary": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "a1spirit": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spirit/A1-Spirit"
+    },
+    "crusspirita1": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spirit/A1-Spirit"
+    },
+    "crusaderindustriesa1spirit": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spirit/A1-Spirit"
+    },
+    "a2herculesstarlifter": {
+      "scu": 216.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/A2-Hercules"
+    },
+    "crusstarliftera2": {
+      "scu": 216.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/A2-Hercules"
+    },
+    "crusaderindustriesa2herculesstarlifter": {
+      "scu": 216.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/A2-Hercules"
+    },
+    "a2herculesstarlifterwikelowarspecial": {
+      "scu": 216.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusstarliftera2collectormilitary": {
+      "scu": 216.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusaderindustriesa2herculesstarlifterwikelowarspecial": {
+      "scu": 216.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aresstarfighterinferno": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-ares/Ares-Inferno"
+    },
+    "crusstarfighterinferno": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-ares/Ares-Inferno"
+    },
+    "crusaderindustriesaresstarfighterinferno": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-ares/Ares-Inferno"
+    },
+    "aresstarfighterinfernowikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusstarfighterinfernocollectormilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusaderindustriesaresstarfighterinfernowikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "aresstarfighterion": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-ares/Ares-Ion"
+    },
+    "crusstarfighterion": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-ares/Ares-Ion"
+    },
+    "crusaderindustriesaresstarfighterion": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-ares/Ares-Ion"
+    },
+    "aresstarfighterionwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusstarfighterioncollectorstealth": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusaderindustriesaresstarfighterionwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "c1spirit": {
+      "scu": 64.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spirit/C1-Spirit"
+    },
+    "crusspiritc1": {
+      "scu": 64.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spirit/C1-Spirit"
+    },
+    "crusaderindustriesc1spirit": {
+      "scu": 64.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/spirit/C1-Spirit"
+    },
+    "c1spiritwikelospecial": {
+      "scu": 64.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusspiritc1civilian": {
+      "scu": 64.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusaderindustriesc1spiritwikelospecial": {
+      "scu": 64.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "c2herculesstarlifter": {
+      "scu": 696.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/C2-Hercules"
+    },
+    "crusstarlifterc2": {
+      "scu": 696.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/C2-Hercules"
+    },
+    "crusaderindustriesc2herculesstarlifter": {
+      "scu": 696.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/C2-Hercules"
+    },
+    "intrepid": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/intrepid/Intrepid"
+    },
+    "crusintrepid": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/intrepid/Intrepid"
+    },
+    "crusaderindustriesintrepid": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/intrepid/Intrepid"
+    },
+    "intrepidwikeloworkspecial": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusintrepidcollectorindust": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "crusaderindustriesintrepidwikeloworkspecial": {
+      "scu": 8.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "m2herculesstarlifter": {
+      "scu": 522.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/M2-Hercules"
+    },
+    "crusstarlifterm2": {
+      "scu": 522.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/M2-Hercules"
+    },
+    "crusaderindustriesm2herculesstarlifter": {
+      "scu": 522.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-starlifter/M2-Hercules"
+    },
+    "mercurystarrunner": {
+      "scu": 114.0,
+      "crew": "3-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-mercury-star-runner/Mercury"
+    },
+    "crusstarrunner": {
+      "scu": 114.0,
+      "crew": "3-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-mercury-star-runner/Mercury"
+    },
+    "crusaderindustriesmercurystarrunner": {
+      "scu": 114.0,
+      "crew": "3-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/crusader-mercury-star-runner/Mercury"
+    },
+    "cutlassblackpyamexec": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakcutlassblackexecstealth": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetarycutlassblackpyamexec": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakcutlassblackexecmilitary": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "buccaneer": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-buccaneer/Buccaneer"
+    },
+    "drakbuccaneer": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-buccaneer/Buccaneer"
+    },
+    "drakeinterplanetarybuccaneer": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-buccaneer/Buccaneer"
+    },
+    "caterpillar": {
+      "scu": 576.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-caterpillar/Caterpillar"
+    },
+    "drakcaterpillar": {
+      "scu": 576.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-caterpillar/Caterpillar"
+    },
+    "drakeinterplanetarycaterpillar": {
+      "scu": 576.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-caterpillar/Caterpillar"
+    },
+    "caterpillarpirate": {
+      "scu": 576.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-caterpillar/Caterpillar-Pirate-Edition"
+    },
+    "drakcaterpillarpirate": {
+      "scu": 576.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-caterpillar/Caterpillar-Pirate-Edition"
+    },
+    "drakeinterplanetarycaterpillarpirate": {
+      "scu": 576.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-caterpillar/Caterpillar-Pirate-Edition"
+    },
+    "clipper": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/clipper/Clipper"
+    },
+    "drakclipper": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/clipper/Clipper"
+    },
+    "drakeinterplanetaryclipper": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/clipper/Clipper"
+    },
+    "clipperwikelowarspecial": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakclippercollectormilitary": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetaryclipperwikelowarspecial": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "commandmodule": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakcommandmodule": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetarycommandmodule": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "corsair": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-corsair/Corsair"
+    },
+    "drakcorsair": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-corsair/Corsair"
+    },
+    "drakeinterplanetarycorsair": {
+      "scu": 72.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-corsair/Corsair"
+    },
+    "cutlassblack": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Black"
+    },
+    "drakcutlassblackbis2950": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Black"
+    },
+    "drakeinterplanetarycutlassblack": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Black"
+    },
+    "drakcutlassblack": {
+      "scu": 46.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Black"
+    },
+    "cutlassblue": {
+      "scu": 12.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Blue"
+    },
+    "drakcutlassblue": {
+      "scu": 12.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Blue"
+    },
+    "drakeinterplanetarycutlassblue": {
+      "scu": 12.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Blue"
+    },
+    "drakcutlassbluebis2950": {
+      "scu": 12.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Blue"
+    },
+    "cutlassred": {
+      "scu": 12.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Red"
+    },
+    "drakcutlassred": {
+      "scu": 12.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Red"
+    },
+    "drakeinterplanetarycutlassred": {
+      "scu": 12.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Red"
+    },
+    "drakcutlassredbis2950": {
+      "scu": 12.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Red"
+    },
+    "cutlasssteel": {
+      "scu": 0.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Steel"
+    },
+    "drakcutlasssteel": {
+      "scu": 0.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Steel"
+    },
+    "drakeinterplanetarycutlasssteel": {
+      "scu": 0.0,
+      "crew": "3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-cutlass/Cutlass-Steel"
+    },
+    "cutter": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter"
+    },
+    "drakcutter": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter"
+    },
+    "drakeinterplanetarycutter": {
+      "scu": 4.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter"
+    },
+    "cutterrambler": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter-Rambler"
+    },
+    "drakcutterrambler": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter-Rambler"
+    },
+    "drakeinterplanetarycutterrambler": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter-Rambler"
+    },
+    "cutterscout": {
+      "scu": 2.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter-Scout"
+    },
+    "drakcutterscout": {
+      "scu": 2.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter-Scout"
+    },
+    "drakeinterplanetarycutterscout": {
+      "scu": 2.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cutter/Cutter-Scout"
+    },
+    "dragonfly": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-dragonfly/Dragonfly-Black"
+    },
+    "drakdragonfly": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-dragonfly/Dragonfly-Black"
+    },
+    "drakeinterplanetarydragonfly": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-dragonfly/Dragonfly-Black"
+    },
+    "dragonflystarkitten": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakdragonflypink": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetarydragonflystarkitten": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "dragonflyyellowjacket": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-dragonfly/Dragonfly-Yellowjacket"
+    },
+    "drakdragonflyyellow": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-dragonfly/Dragonfly-Yellowjacket"
+    },
+    "drakeinterplanetarydragonflyyellowjacket": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-dragonfly/Dragonfly-Yellowjacket"
+    },
+    "golem": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/golem/Golem"
+    },
+    "drakgolem": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/golem/Golem"
+    },
+    "drakeinterplanetarygolem": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/golem/Golem"
+    },
+    "golemalliance": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakgolembtala": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetarygolemalliance": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "golemox": {
+      "scu": 64.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/golem/Golem-OX"
+    },
+    "drakgolemox": {
+      "scu": 64.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/golem/Golem-OX"
+    },
+    "drakeinterplanetarygolemox": {
+      "scu": 64.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/golem/Golem-OX"
+    },
+    "golemwikeloworkspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakgolemcollectorindust": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "drakeinterplanetarygolemwikeloworkspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "herald": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/herald/Herald"
+    },
+    "drakherald": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/herald/Herald"
+    },
+    "drakeinterplanetaryherald": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/herald/Herald"
+    },
+    "ironclad": {
+      "scu": 2200.0,
+      "crew": "7-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ironclad/Ironclad"
+    },
+    "drakironclad": {
+      "scu": 2200.0,
+      "crew": "7-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ironclad/Ironclad"
+    },
+    "drakeinterplanetaryironclad": {
+      "scu": 2200.0,
+      "crew": "7-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ironclad/Ironclad"
+    },
+    "ironcladassault": {
+      "scu": 1440.0,
+      "crew": "7-8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ironclad/Ironclad-Assault"
+    },
+    "drakironcladassault": {
+      "scu": 1440.0,
+      "crew": "7-8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ironclad/Ironclad-Assault"
+    },
+    "drakeinterplanetaryironcladassault": {
+      "scu": 1440.0,
+      "crew": "7-8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ironclad/Ironclad-Assault"
+    },
+    "mule": {
+      "scu": 1.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mule/Mule"
+    },
+    "drakmule": {
+      "scu": 1.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mule/Mule"
+    },
+    "drakeinterplanetarymule": {
+      "scu": 1.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mule/Mule"
+    },
+    "pitbull": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/pitbull/Pitbull"
+    },
+    "drakpitbull": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/pitbull/Pitbull"
+    },
+    "drakeinterplanetarypitbull": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/pitbull/Pitbull"
+    },
+    "vulture": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-vulture/Vulture"
+    },
+    "drakvulture": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-vulture/Vulture"
+    },
+    "drakeinterplanetaryvulture": {
+      "scu": 12.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/drake-vulture/Vulture"
+    },
+    "blade": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanduul-blade/Blade"
+    },
+    "vnclblade": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanduul-blade/Blade"
+    },
+    "esperiablade": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/vanduul-blade/Blade"
+    },
+    "glaive": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/esperia-glaive/Glaive"
+    },
+    "vnclglaive": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/esperia-glaive/Glaive"
+    },
+    "esperiaglaive": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/esperia-glaive/Glaive"
+    },
+    "prowler": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/prowler/Prowler"
+    },
+    "esprprowler": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/prowler/Prowler"
+    },
+    "esperiaprowler": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/prowler/Prowler"
+    },
+    "prowlerutility": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/prowler/Prowler-Utility"
+    },
+    "esprprowlerutility": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/prowler/Prowler-Utility"
+    },
+    "esperiaprowlerutility": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/prowler/Prowler-Utility"
+    },
+    "prowlerutilitywikeloworkspecial": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "esprprowlerutilitycollectorindust": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "esperiaprowlerutilitywikeloworkspecial": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "stinger": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/stinger/Stinger"
+    },
+    "vnclstinger": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/stinger/Stinger"
+    },
+    "esperiastinger": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/stinger/Stinger"
+    },
+    "talon": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/talon/Talon"
+    },
+    "esprtalon": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/talon/Talon"
+    },
+    "esperiatalon": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/talon/Talon"
+    },
+    "talonshrike": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/talon/Talon-Shrike"
+    },
+    "esprtalonshrike": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/talon/Talon-Shrike"
+    },
+    "esperiatalonshrike": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/talon/Talon-Shrike"
+    },
+    "f8clightningpyamexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8cexecstealth": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacef8clightningpyamexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvllightningf8cexecmilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "railen": {
+      "scu": 640.0,
+      "crew": "4-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/railen/Railen"
+    },
+    "gamarailen": {
+      "scu": 640.0,
+      "crew": "4-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/railen/Railen"
+    },
+    "gatacmanufacturerailen": {
+      "scu": 640.0,
+      "crew": "4-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/railen/Railen"
+    },
+    "syulen": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/syulen/Syulen"
+    },
+    "gamasyulen": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/syulen/Syulen"
+    },
+    "gatacmanufacturesyulen": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/syulen/Syulen"
+    },
+    "tyilui": {
+      "scu": 96.0,
+      "crew": "4-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/tyilui/Tyilui"
+    },
+    "gamatyilui": {
+      "scu": 96.0,
+      "crew": "4-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/tyilui/Tyilui"
+    },
+    "gatacmanufacturetyilui": {
+      "scu": 96.0,
+      "crew": "4-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/tyilui/Tyilui"
+    },
+    "mdc": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mdc/MDC"
+    },
+    "grinmdc": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mdc/MDC"
+    },
+    "greycatindustrialmdc": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mdc/MDC"
+    },
+    "mtc": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mtc/MTC"
+    },
+    "grinmtc": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mtc/MTC"
+    },
+    "greycatindustrialmtc": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mtc/MTC"
+    },
+    "ptv": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "grinptv": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "greycatindustrialptv": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "roc": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/roc/ROC"
+    },
+    "grinroc": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/roc/ROC"
+    },
+    "greycatindustrialroc": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/roc/ROC"
+    },
+    "rocds": {
+      "scu": 0.0,
+      "crew": "2-1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/roc/ROC-DS"
+    },
+    "grinrocds": {
+      "scu": 0.0,
+      "crew": "2-1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/roc/ROC-DS"
+    },
+    "greycatindustrialrocds": {
+      "scu": 0.0,
+      "crew": "2-1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/roc/ROC-DS"
+    },
+    "stv": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/stv/STV"
+    },
+    "grinstv": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/stv/STV"
+    },
+    "greycatindustrialstv": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/stv/STV"
+    },
+    "utv": {
+      "scu": 1.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/utv/UTV"
+    },
+    "grinutv": {
+      "scu": 1.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/utv/UTV"
+    },
+    "greycatindustrialutv": {
+      "scu": 1.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/utv/UTV"
+    },
+    "basher": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/basher/Basher"
+    },
+    "glsnbasher": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/basher/Basher"
+    },
+    "greysmarketbasher": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/basher/Basher"
+    },
+    "shiv": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/shiv/Shiv"
+    },
+    "glsnshiv": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/shiv/Shiv"
+    },
+    "greysmarketshiv": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/shiv/Shiv"
+    },
+    "hornetf7amkiipyamexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlhornetf7amk2execstealth": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvilaerospacehornetf7amkiipyamexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "anvlhornetf7amk2execmilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "l21wolf": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/wolf/L-21-Wolf"
+    },
+    "krigl21wolf": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/wolf/L-21-Wolf"
+    },
+    "krugerintergalacticl21wolf": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/wolf/L-21-Wolf"
+    },
+    "l21wolfwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "krigl21wolfcollectorstealth": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "krugerintergalacticl21wolfwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "l21wolfwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "krigl21wolfcollectormilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "krugerintergalacticl21wolfwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "l22alphawolf": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/wolf/L-22-Alpha-Wolf"
+    },
+    "krigl22alphawolf": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/wolf/L-22-Alpha-Wolf"
+    },
+    "krugerintergalacticl22alphawolf": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/wolf/L-22-Alpha-Wolf"
+    },
+    "l22alphawolfwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "krigl22alphawolfcollectormilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "krugerintergalacticl22alphawolfwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "p52merlin": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p52-merlin/P-52-Merlin"
+    },
+    "krigp52merlin": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p52-merlin/P-52-Merlin"
+    },
+    "krugerintergalacticp52merlin": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p52-merlin/P-52-Merlin"
+    },
+    "p72archimedes": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p72-archimedes/P-72-Archimedes"
+    },
+    "krigp72archimedes": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p72-archimedes/P-72-Archimedes"
+    },
+    "krugerintergalacticp72archimedes": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p72-archimedes/P-72-Archimedes"
+    },
+    "p72archimedesemerald": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p72-archimedes/P-72-Archimedes-Emerald"
+    },
+    "krigp72archimedesemerald": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p72-archimedes/P-72-Archimedes-Emerald"
+    },
+    "krugerintergalacticp72archimedesemerald": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/p72-archimedes/P-72-Archimedes-Emerald"
+    },
+    "s65stingray": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/s-65-stingray/S-65-Stingray"
+    },
+    "krigs65stingrayballistic": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/s-65-stingray/S-65-Stingray"
+    },
+    "krugerintergalactics65stingray": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/s-65-stingray/S-65-Stingray"
+    },
+    "krigs65stingray": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/s-65-stingray/S-65-Stingray"
+    },
+    "fury": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury"
+    },
+    "miscfury": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury"
+    },
+    "miraifury": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury"
+    },
+    "furylx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury-LX"
+    },
+    "miscfurylx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury-LX"
+    },
+    "miraifurylx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury-LX"
+    },
+    "furymx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury-MX"
+    },
+    "miscfurymiru": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury-MX"
+    },
+    "miraifurymx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fury/Fury-MX"
+    },
+    "guardian": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian"
+    },
+    "mraiguardian": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian"
+    },
+    "miraiguardian": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian"
+    },
+    "guardianmx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian-MX"
+    },
+    "mraiguardianmx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian-MX"
+    },
+    "miraiguardianmx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian-MX"
+    },
+    "guardianmxwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "mraiguardianmxcollectormilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miraiguardianmxwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "guardianqi": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian-QI"
+    },
+    "mraiguardianqi": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian-QI"
+    },
+    "miraiguardianqi": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/guardian/Guardian-QI"
+    },
+    "guardianqiwikelospecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "mraiguardianqicollectorindust": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miraiguardianqiwikelospecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "guardianwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "mraiguardianmilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miraiguardianwikelowarspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "pulse": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mirai-pulse/Pulse"
+    },
+    "mraipulse": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mirai-pulse/Pulse"
+    },
+    "miraipulse": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mirai-pulse/Pulse"
+    },
+    "pulselx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mirai-pulse/Pulse-LX"
+    },
+    "mraipulselx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mirai-pulse/Pulse-LX"
+    },
+    "miraipulselx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/mirai-pulse/Pulse-LX"
+    },
+    "razor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor"
+    },
+    "miscrazor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor"
+    },
+    "mirairazor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor"
+    },
+    "razorex": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor-EX"
+    },
+    "miscrazorex": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor-EX"
+    },
+    "mirairazorex": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor-EX"
+    },
+    "razorlx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor-LX"
+    },
+    "miscrazorlx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor-LX"
+    },
+    "mirairazorlx": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/razor/Razor-LX"
+    },
+    "miscfortune": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fortune/Fortune"
+    },
+    "musashiindustrialandstarflightconcernmiscfortune": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/fortune/Fortune"
+    },
+    "miscfortunewikelospecial": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscfortunecollectorindustrial": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "musashiindustrialandstarflightconcernmiscfortunewikelospecial": {
+      "scu": 16.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscfreelancer": {
+      "scu": 66.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer"
+    },
+    "musashiindustrialandstarflightconcernmiscfreelancer": {
+      "scu": 66.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer"
+    },
+    "miscfreelancerdur": {
+      "scu": 36.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer-DUR"
+    },
+    "musashiindustrialandstarflightconcernmiscfreelancerdur": {
+      "scu": 36.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer-DUR"
+    },
+    "miscfreelancermax": {
+      "scu": 120.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer-MAX"
+    },
+    "musashiindustrialandstarflightconcernmiscfreelancermax": {
+      "scu": 120.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer-MAX"
+    },
+    "miscfreelancermis": {
+      "scu": 36.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer-MIS"
+    },
+    "musashiindustrialandstarflightconcernmiscfreelancermis": {
+      "scu": 36.0,
+      "crew": "4-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-freelancer/Freelancer-MIS"
+    },
+    "mischulla": {
+      "scu": 64.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hull/Hull-A"
+    },
+    "musashiindustrialandstarflightconcernmischulla": {
+      "scu": 64.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hull/Hull-A"
+    },
+    "mischullb": {
+      "scu": 512.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hull/Hull-B"
+    },
+    "musashiindustrialandstarflightconcernmischullb": {
+      "scu": 512.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hull/Hull-B"
+    },
+    "mischullc": {
+      "scu": 4608.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hull/Hull-C"
+    },
+    "musashiindustrialandstarflightconcernmischullc": {
+      "scu": 4608.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hull/Hull-C"
+    },
+    "miscprospector": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-prospector/Prospector"
+    },
+    "musashiindustrialandstarflightconcernmiscprospector": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-prospector/Prospector"
+    },
+    "miscprospectoralliance": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscprospectorbtala": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "musashiindustrialandstarflightconcernmiscprospectoralliance": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscprospectorwikeloworkspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscprospectorcollectorindust": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "musashiindustrialandstarflightconcernmiscprospectorwikeloworkspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscreliantkore": {
+      "scu": 6.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Kore"
+    },
+    "miscreliant": {
+      "scu": 6.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Kore"
+    },
+    "musashiindustrialandstarflightconcernmiscreliantkore": {
+      "scu": 6.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Kore"
+    },
+    "miscreliantmako": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Mako"
+    },
+    "musashiindustrialandstarflightconcernmiscreliantmako": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Mako"
+    },
+    "miscreliantsen": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Sen"
+    },
+    "musashiindustrialandstarflightconcernmiscreliantsen": {
+      "scu": 0.0,
+      "crew": "2-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Sen"
+    },
+    "miscrelianttana": {
+      "scu": 1.0,
+      "crew": "2-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Tana"
+    },
+    "musashiindustrialandstarflightconcernmiscrelianttana": {
+      "scu": 1.0,
+      "crew": "2-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/reliant/Reliant-Tana"
+    },
+    "miscstarfarer": {
+      "scu": 291.0,
+      "crew": "8-7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-starfarer/Starfarer"
+    },
+    "musashiindustrialandstarflightconcernmiscstarfarer": {
+      "scu": 291.0,
+      "crew": "8-7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-starfarer/Starfarer"
+    },
+    "miscstarfarergemini": {
+      "scu": 291.0,
+      "crew": "2-7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-starfarer/Starfarer-Gemini"
+    },
+    "musashiindustrialandstarflightconcernmiscstarfarergemini": {
+      "scu": 291.0,
+      "crew": "2-7",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/misc-starfarer/Starfarer-Gemini"
+    },
+    "miscstarlancermax": {
+      "scu": 224.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/starlancer/Starlancer-MAX"
+    },
+    "musashiindustrialandstarflightconcernmiscstarlancermax": {
+      "scu": 224.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/starlancer/Starlancer-MAX"
+    },
+    "miscstarlancermaxwikeloworkspecial": {
+      "scu": 224.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscstarlancermaxcollectorindust": {
+      "scu": 224.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "musashiindustrialandstarflightconcernmiscstarlancermaxwikeloworkspecial": {
+      "scu": 224.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscstarlancertac": {
+      "scu": 96.0,
+      "crew": "8-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/starlancer/Starlancer-TAC"
+    },
+    "musashiindustrialandstarflightconcernmiscstarlancertac": {
+      "scu": 96.0,
+      "crew": "8-6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/starlancer/Starlancer-TAC"
+    },
+    "miscstarlancertacwikelowarspecial": {
+      "scu": 96.0,
+      "crew": "8-6",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscstarlancertaccollectormilitary": {
+      "scu": 96.0,
+      "crew": "8-6",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "musashiindustrialandstarflightconcernmiscstarlancertacwikelowarspecial": {
+      "scu": 96.0,
+      "crew": "8-6",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "miscstarlite": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/starlite/Starlite"
+    },
+    "musashiindustrialandstarflightconcernmiscstarlite": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/starlite/Starlite"
+    },
+    "100i": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/100i"
+    },
+    "orig100i": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/100i"
+    },
+    "originjumpworks100i": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/100i"
+    },
+    "125a": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/125a"
+    },
+    "orig125a": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/125a"
+    },
+    "originjumpworks125a": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/125a"
+    },
+    "135c": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/135c"
+    },
+    "orig135c": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/135c"
+    },
+    "originjumpworks135c": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-100/135c"
+    },
+    "300i": {
+      "scu": 8.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/300i"
+    },
+    "orig300i": {
+      "scu": 8.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/300i"
+    },
+    "originjumpworks300i": {
+      "scu": 8.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/300i"
+    },
+    "315p": {
+      "scu": 12.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/315p"
+    },
+    "orig315p": {
+      "scu": 12.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/315p"
+    },
+    "originjumpworks315p": {
+      "scu": 12.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/315p"
+    },
+    "325a": {
+      "scu": 4.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/325a"
+    },
+    "orig325a": {
+      "scu": 4.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/325a"
+    },
+    "originjumpworks325a": {
+      "scu": 4.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/325a"
+    },
+    "350r": {
+      "scu": 4.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/350r"
+    },
+    "orig350r": {
+      "scu": 4.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/350r"
+    },
+    "originjumpworks350r": {
+      "scu": 4.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-300/350r"
+    },
+    "400i": {
+      "scu": 42.0,
+      "crew": "3-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/400i/400i"
+    },
+    "orig400i": {
+      "scu": 42.0,
+      "crew": "3-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/400i/400i"
+    },
+    "originjumpworks400i": {
+      "scu": 42.0,
+      "crew": "3-4",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/400i/400i"
+    },
+    "600i": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Explorer"
+    },
+    "orig600i": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Explorer"
+    },
+    "originjumpworks600i": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Explorer"
+    },
+    "600i2951bis": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Explorer"
+    },
+    "orig600ibis2951": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Explorer"
+    },
+    "originjumpworks600i2951bis": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Explorer"
+    },
+    "600iexecutiveedition": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "orig600iexecutiveedition": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "originjumpworks600iexecutiveedition": {
+      "scu": 44.0,
+      "crew": "5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "600itouring": {
+      "scu": 20.0,
+      "crew": "5-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Touring"
+    },
+    "orig600itouring": {
+      "scu": 20.0,
+      "crew": "5-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Touring"
+    },
+    "originjumpworks600itouring": {
+      "scu": 20.0,
+      "crew": "5-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/600i/600i-Touring"
+    },
+    "85xlimited": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/85x/85X"
+    },
+    "orig85x": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/85x/85X"
+    },
+    "originjumpworks85xlimited": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/85x/85X"
+    },
+    "890jump": {
+      "scu": 388.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/890-jump/890-Jump"
+    },
+    "orig890jump": {
+      "scu": 388.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/890-jump/890-Jump"
+    },
+    "originjumpworks890jump": {
+      "scu": 388.0,
+      "crew": "8",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/890-jump/890-Jump"
+    },
+    "m50interceptor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-m50/M50"
+    },
+    "origm50": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-m50/M50"
+    },
+    "originjumpworksm50interceptor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/origin-m50/M50"
+    },
+    "m80": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/m80/M80"
+    },
+    "origm80": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/m80/M80"
+    },
+    "originjumpworksm80": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/m80/M80"
+    },
+    "x1": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1"
+    },
+    "origx1": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1"
+    },
+    "originjumpworksx1": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1"
+    },
+    "x1force": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1-Force"
+    },
+    "origx1force": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1-Force"
+    },
+    "originjumpworksx1force": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1-Force"
+    },
+    "x1velocity": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1-Velocity"
+    },
+    "origx1velocity": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1-Velocity"
+    },
+    "originjumpworksx1velocity": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/x1/X1-Velocity"
+    },
+    "apollomedivac": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-apollo/Apollo-Medivac"
+    },
+    "rsiapollomedivac": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-apollo/Apollo-Medivac"
+    },
+    "robertsspaceindustriesapollomedivac": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-apollo/Apollo-Medivac"
+    },
+    "apollotriage": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-apollo/Apollo-Triage"
+    },
+    "rsiapollotriage": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-apollo/Apollo-Triage"
+    },
+    "robertsspaceindustriesapollotriage": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-apollo/Apollo-Triage"
+    },
+    "apollotriagewikelosneakspecial": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiapollotriagecollectorstealth": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesapollotriagewikelosneakspecial": {
+      "scu": 32.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "auroramkicl": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-CL"
+    },
+    "rsiauroragscl": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-CL"
+    },
+    "robertsspaceindustriesauroramkicl": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-CL"
+    },
+    "auroramkies": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-ES"
+    },
+    "rsiauroragses": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-ES"
+    },
+    "robertsspaceindustriesauroramkies": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-ES"
+    },
+    "auroramkii": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aurora-mk-ii/Aurora-Mk-II"
+    },
+    "rsiauroramk2": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aurora-mk-ii/Aurora-Mk-II"
+    },
+    "robertsspaceindustriesauroramkii": {
+      "scu": 2.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/aurora-mk-ii/Aurora-Mk-II"
+    },
+    "auroramkiln": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-LN"
+    },
+    "rsiauroragsln": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-LN"
+    },
+    "robertsspaceindustriesauroramkiln": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-LN"
+    },
+    "auroramkilx": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-LX"
+    },
+    "rsiauroragslx": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-LX"
+    },
+    "robertsspaceindustriesauroramkilx": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-LX"
+    },
+    "auroramkimr": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-MR"
+    },
+    "rsiauroragsmr": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-MR"
+    },
+    "robertsspaceindustriesauroramkimr": {
+      "scu": 3.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-MR"
+    },
+    "auroramkise": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-SE"
+    },
+    "rsiauroragsse": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-SE"
+    },
+    "robertsspaceindustriesauroramkise": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-aurora/Aurora-Mk-I-SE"
+    },
+    "constellationmkivandromeda": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Andromeda"
+    },
+    "rsiconstellationandromeda": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Andromeda"
+    },
+    "robertsspaceindustriesconstellationmkivandromeda": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Andromeda"
+    },
+    "rsiconstellationandromedagsdisplay": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Andromeda"
+    },
+    "rsiconstellationandromedags": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Andromeda"
+    },
+    "constellationmkivaquila": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Aquila"
+    },
+    "rsiconstellationaquila": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Aquila"
+    },
+    "robertsspaceindustriesconstellationmkivaquila": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Aquila"
+    },
+    "rsiconstellationaquilags": {
+      "scu": 96.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Aquila"
+    },
+    "constellationmkivphoenix": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Phoenix"
+    },
+    "rsiconstellationphoenix": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Phoenix"
+    },
+    "robertsspaceindustriesconstellationmkivphoenix": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Phoenix"
+    },
+    "rsiconstellationphoenixgs": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Phoenix"
+    },
+    "constellationmkivphoenixemerald": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Phoenix-Emerald"
+    },
+    "rsiconstellationphoenixemerald": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Phoenix-Emerald"
+    },
+    "robertsspaceindustriesconstellationmkivphoenixemerald": {
+      "scu": 80.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Phoenix-Emerald"
+    },
+    "constellationmkivtaurus": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Taurus"
+    },
+    "rsiconstellationtaurusgs": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Taurus"
+    },
+    "robertsspaceindustriesconstellationmkivtaurus": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Taurus"
+    },
+    "rsiconstellationtaurus": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-constellation/Constellation-Mk-IV-Taurus"
+    },
+    "constellationmkivtauruswikelowarspecial": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiconstellationtaurusmilitary": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesconstellationmkivtauruswikelowarspecial": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiconstellationtaurusgsmilitary": {
+      "scu": 174.0,
+      "crew": "4-5",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "constellationmkvcentaurus": {
+      "scu": 240.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiconstellationmk5centaurus": {
+      "scu": 240.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesconstellationmkvcentaurus": {
+      "scu": 240.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiconstellationmk5centaurusdisplay": {
+      "scu": 240.0,
+      "crew": "4",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "hermes": {
+      "scu": 288.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hermes/Hermes"
+    },
+    "rsihermes": {
+      "scu": 288.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hermes/Hermes"
+    },
+    "robertsspaceindustrieshermes": {
+      "scu": 288.0,
+      "crew": "2-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/hermes/Hermes"
+    },
+    "lynx": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Lynx"
+    },
+    "rsilynx": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Lynx"
+    },
+    "robertsspaceindustrieslynx": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Lynx"
+    },
+    "mantis": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-mantis/Mantis"
+    },
+    "rsimantis": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-mantis/Mantis"
+    },
+    "robertsspaceindustriesmantis": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-mantis/Mantis"
+    },
+    "meteor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-meteor/Meteor"
+    },
+    "rsimeteor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-meteor/Meteor"
+    },
+    "robertsspaceindustriesmeteor": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/rsi-meteor/Meteor"
+    },
+    "meteorpyamexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsimeteorcollectormilitary": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesmeteorpyamexec": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "meteorwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsimeteorcollectorstealth": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesmeteorwikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "perseus": {
+      "scu": 96.0,
+      "crew": "6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/perseus/Perseus"
+    },
+    "rsiperseus": {
+      "scu": 96.0,
+      "crew": "6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/perseus/Perseus"
+    },
+    "robertsspaceindustriesperseus": {
+      "scu": 96.0,
+      "crew": "6",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/perseus/Perseus"
+    },
+    "polaris": {
+      "scu": 576.0,
+      "crew": "12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/polaris/Polaris"
+    },
+    "rsipolariscollectormilitary": {
+      "scu": 576.0,
+      "crew": "12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/polaris/Polaris"
+    },
+    "robertsspaceindustriespolaris": {
+      "scu": 576.0,
+      "crew": "12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/polaris/Polaris"
+    },
+    "rsipolaris": {
+      "scu": 576.0,
+      "crew": "12",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/polaris/Polaris"
+    },
+    "salvation": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/salvation/Salvation"
+    },
+    "rsisalvation": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/salvation/Salvation"
+    },
+    "robertsspaceindustriessalvation": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/salvation/Salvation"
+    },
+    "scorpius": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scorpius/Scorpius"
+    },
+    "rsiscorpius": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scorpius/Scorpius"
+    },
+    "robertsspaceindustriesscorpius": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scorpius/Scorpius"
+    },
+    "scorpiusantares": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scorpius/Scorpius-Antares"
+    },
+    "rsiscorpiusantares": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scorpius/Scorpius-Antares"
+    },
+    "robertsspaceindustriesscorpiusantares": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scorpius/Scorpius-Antares"
+    },
+    "scorpiuswikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiscorpiusstealth": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesscorpiuswikelosneakspecial": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "skylark": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiskylarkdisplay": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesskylark": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiskylark": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "ursa": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa"
+    },
+    "rsiursarover": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa"
+    },
+    "robertsspaceindustriesursa": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa"
+    },
+    "ursafortuna": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa-Fortuna"
+    },
+    "rsiursaroveremerald": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa-Fortuna"
+    },
+    "robertsspaceindustriesursafortuna": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa-Fortuna"
+    },
+    "ursamedivac": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa-Medivac"
+    },
+    "rsiursamedivac": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa-Medivac"
+    },
+    "robertsspaceindustriesursamedivac": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/ursa/Ursa-Medivac"
+    },
+    "ursamedivacwikelospecial": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsiursamedivacstealth": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustriesursamedivacwikelospecial": {
+      "scu": 0.0,
+      "crew": "2",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "zeusmkiicl": {
+      "scu": 128.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-CL"
+    },
+    "rsizeuscl": {
+      "scu": 128.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-CL"
+    },
+    "robertsspaceindustrieszeusmkiicl": {
+      "scu": 128.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-CL"
+    },
+    "rsizeusclcollectorindust": {
+      "scu": 128.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-CL"
+    },
+    "zeusmkiies": {
+      "scu": 32.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-ES"
+    },
+    "rsizeuses": {
+      "scu": 32.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-ES"
+    },
+    "robertsspaceindustrieszeusmkiies": {
+      "scu": 32.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/zeus-mk-ii/Zeus-Mk-II-ES"
+    },
+    "zeusmkiieswikeloworkspecial": {
+      "scu": 32.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "rsizeusescollectorindust": {
+      "scu": 32.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "robertsspaceindustrieszeusmkiieswikeloworkspecial": {
+      "scu": 32.0,
+      "crew": "3-9",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "syulenpyamexec": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "gamasyulenexecstealth": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "gatacmanufacturesyulenpyamexec": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "gamasyulenexecmilitary": {
+      "scu": 6.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "cyclone": {
+      "scu": 1.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone"
+    },
+    "tmblcyclone": {
+      "scu": 1.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone"
+    },
+    "tumbrillandsystemscyclone": {
+      "scu": 1.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone"
+    },
+    "cycloneaa": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-AA"
+    },
+    "tmblcycloneaa": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-AA"
+    },
+    "tumbrillandsystemscycloneaa": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-AA"
+    },
+    "cyclonemt": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-MT"
+    },
+    "tmblcyclonemt": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-MT"
+    },
+    "tumbrillandsystemscyclonemt": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-MT"
+    },
+    "cyclonerc": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-RC"
+    },
+    "tmblcyclonerc": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-RC"
+    },
+    "tumbrillandsystemscyclonerc": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-RC"
+    },
+    "cyclonern": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-RN"
+    },
+    "tmblcyclonern": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-RN"
+    },
+    "tumbrillandsystemscyclonern": {
+      "scu": 0.0,
+      "crew": "1-2",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-RN"
+    },
+    "cyclonetr": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-TR"
+    },
+    "tmblcyclonetr": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-TR"
+    },
+    "tumbrillandsystemscyclonetr": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/cyclone/Cyclone-TR"
+    },
+    "nova": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nova-tank/Nova"
+    },
+    "tmblnova": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nova-tank/Nova"
+    },
+    "tumbrillandsystemsnova": {
+      "scu": 0.0,
+      "crew": "1-3",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/nova-tank/Nova"
+    },
+    "storm": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/storm/Storm"
+    },
+    "tmblstorm": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/storm/Storm"
+    },
+    "tumbrillandsystemsstorm": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/storm/Storm"
+    },
+    "stormaa": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/storm/Storm-AA"
+    },
+    "tmblstormaa": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/storm/Storm-AA"
+    },
+    "tumbrillandsystemsstormaa": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/storm/Storm-AA"
+    },
+    "maulerdestroyer": {
+      "scu": 0.0,
+      "crew": "19",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "vnclmauler": {
+      "scu": 0.0,
+      "crew": "19",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "vanduulclansmaulerdestroyer": {
+      "scu": 0.0,
+      "crew": "19",
+      "pad": "",
+      "image": null,
+      "store_url": null
+    },
+    "vanduulscythe": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scythe/Scythe"
+    },
+    "vnclscythe": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scythe/Scythe"
+    },
+    "esperiavanduulscythe": {
+      "scu": 0.0,
+      "crew": "1",
+      "pad": "",
+      "image": null,
+      "store_url": "https://robertsspaceindustries.com/pledge/ships/scythe/Scythe"
+    }
+  }
+}
