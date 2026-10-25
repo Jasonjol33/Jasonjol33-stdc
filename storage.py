@@ -23,7 +23,6 @@ log = logging.getLogger("storage")
 DATA_DIR = Path(os.getenv("DATA_DIR", "").strip() or (Path(__file__).parent / "data"))
 MESSAGES_FILE = DATA_DIR / "messages.json"
 SNAPSHOT_FILE = DATA_DIR / "last_prices.json"
-EVENTS_FILE = DATA_DIR / "community_events.json"
 
 _lock = Lock()
 
@@ -80,15 +79,3 @@ def load_rsi_images() -> Dict[str, dict]:
 
 def save_rsi_images(mapping: Dict[str, dict]) -> None:
     _save_json(RSI_IMAGES_FILE, mapping)
-
-
-def load_events() -> list[dict]:
-    """Lädt gemeinsam genutzte Community-Events samt RSVP-Namen."""
-    data = _load_json(EVENTS_FILE)
-    events = data.get("events", []) if isinstance(data, dict) else []
-    return events if isinstance(events, list) else []
-
-
-def save_events(events: list[dict]) -> None:
-    """Speichert Events atomar auf dem persistenten DATA_DIR-Volume."""
-    _save_json(EVENTS_FILE, {"events": events})

@@ -222,61 +222,6 @@ async def sync_manufacturer_message(
         idx += 1
 
 
-
-async def sync_events_to_discord() -> None:
-    """Aktualisiert die Event-/Teilnehmerübersicht als eine Nachricht im selben Channel wie das Schiffs-Showcase."""
-    if not config.discord_enabled or not bot.is_ready():
-        return
-    events = webapp.load_events() if hasattr(webapp, "load_events") else []
-    # Events nach Startzeit sortieren; vergangene Termine bleiben sichtbar, aber hinten.
-    now = datetime.now(timezone.utc)
-    def event_dt(e):
-        raw = str(e.get("starts_at", ""))
-        try:
-            parsed = datetime.fromisoformat(raw.replace("Z", "+00:00"))
-            if parsed.tzinfo is None:
-                parsed = parsed.replace(tzinfo=timezone.utc)
-            return parsed
-        except (ValueError, TypeError):
-            return datetime.max.replace(tzinfo=timezone.utc)
-    events = sorted((e for e in events if isinstance(e, dict)), key=event_dt)[:5]
-    embed = discord.Embed(
-        title="📅 Event-Kalender & Teilnehmerübersicht",
-        description="Anmeldungen aus dem Star Citizen Showcase werden hier automatisch aktualisiert.",
-        color=0xF28C45,
-        timestamp=now,
-    )
-    if not events:
-        embed.add_field(name="Noch keine Events", value="Erstelle ein Event im Web-Kalender, um es hier anzuzeigen.", inline=False)
-    else:
-        for event in events:
-            title = str(event.get("title") or "Event")[:240]
-            raw_date = str(event.get("starts_at") or "Zeit offen")
-            try:
-                dt = datetime.fromisoformat(raw_date.replace("Z", "+00:00"))
-                if dt.tzinfo is None:
-                    dt = dt.replace(tzinfo=timezone.utc)
-                date_text = f"<t:{int(dt.timestamp())}:F>"
-            except (ValueError, TypeError, OverflowError):
-                date_text = raw_date[:80]
-            rsvps = event.get("rsvps", [])
-            if not isinstance(rsvps, list):
-                rsvps = []
-            names = [str(r.get("pilot_name", "Pilot")) for r in rsvps if isinstance(r, dict)]
-            max_attendees = int(event.get("max_attendees", 8) or 8)
-            roster = "\n".join(f"• {name}" for name in names[:20]) or "Noch keine Anmeldungen"
-            if len(names) > 20:
-                roster += f"\n… und {len(names)-20} weitere"
-            desc = str(event.get("description") or "Kein Briefing hinterlegt.")[:500]
-            value = f"**Aktivität:** {str(event.get('event_type') or 'Event')[:60]}\n**Zeit:** {date_text}\n**Teilnehmer:** {len(names)}/{max_attendees}\n\n{desc}\n\n**Angemeldete Piloten**\n{roster}"
-            embed.add_field(name=title[:256], value=value[:850], inline=False)
-    embed.set_footer(text="Star Citizen Showcase · automatisch synchronisiert")
-    message_ids = load_message_ids()
-    await sync_manufacturer_message(await get_channel(), "__events__", [embed], message_ids)
-    save_message_ids(message_ids)
-
-webapp.set_event_sync_callback(sync_events_to_discord)
-
 async def run_update_cycle(initial: bool = False) -> None:
     log.info("Lade aktuelle Schiffsdaten von UEX Corp...")
     try:
@@ -371,10 +316,6 @@ async def on_ready() -> None:
         await run_update_cycle(initial=True)
         update_loop.start()
         log.info("Update-Loop gestartet (alle %d Minuten).", config.update_interval_minutes)
-    try:
-        await sync_events_to_discord()
-    except Exception:
-        log.exception("Event-Kalender konnte beim Start nicht in Discord synchronisiert werden.")
 
 
 def _is_admin(interaction: discord.Interaction) -> bool:
