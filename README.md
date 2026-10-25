@@ -302,3 +302,14 @@ fly.toml                        Fly.io-App-Konfiguration (Bot + Web-Seite auf ei
 Die Weboberfläche enthält jetzt eine passende Konto-API für `/api/auth/*`, `/api/profile` und `/api/user-data`. Neue Konten werden in `DATA_DIR/accounts.json` gespeichert; Passwörter werden als PBKDF2-SHA256-Hash abgelegt, nicht im Klartext. Auf Fly.io muss `DATA_DIR` auf ein persistentes Volume zeigen, wenn Konten Deployments überleben sollen. Nach einem Serverneustart muss man sich erneut anmelden.
 
 Der externe Missionsbereich probiert mehrere bekannte Missions-/Contract-Endpunkte und zeigt bei fehlenden oder nicht erreichbaren Daten eine verständliche Meldung, statt dauerhaft den Platzhalter stehenzulassen. Eigene Einsätze im lokalen Einsatzplan funktionieren unabhängig vom externen Feed.
+
+## Community-Events mit Discord-Anmeldung
+
+Der Bot veröffentlicht neue Events aus dem Website-Community-Bereich automatisch im konfigurierten Discord-Channel (`CHANNEL_ID`). Im Discord-Embed gibt es die Buttons **✅ Kann** und **❌ Kann nicht**. Nach einem Klick werden die Antwort, der Discord-Anzeigename und die Teilnehmerzahlen gespeichert; die Nachricht wird direkt aktualisiert. Die Button-Interaktionen bleiben auch nach einem Bot-Neustart aktiv.
+
+Events können auf zwei Wegen erstellt werden:
+
+- **Website:** Im Community-Eventbereich ein Event anlegen. Sobald der Bot verbunden ist, wird es im Discord-Channel veröffentlicht.
+- **Discord:** `/event` verwenden und Titel sowie optional Datum/Uhrzeit, Typ und Beschreibung eingeben. Das Event wird auch in der Community-Eventliste der Website gespeichert.
+
+Der Bot benötigt im Ziel-Channel die Rechte **View Channel**, **Send Messages** und **Embed Links**. Für bereits vorhandene Events, die vor dieser Erweiterung erstellt wurden, wird beim Klick auf die Website-Anmeldung weiterhin das bisherige Website-RSVP-Verhalten verwendet.

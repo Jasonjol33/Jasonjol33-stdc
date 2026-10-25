@@ -632,6 +632,7 @@ async def handle_wiki_comm_links(request: web.Request) -> web.Response:
 # --------------------------------------------------------------------------------------
 
 COMMUNITY_FILE = ACCOUNT_DIR / "community.json"
+_EVENT_PUBLISHER: Optional[Callable[[dict], Awaitable[None]]] = None
 _COMMUNITY_LOCK = __import__("threading").Lock()
 _MAX_POSTS = 200
 _MAX_EVENTS = 200
@@ -666,11 +667,73 @@ def _public_post(p: dict) -> dict:
     return {k: p.get(k, "") for k in ("id", "pilot_name", "activity", "role", "when", "description", "created_at")}
 
 
+def set_event_publisher(callback: Optional[Callable[[dict], Awaitable[None]]]) -> None:
+    """Registriert den Discord-Publisher; bleibt im reinen Web-Betrieb optional."""
+    global _EVENT_PUBLISHER
+    _EVENT_PUBLISHER = callback
+
+
+def create_community_event(*, owner: str, title: str, event_type: str = "", starts_at: str = "", description: str = "", max_attendees: int = 8) -> dict:
+    """Legt ein Event an und gibt es im internen Format zurück (Website und Slash-Command)."""
+    title = _clip(title, 120)
+    if len(title) < 3:
+        raise ValueError("Bitte einen Event-Titel mit mindestens 3 Zeichen angeben.")
+    event = {
+        "id": secrets.token_urlsafe(8), "owner": _clip(owner, 120), "title": title,
+        "event_type": _clip(event_type, 60), "starts_at": _clip(starts_at, 40),
+        "description": _clip(description, 1000), "max_attendees": max(1, min(500, int(max_attendees or 8))),
+        "rsvps": [], "discord_rsvps": {}, "discord_message_id": None,
+        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+    }
+    with _COMMUNITY_LOCK:
+        data = _community()
+        data["events"] = (data["events"] + [event])[-_MAX_EVENTS:]
+        _save_community(data)
+    return event
+
+
+def get_community_events() -> list[dict]:
+    return list(_community()["events"])
+
+
+def get_community_event(event_id: str) -> Optional[dict]:
+    return next((e for e in _community()["events"] if e.get("id") == event_id), None)
+
+
+def set_discord_rsvp(event_id: str, user_id: int, display_name: str, status: str) -> Optional[dict]:
+    if status not in ("yes", "no"):
+        return None
+    with _COMMUNITY_LOCK:
+        data = _community()
+        event = next((e for e in data["events"] if e.get("id") == event_id), None)
+        if event is None:
+            return None
+        responses = event.setdefault("discord_rsvps", {})
+        responses[str(user_id)] = {"name": _clip(display_name, 100), "status": status}
+        _save_community(data)
+        return dict(event)
+
+
+def set_event_discord_message(event_id: str, message_id: int, channel_id: int) -> None:
+    with _COMMUNITY_LOCK:
+        data = _community()
+        event = next((e for e in data["events"] if e.get("id") == event_id), None)
+        if event is not None:
+            event["discord_message_id"] = int(message_id)
+            event["discord_channel_id"] = int(channel_id)
+            _save_community(data)
+
+
 def _public_event(e: dict) -> dict:
+    responses = e.get("discord_rsvps", {})
+    yes_names = [v.get("name", "Spieler") for v in responses.values() if isinstance(v, dict) and v.get("status") == "yes"]
+    no_names = [v.get("name", "Spieler") for v in responses.values() if isinstance(v, dict) and v.get("status") == "no"]
     return {
         "id": e.get("id"), "title": e.get("title", ""), "event_type": e.get("event_type", ""),
         "starts_at": e.get("starts_at", ""), "description": e.get("description", ""),
         "max_attendees": e.get("max_attendees", 8), "rsvp_count": len(e.get("rsvps", [])),
+        "can_count": len(yes_names), "cannot_count": len(no_names),
+        "can_names": yes_names, "cannot_names": no_names,
         "created_at": e.get("created_at", ""),
     }
 
@@ -748,16 +811,19 @@ async def community_create_event(request: web.Request) -> web.Response:
         max_att = max(1, min(500, int(body.get("max_attendees") or 8)))
     except (TypeError, ValueError):
         max_att = 8
-    event = {
-        "id": secrets.token_urlsafe(8), "owner": username, "title": title,
-        "event_type": _clip(body.get("event_type"), 60), "starts_at": _clip(body.get("starts_at"), 40),
-        "description": _clip(body.get("description"), 1000), "max_attendees": max_att, "rsvps": [],
-        "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-    }
-    with _COMMUNITY_LOCK:
-        data = _community()
-        data["events"] = (data["events"] + [event])[-_MAX_EVENTS:]
-        _save_community(data)
+    try:
+        event = create_community_event(
+            owner=username, title=title, event_type=_clip(body.get("event_type"), 60),
+            starts_at=_clip(body.get("starts_at"), 40), description=_clip(body.get("description"), 1000),
+            max_attendees=max_att,
+        )
+    except ValueError as exc:
+        return _json_error(str(exc))
+    if _EVENT_PUBLISHER is not None:
+        try:
+            await _EVENT_PUBLISHER(event)
+        except Exception:
+            log.exception("Event %s wurde gespeichert, aber nicht in Discord veröffentlicht.", event.get("id"))
     return web.json_response(_public_event(event), status=201)
 
 
