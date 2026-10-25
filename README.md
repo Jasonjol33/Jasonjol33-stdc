@@ -297,8 +297,10 @@ fly.toml                        Fly.io-App-Konfiguration (Bot + Web-Seite auf ei
 ```
 
 
-## Reparaturen für Pilotprofil und Missionsfeed
+## Event-Kalender in Discord
 
-Die Weboberfläche enthält jetzt eine passende Konto-API für `/api/auth/*`, `/api/profile` und `/api/user-data`. Neue Konten werden in `DATA_DIR/accounts.json` gespeichert; Passwörter werden als PBKDF2-SHA256-Hash abgelegt, nicht im Klartext. Auf Fly.io muss `DATA_DIR` auf ein persistentes Volume zeigen, wenn Konten Deployments überleben sollen. Nach einem Serverneustart muss man sich erneut anmelden.
+Der Event-Kalender speichert gemeinsame Events und Anmeldungen in `DATA_DIR/community_events.json` (auf Fly.io liegt das im persistenten `/app/data`-Volume). Der Bot aktualisiert dazu eine einzelne Embed-Nachricht im selben Discord-Kanal, der über `CHANNEL_ID` für das Schiffs-Showcase konfiguriert ist. Bei Event-Erstellung, Anmeldung und Löschung wird diese Nachricht bearbeitet statt jedes Mal eine neue zu posten.
 
-Der externe Missionsbereich probiert mehrere bekannte Missions-/Contract-Endpunkte und zeigt bei fehlenden oder nicht erreichbaren Daten eine verständliche Meldung, statt dauerhaft den Platzhalter stehenzulassen. Eigene Einsätze im lokalen Einsatzplan funktionieren unabhängig vom externen Feed.
+Teilnehmer melden sich mit dem im Pilotprofil eingetragenen Namen/Rufzeichen an. Der Bot zeigt pro Event Datum, Aktivität, Briefing, Teilnehmerzahl und die angemeldeten Piloten. Damit er posten und die vorhandene Nachricht bearbeiten kann, benötigt er im konfigurierten Kanal die Rechte **Kanal ansehen**, **Nachrichten senden**, **Links einbetten** und **Nachrichtenverlauf lesen**.
+
+Wichtig: Für die Discord-Synchronisierung muss die App über `python bot.py` laufen. Wenn nur `python webapp.py` gestartet wird, funktionieren die Web-Endpunkte, aber es läuft kein Discord-Bot, der den Kanal aktualisiert.
