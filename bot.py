@@ -295,6 +295,14 @@ async def update_loop() -> None:
 async def on_ready() -> None:
     log.info("Eingeloggt als %s (ID: %s)", bot.user, getattr(bot.user, "id", "?"))
 
+    # Persistente Event-Buttons nach einem Bot-Neustart wieder aktivieren.
+    for saved_event in webapp.get_community_events():
+        if saved_event.get("discord_message_id"):
+            try:
+                bot.add_view(EventRSVPView(str(saved_event["id"])), message_id=int(saved_event["discord_message_id"]))
+            except (TypeError, ValueError):
+                log.warning("Ungültige Discord-Nachrichten-ID für Event %s.", saved_event.get("id"))
+
     try:
         if config.guild_id:
             guild_obj = discord.Object(id=config.guild_id)
@@ -325,6 +333,111 @@ def _is_admin(interaction: discord.Interaction) -> bool:
     if isinstance(member, discord.Member):
         return any(role.id == config.admin_role_id for role in member.roles)
     return False
+
+
+def _event_embed(event: dict) -> discord.Embed:
+    responses = event.get("discord_rsvps", {}) or {}
+    yes = [v.get("name", "Spieler") for v in responses.values() if isinstance(v, dict) and v.get("status") == "yes"]
+    no = [v.get("name", "Spieler") for v in responses.values() if isinstance(v, dict) and v.get("status") == "no"]
+    embed = discord.Embed(title=f"🚀 {event.get('title', 'Neues Event')}", color=0x2E86FF)
+    embed.add_field(name="📅 Datum / Uhrzeit", value=event.get("starts_at") or "Noch nicht angegeben", inline=False)
+    if event.get("event_type"):
+        embed.add_field(name="🎯 Event-Typ", value=event["event_type"], inline=True)
+    embed.add_field(name="👤 Erstellt von", value=event.get("owner") or "Unbekannt", inline=True)
+    if event.get("description"):
+        embed.add_field(name="ℹ️ Beschreibung", value=event["description"][:1024], inline=False)
+    embed.add_field(name=f"✅ Kann ({len(yes)})", value="\n".join(yes)[:1024] or "Noch niemand", inline=True)
+    embed.add_field(name=f"❌ Kann nicht ({len(no)})", value="\n".join(no)[:1024] or "Noch niemand", inline=True)
+    if config.web_url:
+        embed.add_field(name="🌐 Website", value=f"[Event-Übersicht öffnen]({config.web_url})", inline=False)
+    embed.set_footer(text=f"Event-ID: {event.get('id')} • Klicke auf einen Button, um deine Antwort zu speichern.")
+    return embed
+
+
+class EventRSVPView(discord.ui.View):
+    """Persistente Ja/Nein-Schaltflächen; Antworten bleiben nach Neustarts erhalten."""
+    def __init__(self, event_id: str):
+        super().__init__(timeout=None)
+        self.event_id = event_id
+        yes_button = discord.ui.Button(label="Kann", emoji="✅", style=discord.ButtonStyle.success, custom_id=f"event_yes:{event_id}")
+        no_button = discord.ui.Button(label="Kann nicht", emoji="❌", style=discord.ButtonStyle.danger, custom_id=f"event_no:{event_id}")
+        yes_button.callback = self._yes
+        no_button.callback = self._no
+        self.add_item(yes_button)
+        self.add_item(no_button)
+
+    async def _respond(self, interaction: discord.Interaction, status: str) -> None:
+        event = webapp.set_discord_rsvp(
+            self.event_id, interaction.user.id,
+            getattr(interaction.user, "display_name", interaction.user.name), status,
+        )
+        if event is None:
+            await interaction.response.send_message("Dieses Event existiert nicht mehr.", ephemeral=True)
+            return
+        await interaction.response.edit_message(embed=_event_embed(event), view=self)
+
+    async def _yes(self, interaction: discord.Interaction) -> None:
+        await self._respond(interaction, "yes")
+
+    async def _no(self, interaction: discord.Interaction) -> None:
+        await self._respond(interaction, "no")
+
+
+async def publish_event_to_discord(event: dict) -> None:
+    """Veröffentlicht ein Event (oder aktualisiert dessen bestehende Nachricht)."""
+    if not config.discord_enabled or not bot.is_ready():
+        log.info("Event %s gespeichert; Discord-Publikation ist derzeit nicht verfügbar.", event.get("id"))
+        return
+    channel = await get_channel()
+    view = EventRSVPView(str(event["id"]))
+    message_id = event.get("discord_message_id")
+    message = None
+    if message_id:
+        try:
+            message = await channel.fetch_message(int(message_id))
+        except discord.NotFound:
+            message = None
+    if message is None:
+        message = await channel.send(embed=_event_embed(event), view=view)
+        webapp.set_event_discord_message(str(event["id"]), message.id, channel.id)
+    else:
+        await message.edit(embed=_event_embed(event), view=view)
+    bot.add_view(view, message_id=message.id)
+
+
+webapp.set_event_publisher(publish_event_to_discord)
+
+
+@bot.tree.command(name="event", description="Erstellt ein Event und veröffentlicht es mit Anmelde-Buttons in Discord.")
+@discord.app_commands.describe(
+    titel="Name des Events", datum_uhrzeit="Datum und Uhrzeit, z. B. 25.10.2026 20:00",
+    typ="Event-Typ, z. B. Flottenmission", beschreibung="Kurze Beschreibung des Events",
+)
+async def event_command(
+    interaction: discord.Interaction,
+    titel: str,
+    datum_uhrzeit: str = "",
+    typ: str = "",
+    beschreibung: str = "",
+) -> None:
+    if not interaction.guild:
+        await interaction.response.send_message("Bitte verwende diesen Befehl auf deinem Discord-Server.", ephemeral=True)
+        return
+    try:
+        event = webapp.create_community_event(
+            owner=getattr(interaction.user, "display_name", interaction.user.name),
+            title=titel, starts_at=datum_uhrzeit, event_type=typ, description=beschreibung,
+        )
+    except ValueError as exc:
+        await interaction.response.send_message(str(exc), ephemeral=True)
+        return
+    await interaction.response.defer(ephemeral=True, thinking=True)
+    try:
+        await publish_event_to_discord(event)
+        await interaction.followup.send("✅ Event erstellt und im konfigurierten Kanal veröffentlicht.", ephemeral=True)
+    except Exception:
+        log.exception("Discord-Event konnte nicht veröffentlicht werden.")
+        await interaction.followup.send("⚠️ Event wurde gespeichert, konnte aber nicht in Discord veröffentlicht werden. Bitte Bot-/Kanalrechte prüfen.", ephemeral=True)
 
 
 class ListPager(discord.ui.View):
