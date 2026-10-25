@@ -12,8 +12,10 @@ Zwei Betriebsarten:
 2. Eigenständig (`python webapp.py`): holt die Daten selbst von UEX. Praktisch, um die Seite
    lokal anzusehen, ohne Discord-Token und ohne den Bot zu starten.
 
-Die Seite ist öffentlich und rein lesend; sie liefert nur static/index.html und die
-Schiffsdaten als JSON (/api/ships) aus.
+Die Seite liefert static/index.html, die Schiffsdaten (/api/ships) und das mitgelieferte
+Backend aus: Daten für Handel/Universum/Missionen/News unter /api/v1/... (hubapi.py) sowie
+Konto, Profil, Sync und Community-Board unter /api/auth, /api/profile, /api/user-data,
+/api/organizations und /api/community/... (accounts.py). Alles läuft im selben Prozess.
 """
 
 from __future__ import annotations
@@ -26,10 +28,13 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Awaitable, Callable, Optional
+from urllib.parse import urlparse
 
 import aiohttp
 from aiohttp import web
 
+import accounts
+import hubapi
 from config import WebSettings, load_web_settings
 from uex_api import Ship, UexApiError, fetch_ships
 
@@ -161,7 +166,9 @@ SECURITY_HEADERS = {
 
 RATE_LIMIT = 120  # Anfragen pro IP und Fenster
 RATE_WINDOW = 60.0  # Sekunden
-_hits: dict[str, tuple[float, int]] = {}
+AUTH_LIMIT = 20  # Anmelde-/Registrier-Versuche pro IP und Fenster (bremst Passwort-Raten)
+AUTH_WINDOW = 600.0
+_hits: dict[tuple[str, str], tuple[float, int]] = {}
 
 
 def _client_ip(request: web.Request) -> str:
@@ -169,22 +176,40 @@ def _client_ip(request: web.Request) -> str:
     return request.headers.get("Fly-Client-IP") or request.remote or "unbekannt"
 
 
-def _rate_limited(ip: str) -> bool:
+def _rate_limited(ip: str, bucket: str = "api", limit: int = RATE_LIMIT, window: float = RATE_WINDOW) -> bool:
     now = time.monotonic()
-    start, count = _hits.get(ip, (now, 0))
-    if now - start >= RATE_WINDOW:
+    key = (bucket, ip)
+    start, count = _hits.get(key, (now, 0))
+    if now - start >= window:
         start, count = now, 0
-    _hits[ip] = (start, count + 1)
+    _hits[key] = (start, count + 1)
     if len(_hits) > 5000:  # Speicher begrenzen: abgelaufene Einträge wegräumen
-        for k in [k for k, (s, _) in _hits.items() if now - s >= RATE_WINDOW]:
+        for k in [k for k, (s, _) in _hits.items() if now - s >= max(window, AUTH_WINDOW)]:
             del _hits[k]
-    return count + 1 > RATE_LIMIT
+    return count + 1 > limit
+
+
+def _same_origin(request: web.Request) -> bool:
+    """Schreibende Anfragen müssen von dieser Seite selbst kommen (Schutz vor CSRF)."""
+    origin = request.headers.get("Origin")
+    if not origin:
+        return True  # Same-Origin-Anfragen ohne Origin-Header und Nicht-Browser-Clients
+    host = request.headers.get("X-Forwarded-Host") or request.host
+    return urlparse(origin).netloc == host
 
 
 @web.middleware
 async def protect(request: web.Request, handler):
-    if request.path.startswith("/api/") and _rate_limited(_client_ip(request)):
-        resp: web.StreamResponse = web.Response(status=429, text="Zu viele Anfragen - bitte kurz warten.")
+    is_api = request.path.startswith("/api/")
+    if is_api and request.method in ("POST", "PUT", "PATCH", "DELETE") and not _same_origin(request):
+        resp: web.StreamResponse = web.json_response({"detail": "Anfrage von fremder Herkunft abgelehnt."}, status=403)
+    elif is_api and request.path in ("/api/auth/login", "/api/auth/register") and _rate_limited(
+        _client_ip(request), "auth", AUTH_LIMIT, AUTH_WINDOW
+    ):
+        resp = web.json_response({"detail": "Zu viele Versuche - bitte in ein paar Minuten erneut probieren."}, status=429)
+        resp.headers["Retry-After"] = str(int(AUTH_WINDOW))
+    elif is_api and _rate_limited(_client_ip(request)):
+        resp = web.json_response({"detail": "Zu viele Anfragen - bitte kurz warten."}, status=429)
         resp.headers["Retry-After"] = str(int(RATE_WINDOW))
     else:
         try:
@@ -193,7 +218,7 @@ async def protect(request: web.Request, handler):
             resp = exc  # auch Fehlerseiten (404 ...) bekommen die Header
     for k, v in SECURITY_HEADERS.items():
         resp.headers[k] = v
-    if request.path.startswith("/api/"):
+    if is_api:
         resp.headers["Cache-Control"] = "no-store"
     if isinstance(resp, web.HTTPException):
         raise resp
@@ -229,8 +254,20 @@ async def handle_ships(request: web.Request) -> web.Response:
 
 def create_app(background_task: Optional[Callable[[], Awaitable[None]]] = None) -> web.Application:
     """Baut die Anwendung. `background_task` (nur im eigenständigen Betrieb) läuft mit ihr mit."""
-    app = web.Application(middlewares=[protect])
+    app = web.Application(middlewares=[protect], client_max_size=1_048_576)
     app.add_routes(routes)
+    app.add_routes(hubapi.hub_routes)
+    app.add_routes(accounts.routes)
+
+    async def _open_db(app: web.Application) -> None:
+        accounts.store.open()
+        log.info("Konten-Datenbank bereit: %s", accounts.store.path)
+
+    async def _close_db(app: web.Application) -> None:
+        accounts.store.close()
+
+    app.on_startup.append(_open_db)
+    app.on_cleanup.append(_close_db)
 
     if background_task is not None:
 
