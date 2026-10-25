@@ -171,48 +171,6 @@ Browser der Besucher direkt von RSI. Fehlt ein Bild, bleibt alles wie vorher. Di
 Games im Fußbereich als Urheber; die Nutzungsbedingungen von CIG für Fan-Projekte gelten für dich.
 Ob es klappt, siehst du im Log: `RSI-Bilder: ... Bilder gefunden`.
 
-## Hub-Seiten: Handel, Universum, Missionen, Konto
-
-Außer dem Schiffs-Showcase hat die Seite weitere Bereiche. Sie laufen komplett über den eigenen
-Server (`hubapi.py` und `accounts.py`, im selben Prozess wie der Bot) - der Browser spricht nur
-noch mit `/api/...` der eigenen Seite und nie direkt mit Drittanbietern.
-
-| Bereich | Quelle | Hinweis |
-|---|---|---|
-| **Handel & Industrie** (Marktbewegungen, Handelsrouten) | UEX Corp (`commodities`, `commodities_prices_all`) | Routen werden serverseitig berechnet: Kaufpreis am Terminal A, Verkaufspreis am Terminal B, begrenzt durch Fracht, Kapital und Vorrat. Eine Schätzung, keine Garantie. |
-| **Universum** (Ortssuche, Systeme) | UEX Corp (Systeme, Planeten, Monde, Stationen, Städte, Außenposten, POIs) | UEX liefert keine Koordinaten. Die Karte zeigt deshalb eine schematische Übersicht der Treffer, keine maßstäblichen Positionen und keine Flugzeiten. |
-| **Mission Control** (Missionen aus dem Datenfeed) | redaktioneller Auftragskatalog | Es gibt keine öffentliche Live-Liste von Verträgen. Der Katalog beschreibt Auftragstypen ohne erfundene Belohnungen und ist als solcher gekennzeichnet. Optional kann `MISSIONS_FEED_URL` einen eigenen JSON-Feed einbinden. |
-| **News** (Comm-Links) | Star Citizen Wiki API | Server-Cache 10 Minuten. |
-| **Mining-Rechner** (Erz-Voreinstellungen) | UEX Corp | Roh- und Raffinerie-Preise aus den Warenpreisen. |
-| **Pilotprofil, Konto, Sync, Crew Board, Events, Organisationsverzeichnis** | eigene SQLite-Datenbank `data/hub.db` | Siehe unten. |
-
-Alle UEX-Daten werden 15 Minuten (Orte 6 Stunden) zwischengespeichert. Fällt UEX aus, bleibt der letzte
-Stand sichtbar; gibt es noch gar keinen, antwortet die Seite mit einer klaren Fehlermeldung statt leer.
-
-### Konto & Community (mitgeliefertes Backend)
-
-- **Konto:** Registrieren/Anmelden mit E-Mail oder Pilotname und Passwort (8-128 Zeichen). Passwörter
-  werden mit scrypt und eigenem Salz gehasht, nie im Klartext gespeichert. Die Sitzung liegt in einem
-  `HttpOnly`-Cookie (`SameSite=Lax`, auf HTTPS zusätzlich `Secure`); in der Datenbank steht nur der Hash des Tokens.
-- **Schutz:** höchstens 20 Anmelde-/Registrierversuche pro IP und 10 Minuten, Herkunftsprüfung bei
-  schreibenden Anfragen (CSRF), Größenlimit für Anfragen, Eingaben werden gekürzt und bereinigt.
-- **Sync:** Hangar, Builds, Routen, Einsatzplan und Fortschritt werden mit dem Konto geräteübergreifend gespeichert.
-  Ohne Anmeldung bleibt alles wie bisher lokal im Browser.
-- **Crew Board & Events:** lesen darf jeder, veröffentlichen/teilnehmen nur angemeldete Piloten; löschen nur der Ersteller.
-  Jede Person kann höchstens 20 Gesuche und 20 Events gleichzeitig haben; volle Events nehmen keine Zusagen mehr an.
-- **Organisationsverzeichnis:** zeigt nur Profile, bei denen die Person selbst eine Organisation eingetragen hat.
-  E-Mail-Adressen werden nie ausgeliefert.
-- **Daten:** Die Datenbank liegt im Datenverzeichnis (`DATA_DIR`, auf Fly.io im Volume) und überlebt Neustarts.
-  Sichere `data/hub.db` mit, wenn du Konten behalten willst.
-
-### Tests
-
-```bash
-python test_hub.py        # Konto, Profil, Sync, Community, Handel, Orte, Erze, Missionen, Schutzmechanismen
-python test_smoke.py      # Schiffsdaten, Embeds, Web-API
-python -m pytest test_phase2a.py
-```
-
 ## Hosting auf Fly.io
 
 Der Bot muss durchgehend laufen, um Änderungen mitzubekommen und auf
@@ -311,8 +269,6 @@ aktivieren, dann verlinkt das Kopf-Embed im Discord-Channel die Seite.
 | Web-Seite lokal nicht erreichbar | Läuft `python bot.py`? Im Log steht dann "Web-Seite läuft auf Port 8080". Steht dort "konnte nicht gestartet werden", ist der Port belegt (läuft noch `python webapp.py`?). `PORT` in der `.env` ändern. |
 | Web-Seite auf Fly.io nicht erreichbar | Nach dem Deploy `fly status` und `fly ips list` prüfen. `internal_port` in der `fly.toml` muss zu `PORT` passen. |
 | Web-Seite zeigt "Schiffsdaten gerade nicht erreichbar" | Der Bot hatte noch keinen erfolgreichen UEX-Abruf (frisch gestartet oder UEX war down). Sobald der erste Abruf klappt, lädt sich die Seite von selbst nach. |
-| Handel/Universum/News zeigen "nicht erreichbar" | Im Log nach `Abruf '...' fehlgeschlagen` suchen: UEX oder die Wiki-API war nicht erreichbar. Beim nächsten erfolgreichen Abruf füllt sich die Seite von selbst. Die Zeile `Marktdaten geladen: ...` im Log zeigt, was UEX geliefert hat. |
-| Konto erstellen schlägt fehl | Die Datenbank liegt in `DATA_DIR` (auf Fly.io `/app/data`). Das Volume muss existieren und beschreibbar sein (`fly volumes list`). |
 | Web-Seite zeigt "Stand evtl. veraltet" | Der letzte UEX-Abruf ist fehlgeschlagen, gezeigt wird der letzte gute Stand. Erholt sich beim nächsten erfolgreichen Abruf von selbst. |
 
 ## Mögliche Erweiterungen (nicht enthalten, aber gut ergänzbar)
@@ -331,14 +287,18 @@ uex_api.py                      Anbindung an die UEX-Corp-API + Datenmodell
 embeds.py                       Baut die Discord-Embeds (Showcase-Optik, /liste-Seiten)
 storage.py                      Lokale JSON-Persistenz (Nachrichten-IDs, letzter Preisstand)
 config.py                       Lädt/prüft die .env-Konfiguration
-webapp.py                       Web-Seite: Webserver, Sicherheits-Header, Rate-Limit, /api/ships; läuft im Bot-Prozess (oder allein: `python webapp.py`)
-hubapi.py                       Daten-API /api/v1/...: Markt, Handelsrouten, Orte, Erze, Missionen, News (UEX, mit Cache)
-accounts.py                     Backend: Konto, Profil, Sync, Crew Board, Events, Organisationsverzeichnis (SQLite)
+webapp.py                       Web-Seite: Webserver + JSON-API (/api/ships), läuft im Bot-Prozess (oder allein: `python webapp.py`)
 static/index.html               Die Web-Seite selbst (HTML/CSS/JS in einer Datei)
-test_hub.py                     Tests für Konto-Backend und Hub-Daten-API (`python test_hub.py`)
 test_smoke.py                   Test mit echten Beispieldaten, unabhängig von Discord/UEX (`python test_smoke.py`)
 Dockerfile                      Container-Image für Fly.io
 fly.toml                        Fly.io-App-Konfiguration (Bot + Web-Seite auf einer Maschine, Volume, HTTP-Port 8080)
 .dockerignore                   Hält .env/.git/data aus dem Docker-Image raus
 .github/workflows/fly-deploy.yml  GitHub Actions: automatisches `fly deploy` bei Push auf main
 ```
+
+
+## Reparaturen für Pilotprofil und Missionsfeed
+
+Die Weboberfläche enthält jetzt eine passende Konto-API für `/api/auth/*`, `/api/profile` und `/api/user-data`. Neue Konten werden in `DATA_DIR/accounts.json` gespeichert; Passwörter werden als PBKDF2-SHA256-Hash abgelegt, nicht im Klartext. Auf Fly.io muss `DATA_DIR` auf ein persistentes Volume zeigen, wenn Konten Deployments überleben sollen. Nach einem Serverneustart muss man sich erneut anmelden.
+
+Der externe Missionsbereich probiert mehrere bekannte Missions-/Contract-Endpunkte und zeigt bei fehlenden oder nicht erreichbaren Daten eine verständliche Meldung, statt dauerhaft den Platzhalter stehenzulassen. Eigene Einsätze im lokalen Einsatzplan funktionieren unabhängig vom externen Feed.

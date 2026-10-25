@@ -12,10 +12,8 @@ Zwei Betriebsarten:
 2. Eigenständig (`python webapp.py`): holt die Daten selbst von UEX. Praktisch, um die Seite
    lokal anzusehen, ohne Discord-Token und ohne den Bot zu starten.
 
-Die Seite liefert static/index.html, die Schiffsdaten (/api/ships) und das mitgelieferte
-Backend aus: Daten für Handel/Universum/Missionen/News unter /api/v1/... (hubapi.py) sowie
-Konto, Profil, Sync und Community-Board unter /api/auth, /api/profile, /api/user-data,
-/api/organizations und /api/community/... (accounts.py). Alles läuft im selben Prozess.
+Die Seite ist öffentlich und rein lesend; sie liefert nur static/index.html und die
+Schiffsdaten als JSON (/api/ships) aus.
 """
 
 from __future__ import annotations
@@ -25,16 +23,17 @@ import contextlib
 import json
 import logging
 import time
+import hashlib
+import hmac
+import secrets
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Awaitable, Callable, Optional
-from urllib.parse import urlparse
 
 import aiohttp
 from aiohttp import web
 
-import accounts
-import hubapi
 from config import WebSettings, load_web_settings
 from uex_api import Ship, UexApiError, fetch_ships
 
@@ -166,9 +165,7 @@ SECURITY_HEADERS = {
 
 RATE_LIMIT = 120  # Anfragen pro IP und Fenster
 RATE_WINDOW = 60.0  # Sekunden
-AUTH_LIMIT = 20  # Anmelde-/Registrier-Versuche pro IP und Fenster (bremst Passwort-Raten)
-AUTH_WINDOW = 600.0
-_hits: dict[tuple[str, str], tuple[float, int]] = {}
+_hits: dict[str, tuple[float, int]] = {}
 
 
 def _client_ip(request: web.Request) -> str:
@@ -176,40 +173,22 @@ def _client_ip(request: web.Request) -> str:
     return request.headers.get("Fly-Client-IP") or request.remote or "unbekannt"
 
 
-def _rate_limited(ip: str, bucket: str = "api", limit: int = RATE_LIMIT, window: float = RATE_WINDOW) -> bool:
+def _rate_limited(ip: str) -> bool:
     now = time.monotonic()
-    key = (bucket, ip)
-    start, count = _hits.get(key, (now, 0))
-    if now - start >= window:
+    start, count = _hits.get(ip, (now, 0))
+    if now - start >= RATE_WINDOW:
         start, count = now, 0
-    _hits[key] = (start, count + 1)
+    _hits[ip] = (start, count + 1)
     if len(_hits) > 5000:  # Speicher begrenzen: abgelaufene Einträge wegräumen
-        for k in [k for k, (s, _) in _hits.items() if now - s >= max(window, AUTH_WINDOW)]:
+        for k in [k for k, (s, _) in _hits.items() if now - s >= RATE_WINDOW]:
             del _hits[k]
-    return count + 1 > limit
-
-
-def _same_origin(request: web.Request) -> bool:
-    """Schreibende Anfragen müssen von dieser Seite selbst kommen (Schutz vor CSRF)."""
-    origin = request.headers.get("Origin")
-    if not origin:
-        return True  # Same-Origin-Anfragen ohne Origin-Header und Nicht-Browser-Clients
-    host = request.headers.get("X-Forwarded-Host") or request.host
-    return urlparse(origin).netloc == host
+    return count + 1 > RATE_LIMIT
 
 
 @web.middleware
 async def protect(request: web.Request, handler):
-    is_api = request.path.startswith("/api/")
-    if is_api and request.method in ("POST", "PUT", "PATCH", "DELETE") and not _same_origin(request):
-        resp: web.StreamResponse = web.json_response({"detail": "Anfrage von fremder Herkunft abgelehnt."}, status=403)
-    elif is_api and request.path in ("/api/auth/login", "/api/auth/register") and _rate_limited(
-        _client_ip(request), "auth", AUTH_LIMIT, AUTH_WINDOW
-    ):
-        resp = web.json_response({"detail": "Zu viele Versuche - bitte in ein paar Minuten erneut probieren."}, status=429)
-        resp.headers["Retry-After"] = str(int(AUTH_WINDOW))
-    elif is_api and _rate_limited(_client_ip(request)):
-        resp = web.json_response({"detail": "Zu viele Anfragen - bitte kurz warten."}, status=429)
+    if request.path.startswith("/api/") and _rate_limited(_client_ip(request)):
+        resp: web.StreamResponse = web.Response(status=429, text="Zu viele Anfragen - bitte kurz warten.")
         resp.headers["Retry-After"] = str(int(RATE_WINDOW))
     else:
         try:
@@ -218,7 +197,7 @@ async def protect(request: web.Request, handler):
             resp = exc  # auch Fehlerseiten (404 ...) bekommen die Header
     for k, v in SECURITY_HEADERS.items():
         resp.headers[k] = v
-    if is_api:
+    if request.path.startswith("/api/"):
         resp.headers["Cache-Control"] = "no-store"
     if isinstance(resp, web.HTTPException):
         raise resp
@@ -252,22 +231,184 @@ async def handle_ships(request: web.Request) -> web.Response:
     )
 
 
+
+# Kleine optionale Konto-API für Pilotprofil und Synchronisierung.
+# Konten werden mit PBKDF2-Hashes gespeichert; Passwörter werden nie im Klartext abgelegt.
+ACCOUNT_DIR = Path(os.getenv("DATA_DIR", "").strip() or (Path(__file__).parent / "data"))
+ACCOUNT_FILE = ACCOUNT_DIR / "accounts.json"
+_SESSIONS: dict[str, str] = {}
+_ACCOUNT_LOCK = __import__("threading").Lock()
+
+
+def _accounts() -> dict:
+    ACCOUNT_DIR.mkdir(parents=True, exist_ok=True)
+    try:
+        return json.loads(ACCOUNT_FILE.read_text(encoding="utf-8")) if ACCOUNT_FILE.exists() else {}
+    except (OSError, json.JSONDecodeError):
+        log.exception("Kontodatei konnte nicht gelesen werden.")
+        return {}
+
+
+def _save_accounts(data: dict) -> None:
+    ACCOUNT_DIR.mkdir(parents=True, exist_ok=True)
+    tmp = ACCOUNT_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.replace(ACCOUNT_FILE)
+
+
+def _account_name(raw: str) -> str:
+    return str(raw or "").strip().lower()[:120]
+
+
+def _password_hash(password: str, salt: bytes | None = None) -> tuple[str, str]:
+    salt = salt or secrets.token_bytes(16)
+    digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 310000)
+    return salt.hex(), digest.hex()
+
+
+def _current_user(request: web.Request) -> str | None:
+    token = request.cookies.get("scx_session", "")
+    return _SESSIONS.get(token)
+
+
+def _json_error(message: str, status: int = 400) -> web.Response:
+    return web.json_response({"message": message}, status=status)
+
+
+@routes.post("/api/auth/register")
+async def auth_register(request: web.Request) -> web.Response:
+    try:
+        body = await request.json()
+    except Exception:
+        return _json_error("Ungültige Anfrage.")
+    username = _account_name(body.get("username"))
+    password = str(body.get("password") or "")
+    if len(username) < 3:
+        return _json_error("Benutzername/E-Mail muss mindestens 3 Zeichen haben.")
+    if len(password) < 8 or len(password) > 1024:
+        return _json_error("Passwort muss mindestens 8 Zeichen haben.")
+    with _ACCOUNT_LOCK:
+        data = _accounts()
+        if username in data:
+            return _json_error("Dieses Konto existiert bereits.", 409)
+        salt, digest = _password_hash(password)
+        data[username] = {"salt": salt, "password_hash": digest, "profile": {}, "user_data": {}}
+        _save_accounts(data)
+    token = secrets.token_urlsafe(32)
+    _SESSIONS[token] = username
+    response = web.json_response({"username": username, "ok": True})
+    response.set_cookie("scx_session", token, httponly=True, secure=request.secure,
+                        samesite="Lax", max_age=60 * 60 * 24 * 30, path="/")
+    return response
+
+
+@routes.post("/api/auth/login")
+async def auth_login(request: web.Request) -> web.Response:
+    try:
+        body = await request.json()
+    except Exception:
+        return _json_error("Ungültige Anfrage.")
+    username = _account_name(body.get("username"))
+    password = str(body.get("password") or "")
+    data = _accounts()
+    user = data.get(username)
+    if not user:
+        return _json_error("Benutzername oder Passwort ist falsch.", 401)
+    try:
+        expected = bytes.fromhex(user["password_hash"])
+        salt = bytes.fromhex(user["salt"])
+        actual = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, 310000)
+    except (KeyError, ValueError):
+        return _json_error("Kontodaten sind beschädigt.", 500)
+    if not hmac.compare_digest(actual, expected):
+        return _json_error("Benutzername oder Passwort ist falsch.", 401)
+    token = secrets.token_urlsafe(32)
+    _SESSIONS[token] = username
+    response = web.json_response({"username": username, "ok": True})
+    response.set_cookie("scx_session", token, httponly=True, secure=request.secure,
+                        samesite="Lax", max_age=60 * 60 * 24 * 30, path="/")
+    return response
+
+
+@routes.get("/api/auth/me")
+async def auth_me(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    return web.json_response({"username": username, "authenticated": bool(username)})
+
+
+@routes.post("/api/auth/logout")
+async def auth_logout(request: web.Request) -> web.Response:
+    token = request.cookies.get("scx_session", "")
+    _SESSIONS.pop(token, None)
+    response = web.json_response({"ok": True})
+    response.del_cookie("scx_session", path="/")
+    return response
+
+
+@routes.get("/api/profile")
+async def account_get_profile(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    return web.json_response(_accounts().get(username, {}).get("profile", {}))
+
+
+@routes.put("/api/profile")
+async def account_put_profile(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    try:
+        profile = await request.json()
+    except Exception:
+        return _json_error("Ungültige Profildaten.")
+    if not isinstance(profile, dict):
+        return _json_error("Ungültige Profildaten.")
+    with _ACCOUNT_LOCK:
+        data = _accounts()
+        if username not in data:
+            return _json_error("Konto nicht gefunden.", 401)
+        data[username]["profile"] = {k: str(v)[:5000] for k, v in profile.items() if k in {"name", "org", "role", "discord", "bio"}}
+        _save_accounts(data)
+    return web.json_response({"ok": True})
+
+
+@routes.get("/api/user-data")
+async def account_get_user_data(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    return web.json_response(_accounts().get(username, {}).get("user_data", {}))
+
+
+@routes.put("/api/user-data")
+async def account_put_user_data(request: web.Request) -> web.Response:
+    username = _current_user(request)
+    if not username:
+        return _json_error("Bitte zuerst anmelden.", 401)
+    try:
+        user_data = await request.json()
+    except Exception:
+        return _json_error("Ungültige Synchronisierungsdaten.")
+    if not isinstance(user_data, dict):
+        return _json_error("Ungültige Synchronisierungsdaten.")
+    allowed = {"fleet", "builds", "buildCompare", "routes", "crews", "events", "missions", "guide", "check"}
+    cleaned = {k: user_data[k] for k in allowed if k in user_data}
+    if len(json.dumps(cleaned, ensure_ascii=False)) > 2_000_000:
+        return _json_error("Synchronisierungsdaten sind zu groß.", 413)
+    with _ACCOUNT_LOCK:
+        data = _accounts()
+        if username not in data:
+            return _json_error("Konto nicht gefunden.", 401)
+        data[username]["user_data"] = cleaned
+        _save_accounts(data)
+    return web.json_response({"ok": True})
+
+
 def create_app(background_task: Optional[Callable[[], Awaitable[None]]] = None) -> web.Application:
     """Baut die Anwendung. `background_task` (nur im eigenständigen Betrieb) läuft mit ihr mit."""
-    app = web.Application(middlewares=[protect], client_max_size=1_048_576)
+    app = web.Application(middlewares=[protect])
     app.add_routes(routes)
-    app.add_routes(hubapi.hub_routes)
-    app.add_routes(accounts.routes)
-
-    async def _open_db(app: web.Application) -> None:
-        accounts.store.open()
-        log.info("Konten-Datenbank bereit: %s", accounts.store.path)
-
-    async def _close_db(app: web.Application) -> None:
-        accounts.store.close()
-
-    app.on_startup.append(_open_db)
-    app.on_cleanup.append(_close_db)
 
     if background_task is not None:
 
